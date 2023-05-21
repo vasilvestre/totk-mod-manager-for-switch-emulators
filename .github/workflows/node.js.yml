@@ -6,13 +6,17 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ "main" ]
 
 jobs:
+  release:
+    permissions:
+      contents: write
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
@@ -23,10 +27,31 @@ jobs:
     - uses: pnpm/action-setup@v2
       with:
         version: 6.32.9
-    - uses: actions/setup-node@v3
+    - name: Rust setup
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Rust cache
+      uses: swatinem/rust-cache@v2
       with:
-        node-version: '14'
+        workspaces: './src-tauri -> target'
+
+    - name: Sync node version and setup cache
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'lts/*'
         cache: 'pnpm'
+        
     - run: pnpm install --frozen-lockfile
+    
     - run: pnpm tauri build
-#    - run: pnpm test
+    
+    - uses: tauri-apps/tauri-action@v0
+
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  with:
+    tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
+    releaseName: 'App Name v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
+    releaseBody: 'See the assets to download and install this version.'
+    releaseDraft: true
+          prerelease: false
