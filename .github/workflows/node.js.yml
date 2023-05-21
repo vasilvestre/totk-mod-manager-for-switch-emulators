@@ -15,9 +15,7 @@ jobs:
   release:
     permissions:
       contents: write
-  build:
     runs-on: windows-latest
-
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -38,20 +36,19 @@ jobs:
     - name: Sync node version and setup cache
       uses: actions/setup-node@v3
       with:
-        node-version: 'lts/*'
+        node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
         
-    - run: pnpm install --frozen-lockfile
+    - name: Install frontend dependencies
+      run: pnpm install --frozen-lockfile
     
-    - run: pnpm tauri build
-    
-    - uses: tauri-apps/tauri-action@v0
-
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  with:
-    tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
-    releaseName: 'App Name v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
-    releaseBody: 'See the assets to download and install this version.'
-    releaseDraft: true
-          prerelease: false
+    - name: Build the app
+      uses: tauri-apps/tauri-action@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
+        releaseName: 'App Name v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
+        releaseBody: 'See the assets to download and install this version.'
+        releaseDraft: true
+        prerelease: false
