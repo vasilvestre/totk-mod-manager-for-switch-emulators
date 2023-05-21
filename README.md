@@ -4,7 +4,7 @@
 
 Zelda: Tears of the Kingdom Mod Manager is an open-source application built with Next.js and Tauri, designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
 
-## Features
+## Future features
 
 - **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, disabling, or removing them from your game installation.
 - **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
