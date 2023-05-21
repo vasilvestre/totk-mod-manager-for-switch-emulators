@@ -1,34 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Zelda: Tears of the Kingdom Mod Manager
 
-## Getting Started
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE)
 
-First, run the development server:
+Zelda: Tears of the Kingdom Mod Manager is an open-source application built with Next.js and Tauri, designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
+
+## Features
+
+- **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, disabling, or removing them from your game installation.
+- **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
+- **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
+
+## Installation
+
+To use Zelda: Tears of the Kingdom Mod Manager, follow these steps:
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/vasilvestre/totk-mod-manager-for-yuzu.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Navigate to the project directory:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd totk-mod-manager-for-yuzu
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Install the dependencies:
 
-## Learn More
+```bash
+pnpm tauri install
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the application:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm tauri dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The application will launch in your default web browser.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! If you'd like to contribute to Zelda: Tears of the Kingdom Mod Manager, please follow these steps:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make the necessary changes and commit your code.
+4. Push your branch to your forked repository.
+5. Submit a pull request to the main repository.
+
+Please ensure that your code adheres to the project's coding standards and includes appropriate documentation and tests.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE) file for more information.
+
+## Acknowledgements
+
+- The Zelda: Tears of the Kingdom community for their support and feedback.
+- The contributors to the Yuzu emulator for enabling Zelda: Tears of the Kingdom to be played on PC.
+- The developers of Next.js and Tauri for their fantastic frameworks.
+
+## Support
+
+If you encounter any issues or have questions, please create an issue on the [issue tracker](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/issues). We'll do our best to assist you.
+
+You can also reach out to the community on our official Discord server for additional help and discussions.
+
+## Roadmap
+
+- Implement automatic mod updates.
+- Add support for custom mod repositories.
+- Enhance user interface with additional features.
+- Improve mod installation and removal process.
+
+## Stay Updated
+
+To stay updated with the latest news and announcements regarding Zelda: Tears of the Kingdom Mod Manager, be sure to watch the repository on GitHub.
+
+We appreciate your interest in Zelda: Tears of the Kingdom Mod Manager! Happy modding!
