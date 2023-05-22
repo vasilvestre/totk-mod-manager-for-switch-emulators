@@ -17,9 +17,14 @@
         "all": true
       },
       "fs": {
-        "all": true,
+        "all": false,
+        "writeFile": true,
+        "readDir": true,
+        "exists": true,
         "scope": [
-          "$DATA\\yuzu\\\\load\\0100F2C0115B6000"
+          "$DATA\\yuzu\\load\\0100F2C0115B6000",
+          "$DOWNLOAD\\*",
+          "$APPDATA\\**"
         ]
       }
     },
@@ -39,7 +44,7 @@
         "icons/icon.ico"
       ],
       "identifier": "com.vasilvestre.totkMM",
-      "longDescription": "",
+      "longDescription": "Zelda: Tears of the Kingdom Mod Manager is an open-source application built with Next.js and Tauri, designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -65,10 +70,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "TOTK mod manager for Yuzu",
-        "width": 800
+        "width": 1000
       }
     ]
   }
