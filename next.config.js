@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  output: "export",
   webpack: (config) => {
     config.experiments = {
       ...config.experiments,
-        topLevelAwait: true,
+      topLevelAwait: true,
     }
     return config
-  }
+  },
 }
 
 module.exports = nextConfig
