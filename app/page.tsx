@@ -8,14 +8,16 @@ import {
 } from '@/app/(handler)/fetchGithubUpdatedMods'
 import listMods from '@/app/(handler)/listmods'
 import { Enum, CategoryNames } from '@/app/enum'
-import { ModFile, LocalMods } from '@/app/types'
+import { ModFile, LocalMod, ModConfig } from '@/app/types'
 import {
     checkIncompatibilities,
     installSingleMod,
+    removeSingleMod,
 } from '@/app/(handler)/modHandler'
+import { FileEntry } from '@tauri-apps/api/fs'
 
 export default function Home() {
-    const [localMods, setLocalMods] = useState<LocalMods[]>([])
+    const [localMods, setLocalMods] = useState<LocalMod[]>([])
     const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)
     const [downloadProgress, setDownloadProgress] = useState<number>(0)
     const [mods, setMods] = useState<ModFile[]>()
@@ -44,6 +46,43 @@ export default function Home() {
             setAlert(undefined)
         }, 5000)
     }, [alert])
+
+    function tryInstall(mod: { config: ModConfig } & FileEntry) {
+        return async () => {
+            try {
+                await checkIncompatibilities(mod, localMods)
+                await installSingleMod(mod)
+                setLocalMods(await fetchYuzuMods())
+            } catch (e: any) {
+                console.error(e)
+                setAlert({
+                    message: e.message,
+                    type: 'error',
+                    data: e.data,
+                })
+            }
+        }
+    }
+
+    function tryRemove(mod: LocalMod | undefined) {
+        return async () => {
+            try {
+                if (mod) {
+                    await removeSingleMod(mod)
+                    setLocalMods(await fetchYuzuMods())
+                } else {
+                    throw new Error()
+                }
+            } catch (e: any) {
+                console.error(e)
+                setAlert({
+                    message: e.message,
+                    type: 'error',
+                    data: e.data,
+                })
+            }
+        }
+    }
 
     return (
         <main className="min-h-screen justify-between">
@@ -195,47 +234,32 @@ export default function Home() {
                                                 })}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2">
-                                            <a
-                                                href="#"
-                                                className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                                                onClick={async (e) => {
-                                                    if (
-                                                        typeof localMods.find(
+                                            {typeof localMods.find(
+                                                (localMod) =>
+                                                    localMod.name === mod.name
+                                            ) === 'undefined' ? (
+                                                <a
+                                                    href="#"
+                                                    className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                                                    onClick={tryInstall(mod)}
+                                                >
+                                                    Install
+                                                </a>
+                                            ) : (
+                                                <a
+                                                    href="#"
+                                                    className="inline-block rounded px-4 py-2 text-xs font-medium text-white bg-red-700 hover:bg-red-800"
+                                                    onClick={tryRemove(
+                                                        localMods.find(
                                                             (localMod) =>
                                                                 localMod.name ===
                                                                 mod.name
-                                                        ) === 'object'
-                                                    )
-                                                        return
-                                                    try {
-                                                        await checkIncompatibilities(
-                                                            mod,
-                                                            localMods
                                                         )
-                                                        await installSingleMod(
-                                                            mod
-                                                        )
-                                                        setLocalMods(
-                                                            await fetchYuzuMods()
-                                                        )
-                                                    } catch (e: any) {
-                                                        console.error(e)
-                                                        setAlert({
-                                                            message: e.message,
-                                                            type: 'error',
-                                                            data: e.data,
-                                                        })
-                                                    }
-                                                }}
-                                            >
-                                                {typeof localMods.find(
-                                                    (localMod) =>
-                                                        localMod.name ===
-                                                        mod.name
-                                                ) === 'undefined'
-                                                    ? 'Install'
-                                                    : 'Already installed'}
-                                            </a>
+                                                    )}
+                                                >
+                                                    Remove
+                                                </a>
+                                            )}
                                         </td>
                                     </tr>
                                 )
