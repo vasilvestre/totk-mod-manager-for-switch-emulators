@@ -22,6 +22,7 @@
         "exists": true,
         "readFile": true,
         "copyFile": true,
+        "removeDir": true,
         "scope": [
           "$DATA\\yuzu\\load\\0100F2C0115B6000",
           "$DATA\\yuzu\\load\\0100F2C0115B6000\\**",

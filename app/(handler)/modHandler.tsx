@@ -1,4 +1,4 @@
-import { LocalMods, ModFile } from '@/app/types'
+import { LocalMod, ModFile } from '@/app/types'
 
 export async function installSingleMod(mod: ModFile) {
     const { invoke, path } = await import('@tauri-apps/api')
@@ -11,9 +11,15 @@ export async function installSingleMod(mod: ModFile) {
     await invoke('copy_dir', { filePath: mod.path, targetDir: localModsPath })
 }
 
+export async function removeSingleMod(mod: LocalMod) {
+    const { fs } = await import('@tauri-apps/api')
+
+    await fs.removeDir(mod.path, { recursive: true })
+}
+
 export async function checkIncompatibilities(
     mod: ModFile,
-    localMods: LocalMods[]
+    localMods: LocalMod[]
 ) {
     let incompatibilities: string[] = []
     localMods.forEach((localMod) => {

@@ -24,6 +24,6 @@ export type ModFile = {
     config: ModConfig
 } & FileEntry
 
-export type LocalMods = {
+export type LocalMod = {
     config?: ModConfig
 } & FileEntry
