@@ -42,8 +42,11 @@ export async function extractZip(filename: string, version: string | null) {
     let filePath = await path.resolve(downloadDir, filename);
     let targetDir = await path.resolve(await path.appDataDir(), version ? version : 'latest');
     if (!await fs.exists(version ? version : 'latest', { dir: fs.BaseDirectory.AppData })) {
-        invoke('unzip', { filePath: filePath, targetDir: targetDir})
-            .catch(console.error)
+        try {
+            await invoke('unzip', { filePath: filePath, targetDir: targetDir})
+        } catch (e) {
+            console.error(e)
+        }
     }
 }
 
