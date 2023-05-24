@@ -7,8 +7,7 @@
     "distDir": "../out"
   },
   "package": {
-    "productName": "totk-mod-manager-for-yuzu",
-    "version": "0.1.0"
+    "productName": "Zelda Tears of the Kingdom Mod Manager"
   },
   "tauri": {
     "allowlist": {
@@ -75,7 +74,7 @@
         "fullscreen": false,
         "height": 800,
         "resizable": true,
-        "title": "TOTK mod manager for Yuzu",
+        "title": "Zelda: Tears of the Kingdom Mod Manager",
         "width": 1000
       }
     ]
