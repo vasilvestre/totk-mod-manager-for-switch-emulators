@@ -6,15 +6,15 @@ Zelda: Tears of the Kingdom Mod Manager is an open-source application built with
 
 ## Features
 
-- **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling them from your game installation.
-- **Mod compatibility**: The application will automatically detect which mods are compatible with others
+-   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling them from your game installation.
+-   **Mod compatibility**: The application will automatically detect which mods are compatible with others
 
 ## Future features
 
-- **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by disabling, or removing them from your game installation.
-- **Compatibility**: The application will automatically detect which mods are compatible with the current version of Zelda: Tears of the Kingdom.
-- **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
-- **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
+-   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by disabling, or removing them from your game installation.
+-   **Compatibility**: The application will automatically detect which mods are compatible with the current version of Zelda: Tears of the Kingdom.
+-   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
+-   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
 
 ## Installation
 
@@ -64,7 +64,7 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 
 ## Acknowledgements
 
-- See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
+-   See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
 
@@ -74,10 +74,10 @@ You can also reach out to the community on our official Discord server for addit
 
 ## Roadmap
 
-- Implement automatic mod updates.
-- Add support for custom mod repositories.
-- Enhance user interface with additional features.
-- Improve mod installation and removal process.
+-   Implement automatic mod updates.
+-   Add support for custom mod repositories.
+-   Enhance user interface with additional features.
+-   Improve mod installation and removal process.
 
 ## Stay Updated
 
