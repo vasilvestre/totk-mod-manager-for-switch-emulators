@@ -11,14 +11,14 @@ import {
 import listMods from "@/app/listmods";
 import {Categories, CategoryNames} from "@/app/categories";
 import {ModFile, LocalMods} from "@/app/types";
-import {installSingleMod} from "@/app/modHandler";
+import {checkIncompatibilities, installSingleMod} from "@/app/modHandler";
 
 export default function Home() {
     const [localMods, setLocalMods] = useState<LocalMods[]>([]);
     const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null);
     const [downloadProgress, setDownloadProgress] = useState<number>(0)
     const [mods, setMods] = useState<ModFile[]>();
-    const [alert, setAlert] = useState<{ message: string, type: string } | undefined>()
+    const [alert, setAlert] = useState<{ message: string, type: string, data?: any[] } | undefined>()
 
     useEffect(() => {
         (async () => {
@@ -41,7 +41,7 @@ export default function Home() {
 
     useEffect(() => {
         setTimeout(() => {
-            setAlert(undefined)
+            // setAlert(undefined)
         }, 5000)
     }, [alert])
 
@@ -140,11 +140,12 @@ export default function Home() {
                                             onClick={async (e) => {
                                                 if (typeof localMods.find(localMod => localMod.name === mod.name) === 'object') return
                                                 try {
-                                                    await installSingleMod(mod)
+                                                    await checkIncompatibilities(mod, localMods)
+                                                    // await installSingleMod(mod)
                                                     setLocalMods(await fetchTotkMods())
                                                 } catch (e: any) {
                                                     console.error(e)
-                                                    setAlert({message: "Failed to install mod : already installed", type: 'error'})
+                                                    setAlert({message: e.message, type: 'error', data: e.data})
                                                 }
                                             }}
                                         >
@@ -160,10 +161,9 @@ export default function Home() {
             {alert && (
             <div className={'flex sticky top-[100vh] items-center justify-center p-4 mb-auto'}>
                     <div role="alert" className="rounded border-s-4 border-red-500 bg-red-50 p-4 sticky top-[100vh]">
-                        <strong className="block font-medium text-red-800"> Something went wrong </strong>
-
+                        <strong className="block font-medium text-red-800">{alert.message}</strong>
                         <p className="mt-2 text-sm text-red-700">
-                            {alert.message}
+                            { alert.data && alert.data.map((data: string, index: number) => <p key={index}>{data}</p>) }
                         </p>
                     </div>
             </div>

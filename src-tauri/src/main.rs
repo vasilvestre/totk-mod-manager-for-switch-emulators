@@ -15,8 +15,7 @@ use fs_extra::dir::{
 fn main() {
   tauri::Builder::default()
     .plugin(tauri_plugin_upload::init())
-    .invoke_handler(tauri::generate_handler![unzip])
-    .invoke_handler(tauri::generate_handler![copy_dir])
+    .invoke_handler(tauri::generate_handler![unzip, copy_dir])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

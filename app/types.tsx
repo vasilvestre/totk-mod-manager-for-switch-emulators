@@ -1,12 +1,17 @@
 import {FileEntry} from "@tauri-apps/api/fs";
+import {UUID} from "crypto";
 
 export type ModConfig = {
+    id: UUID,
     title: string,
     author: {
         name: string,
     },
     category: number,
-    subtitle: string
+    subtitle: string,
+    compatibility: {
+        blacklist: string[],
+    }
 }
 
 export type ModFile = {
@@ -14,5 +19,5 @@ export type ModFile = {
 } & FileEntry
 
 export type LocalMods = {
-    config?: {},
+    config?: ModConfig,
 } & FileEntry
