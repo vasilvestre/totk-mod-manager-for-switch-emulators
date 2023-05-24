@@ -5,9 +5,5 @@ export async function installSingleMod(mod: ModFile) {
 
     const appDataDir = await path.dataDir()
     const localModsPath = await path.resolve(appDataDir, 'yuzu\\load\\0100F2C0115B6000')
-    try {
-        await invoke('copy_dir', { filePath: mod.path, targetDir: localModsPath})
-    } catch (e) {
-        console.error(e)
-    }
+    await invoke('copy_dir', { filePath: mod.path, targetDir: localModsPath})
 }
