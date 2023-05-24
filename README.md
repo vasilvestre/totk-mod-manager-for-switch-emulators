@@ -7,12 +7,12 @@ Zelda: Tears of the Kingdom Mod Manager is an open-source application built with
 ## Features
 
 - **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling them from your game installation.
+- **Mod compatibility**: The application will automatically detect which mods are compatible with others
 
 ## Future features
 
 - **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by disabling, or removing them from your game installation.
 - **Compatibility**: The application will automatically detect which mods are compatible with the current version of Zelda: Tears of the Kingdom.
-- **Mod compatibility**: The application will automatically detect which mods are compatible with others
 - **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
 - **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
 
@@ -44,7 +44,7 @@ pnpm tauri install
 pnpm tauri dev
 ```
 
-The application will launch in your default web browser.
+The application will open a window.
 
 ## Contributing
 
@@ -64,9 +64,7 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 
 ## Acknowledgements
 
-- The Zelda: Tears of the Kingdom community for their support and feedback.
-- The contributors to the Yuzu emulator for enabling Zelda: Tears of the Kingdom to be played on PC.
-- The developers of Next.js and Tauri for their fantastic frameworks.
+- See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
 
