@@ -1,14 +1,13 @@
-name: Build
+name: Test on PR
 
 on:
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  release:
-    permissions:
-      contents: write
+  test-tauri:
     strategy:
+      fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
         node-version: [18.x]
