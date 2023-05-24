@@ -110,6 +110,12 @@ export default function Home() {
                             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 Category
                             </th>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                Game version
+                            </th>
+                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                Incompatibility
+                            </th>
                             <th className="px-4 py-2"></th>
                         </tr>
                         </thead>
@@ -133,6 +139,19 @@ export default function Home() {
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{config.subtitle}</td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{config.author.name}</td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{CategoryNames[Categories[config.category] as keyof typeof CategoryNames]}</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">{config.game.version.map((item, index) => (
+                                        <div key={index}>
+                                            {item}
+                                        </div>
+                                    ))}</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                        {mods.filter(mod => config.compatibility.blacklist.includes(mod.config.id)).map((mod, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {mod.config.title}
+                                            </div>
+                                        )
+                                    })}</td>
                                     <td className="whitespace-nowrap px-4 py-2">
                                         <a
                                             href="#"

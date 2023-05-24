@@ -4,8 +4,14 @@ import {UUID} from "crypto";
 export type ModConfig = {
     id: UUID,
     title: string,
+    version?: string,
+    game: {
+        titleId: string,
+        version: string[],
+    }
     author: {
         name: string,
+        link: URL
     },
     category: number,
     subtitle: string,
