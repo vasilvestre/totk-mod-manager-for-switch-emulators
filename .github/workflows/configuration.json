@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["feature"]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": ["fix"]
+    },
+    {
+      "title": "## 🧪 Tests",
+      "labels": ["test"]
+    },
+    {
+      "title": "## 📚 Documentations",
+      "labels": ["documentation"]
+    },
+    {
+      "title": "## 🧪 Misc",
+      "labels": ["misc"]
+    }
+  ]
+}

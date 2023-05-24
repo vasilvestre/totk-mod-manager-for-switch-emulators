@@ -51,6 +51,8 @@ jobs:
       uses: mikepenz/release-changelog-builder-action@v3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        configuration: ".github/workflows/configuration.json"
     
     - name: Create a release and uploading
       uses: tauri-apps/tauri-action@v0

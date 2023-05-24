@@ -73,10 +73,10 @@ You can also reach out to the community on our official Discord server for addit
 
 ## Roadmap
 
--   Implement automatic mod updates.
--   Add support for custom mod repositories.
--   Enhance user interface with additional features.
--   Improve mod installation and removal process.
+- Implement automatic mod updates.
+- Specify path to Yuzu
+- Support for Linux
+- Enhance user interface with additional features.
 
 ## Stay Updated
 
