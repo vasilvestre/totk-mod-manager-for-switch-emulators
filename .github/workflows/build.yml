@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        node-version: [18.x]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8.5.1
+
+    - name: Rust setup
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-20.04'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+    - name: Rust cache
+      uses: swatinem/rust-cache@v2
+      with:
+        workspaces: './src-tauri -> target'
+
+    - name: Sync node version and setup cache
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+        
+    - name: Install frontend dependencies
+      run: pnpm install
+    
+    - name: Test the build
+      uses: tauri-apps/tauri-action@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NEXT_PUBLIC_GITHUB_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_GITHUB_AUTH_TOKEN }}
