@@ -1,4 +1,4 @@
-import {LocalMod, ModConfig, ModFile} from '@/app/types'
+import {LocalMod, ModFile} from '@/app/types'
 import fetchYuzuMods from "@/app/(handler)/fetchYuzuMods";
 
 export async function installSingleMod(mod: ModFile, overwrite: boolean = false) {

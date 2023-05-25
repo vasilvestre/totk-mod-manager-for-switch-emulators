@@ -1,281 +1,79 @@
-'use client'
+"use client";
 
-import fetchYuzuMods from './(handler)/fetchYuzuMods'
-import { useEffect, useState } from 'react'
-import {
-    fetchGithubUpdatedMods,
-    GithubRelease,
-} from '@/app/(handler)/fetchGithubUpdatedMods'
-import listMods from '@/app/(handler)/listmods'
-import { Enum, CategoryNames } from '@/app/enum'
-import { ModFile, LocalMod, ModConfig } from '@/app/types'
-import {
-    checkIncompatibilities, filterMods,
-    installSingleMod,
-    removeSingleMod, tryInstall, tryRemove, tryUpdate,
-} from '@/app/(handler)/modHandler'
-import { FileEntry } from '@tauri-apps/api/fs'
+import fetchYuzuMods from "./(handler)/fetchYuzuMods";
+import {useEffect, useState} from "react";
+import {fetchGithubUpdatedMods, GithubRelease,} from "@/app/(handler)/fetchGithubUpdatedMods";
+import listMods from "@/app/(handler)/listmods";
+import {CategoryNames, Enum} from "@/app/enum";
+import {LocalMod, ModFile} from "@/app/types";
+import {filterMods, tryInstall, tryRemove, tryUpdate,} from "@/app/(handler)/modHandler";
+import {ModContext} from "@/app/modContext";
+import Alert from "@/app/alert";
+import {Header} from "@/app/header";
+import {DownloadBar} from "@/app/downloadBar";
+import {ModsTable} from "@/app/modsTable";
 
 export default function Home() {
-    const [localMods, setLocalMods] = useState<LocalMod[]>([])
-    const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)
-    const [downloadProgress, setDownloadProgress] = useState<number>(0)
-    const [mods, setMods] = useState<ModFile[]>()
+    const [localMods, setLocalMods] = useState<LocalMod[]>([]);
+    const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null);
+    const [downloadProgress, setDownloadProgress] = useState<number>(0);
+    const [mods, setMods] = useState<ModFile[]>();
     const [alert, setAlert] = useState<
         { message: string; type: string; data?: any[] } | undefined
-    >()
+    >();
 
     useEffect(() => {
         ;(async () => {
             try {
-                setLocalMods(await fetchYuzuMods())
+                setLocalMods(await fetchYuzuMods());
                 setUpToDateMods(
                     await fetchGithubUpdatedMods(setDownloadProgress)
-                )
+                );
             } catch (e: any) {
-                console.error(e.message)
-                setAlert({ message: e.message, type: 'error' })
+                console.error(e.message);
+                setAlert({ message: e.message, type: "error" });
             }
-            setDownloadProgress(100)
-        })()
-    }, [])
+            setDownloadProgress(100);
+        })();
+    }, []);
 
     useEffect(() => {
         setTimeout(() => {
-            setAlert(undefined)
-        }, 5000)
-    }, [alert])
+            setAlert(undefined);
+        }, 5000);
+    }, [alert]);
 
     useEffect(() => {
         ;(async () => {
             try {
-                setMods(filterMods(await listMods(upToDateMods?.data.name), localMods))
+                if (upToDateMods?.data.name) {
+                    setMods(filterMods(await listMods(upToDateMods.data.name), localMods));
+                }
             } catch (e: any) {
-                console.error(e)
-                setAlert({ message: e.message, type: 'error' })
+                console.error(e);
+                setAlert({ message: e.message, type: "error" });
             }
-        })()
-    }, [localMods, upToDateMods?.data.name])
+        })();
+    }, [localMods, upToDateMods]);
 
     return (
-        <main className="min-h-screen justify-between">
-            <header
-                aria-label="Page Header"
-                className={
-                    "min-h-[300px] bg-[url('https://wallpapercave.com/wp/wp11520757.jpg')]"
-                }
-            >
-                <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-                    <div className="sm:flex sm:items-center sm:justify-between">
-                        <div className="text-center sm:text-left">
-                            {upToDateMods && (
-                                <>
-                                    <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                                        Last version is {upToDateMods.data.name}
-                                    </h1>
-                                    <p className="mt-1.5 text-sm text-white">
-                                        Last release was made at {new Date(Date.parse(upToDateMods.data.created_at)).toLocaleDateString()} !
-                                    </p>
-                                </>
-                            )}
-                        </div>
+        <ModContext.Provider
+            value={{
+                mods, localMods, upToDateMods, downloadProgress, alert, setAlert, setLocalMods, setMods
+            }}>
 
-                        <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-                            <button
-                                className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button"
-                            >
-                                Auto update enabled
-                            </button>
-                            <button
-                                className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                                type="button"
-                            >
-                                Install/update selected mod
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <div className="bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <main className="min-h-screen justify-between">
+                <Header/>
+                <DownloadBar/>
                 <div
-                    className="bg-blue-600 h-2.5 rounded-full"
-                    style={{ width: downloadProgress + '%' }}
-                ></div>
-            </div>
-            <div
-                className={
-                    'overflow-x-auto'
-                }
-            >
-                <table className="divide-y-2 divide-gray-200 bg-white text-sm w-full">
-                    <thead className="ltr:text-left rtl:text-right">
-                        <tr>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Title
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Mod version
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Author
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Category
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Game version
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Incompatibility
-                            </th>
-                            <th className="px-4 py-2"></th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 text-center">
-                        {mods &&
-                            mods.map((mod) => {
-                                let config = mod.config
-                                return (
-                                    <tr key={config.id} className={"odd:bg-blue-100"}>
-                                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                            {config.title}
-                                            <br/>
-                                            {config?.subtitle !== config.title && (
-                                                <p className="mt-1.5 text-sm text-gray-700">
-                                                    {config.subtitle}
-                                                </p>
-                                            )}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                            {config.version}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {config.author?.name}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {
-                                                CategoryNames[
-                                                    Enum[
-                                                        config.category
-                                                    ] as keyof typeof CategoryNames
-                                                ]
-                                            }
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {config.game.version.map(
-                                                (item, index) => (
-                                                    <div key={index}>
-                                                        {item}
-                                                    </div>
-                                                )
-                                            )}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {mods
-                                                .filter((mod) =>
-                                                    config.compatibility?.blacklist?.includes(
-                                                        mod.config.id
-                                                    )
-                                                )
-                                                .map((mod, index) => {
-                                                    return (
-                                                        <div key={index}>
-                                                            {mod.config.title}
-                                                        </div>
-                                                    )
-                                                })}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2">
-                                            <span className="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
-                                                {typeof localMods.find(
-                                                    (localMod) =>
-                                                        localMod.name ===
-                                                        mod.name
-                                                ) === 'undefined' ? (
-                                                    <button
-                                                        className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                                                        onClick={tryInstall(
-                                                            mod,
-                                                            localMods,
-                                                            setLocalMods,
-                                                            setAlert
-                                                        )}
-                                                    >
-                                                        Install
-                                                    </button>
-                                                ) : (
-                                                    <>
-                                                        {localMods.find(
-                                                            (localMod) =>
-                                                                localMod.name ===
-                                                                mod.name
-                                                        )?.config?.version !==
-                                                            mod.config
-                                                                .version && (
-                                                            <button
-                                                                className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:relative"
-                                                                onClick={tryUpdate(
-                                                                    mod,
-                                                                    localMods,
-                                                                    setLocalMods,
-                                                                    setAlert
-                                                                )}
-                                                            >
-                                                                Update
-                                                            </button>
-                                                        )}
-                                                        <button
-                                                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:relative"
-                                                            onClick={tryRemove(
-                                                                localMods.find(
-                                                                    (
-                                                                        localMod
-                                                                    ) =>
-                                                                        localMod.name ===
-                                                                        mod.name
-                                                                ),
-                                                                setLocalMods,
-                                                                setAlert
-                                                            )}
-                                                        >
-                                                            Remove
-                                                        </button>
-                                                    </>
-                                                )}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                    </tbody>
-                </table>
-            </div>
-            {alert && (
-                <div
-                    className="fixed bottom-5 flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"
-                    role="alert">
-                    <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
-                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                              clipRule="evenodd"></path>
-                    </svg>
-                    <span className="sr-only">{alert.message}</span>
-                    <div>
-                        <span className="font-medium">Ensure that these requirements are met:</span>
-                        <ul className="mt-1.5 ml-4 list-disc list-inside">
-                            {alert.data &&
-                                alert.data.map(
-                                    (data: string, index: number) => (
-                                        <li key={index}>{data}</li>
-                                    )
-                                )
-                            }
-                        </ul>
-                    </div>
+                    className={
+                        "overflow-x-auto"
+                    }
+                >
+                    <ModsTable/>
                 </div>
-            )}
-        </main>
+                <Alert/>
+            </main>
+        </ModContext.Provider>
     )
 }
