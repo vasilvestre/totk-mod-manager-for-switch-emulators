@@ -26,9 +26,7 @@ export default function Alert() {
             </svg>
             <span className="sr-only">{alert.message}</span>
             <div>
-                <span className="font-medium">
-                    Ensure that these requirements are met:
-                </span>
+                <span className="font-medium">{alert.message}</span>
                 <ul className="mt-1.5 ml-4 list-disc list-inside">
                     {alert.data &&
                         alert.data.map((data: string, index: number) => (

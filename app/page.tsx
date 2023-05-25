@@ -45,6 +45,11 @@ export default function Home() {
                     setUpToDateMods(
                         await fetchGithubUpdatedMods(setDownloadProgress)
                     )
+                } else {
+                    setAlert({
+                        message: 'Please locate Yuzu folder',
+                        type: 'warning',
+                    })
                 }
             } catch (e: any) {
                 console.error(e)
@@ -70,6 +75,11 @@ export default function Home() {
                             localMods
                         )
                     )
+                } else {
+                    setAlert({
+                        message: 'Please locate Yuzu folder',
+                        type: 'warning',
+                    })
                 }
             } catch (e: any) {
                 console.error(e)
