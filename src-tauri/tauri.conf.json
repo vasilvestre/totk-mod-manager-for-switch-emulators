@@ -76,7 +76,8 @@
         "height": 800,
         "resizable": true,
         "title": "Zelda: Tears of the Kingdom Mod Manager",
-        "width": 1000
+        "width": 1000,
+        "maximized": true
       }
     ]
   }
