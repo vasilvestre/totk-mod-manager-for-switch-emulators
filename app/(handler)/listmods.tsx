@@ -3,7 +3,7 @@ import { ModFile, ModConfig } from '@/app/types'
 import { FileEntry } from '@tauri-apps/api/fs'
 
 export default async function listMods(
-    version: string | null = null
+    version: string
 ): Promise<ModFile[]> {
     const { fs, path } = await import('@tauri-apps/api')
 
