@@ -10,7 +10,7 @@ import listMods from '@/app/(handler)/listmods'
 import { Enum, CategoryNames } from '@/app/enum'
 import { ModFile, LocalMod, ModConfig } from '@/app/types'
 import {
-    checkIncompatibilities,
+    checkIncompatibilities, filterMods,
     installSingleMod,
     removeSingleMod, tryInstall, tryRemove, tryUpdate,
 } from '@/app/(handler)/modHandler'
@@ -32,20 +32,30 @@ export default function Home() {
                 setUpToDateMods(
                     await fetchGithubUpdatedMods(setDownloadProgress)
                 )
-                setMods(await listMods(upToDateMods?.data.name))
             } catch (e: any) {
                 console.error(e.message)
                 setAlert({ message: e.message, type: 'error' })
             }
             setDownloadProgress(100)
         })()
-    }, [upToDateMods?.data.name])
+    }, [])
 
     useEffect(() => {
         setTimeout(() => {
             setAlert(undefined)
         }, 5000)
     }, [alert])
+
+    useEffect(() => {
+        ;(async () => {
+            try {
+                setMods(filterMods(await listMods(upToDateMods?.data.name), localMods))
+            } catch (e: any) {
+                console.error(e)
+                setAlert({ message: e.message, type: 'error' })
+            }
+        })()
+    }, [localMods, upToDateMods?.data.name])
 
     return (
         <main className="min-h-screen justify-between">
@@ -63,9 +73,8 @@ export default function Home() {
                                     <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                                         Last version is {upToDateMods.data.name}
                                     </h1>
-                                    <p className="mt-1.5 text-sm text-gray-800">
-                                        Last release was made at{' '}
-                                        {upToDateMods.data.created_at} !
+                                    <p className="mt-1.5 text-sm text-white">
+                                        Last release was made at {new Date(Date.parse(upToDateMods.data.created_at)).toLocaleDateString()} !
                                     </p>
                                 </>
                             )}
