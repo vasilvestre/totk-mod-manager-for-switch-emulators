@@ -54,6 +54,11 @@ export default function Home() {
             } catch (e: any) {
                 console.error(e)
                 setAlert({ message: e.message, type: 'error' })
+                setYuzuState({
+                    found: false,
+                    path: undefined,
+                    version: undefined,
+                })
             }
             setDownloadProgress(100)
         })()
@@ -75,11 +80,6 @@ export default function Home() {
                             localMods
                         )
                     )
-                } else {
-                    setAlert({
-                        message: 'Please locate Yuzu folder',
-                        type: 'warning',
-                    })
                 }
             } catch (e: any) {
                 console.error(e)
@@ -109,7 +109,15 @@ export default function Home() {
                     <div>
                         <button
                             onClick={async () => {
-                                setYuzuState(await askForYuzu())
+                                try {
+                                    setYuzuState(await askForYuzu())
+                                } catch (e: any) {
+                                    console.error(e)
+                                    setAlert({
+                                        message: e.message,
+                                        type: 'error',
+                                    })
+                                }
                             }}
                         >
                             Please locate Yuzu folder

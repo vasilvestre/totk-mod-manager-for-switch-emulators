@@ -1,6 +1,7 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import * as yaml from 'yaml'
 import { LocalMod } from '@/app/types'
+import { ModContext, useModContext } from '@/app/modContext'
 
 export default async function fetchYuzuMods(
     yuzuDir: string

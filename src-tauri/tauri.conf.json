@@ -29,6 +29,8 @@
         "createDir": true,
         "scope": [
           "$DATA/yuzu",
+          "$DATA/yuzu/load/",
+          "$DATA/yuzu/load/**",
           "$DATA/yuzu/load/0100F2C0115B6000",
           "$DATA/yuzu/load/0100F2C0115B6000/**",
           "$DOWNLOAD/*",

@@ -8,7 +8,7 @@ export async function askForYuzu() {
             title: 'Select Yuzu Directory',
             recursive: true,
         })
-        if (typeof selectedPath === 'string') {
+        if (selectedPath && typeof selectedPath === 'string') {
             await writeConfiguration({ yuzuDir: selectedPath })
             return {
                 path: selectedPath,
@@ -71,12 +71,13 @@ export async function checkYuzu() {
     const { fs, path } = await import('@tauri-apps/api')
     let configuration = await readConfiguration()
     let yuzuDir
-    if (configuration.yuzuDir !== undefined) {
+    if (configuration.yuzuDir) {
         yuzuDir = configuration.yuzuDir
     } else {
         yuzuDir = await path.resolve(await path.dataDir(), 'yuzu')
     }
     let yuzuFound = await fs.exists(yuzuDir)
+    await fs.readDir(await path.resolve(yuzuDir, 'load'))
     return {
         found: yuzuFound,
         path: yuzuDir,

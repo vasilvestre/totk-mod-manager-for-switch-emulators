@@ -24,7 +24,7 @@ export default function Alert() {
                     clipRule="evenodd"
                 ></path>
             </svg>
-            <span className="sr-only">{alert.message}</span>
+            <span className="sr-only">Info</span>
             <div>
                 <span className="font-medium">{alert.message}</span>
                 <ul className="mt-1.5 ml-4 list-disc list-inside">
