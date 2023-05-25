@@ -10,11 +10,15 @@ export default async function listMods(version: string): Promise<ModFile[]> {
         version ? version : 'latest',
         'config.yaml'
     )
-    let modConfig = yaml.parse(await fs.readTextFile(modConfigPath))
+    let modDirectory: string | undefined
+    if (await fs.exists(modConfigPath)) {
+        let modConfig = yaml.parse(await fs.readTextFile(modConfigPath))
+        modDirectory = modConfig.root
+    }
     let modPath = await path.resolve(
         await path.appDataDir(),
         version ? version : 'latest',
-        modConfig.root
+        modDirectory ? modDirectory : 'Mods'
     )
     let files = await fs.readDir(modPath, { recursive: true })
     let promises: Promise<ModFile | undefined>[] = []

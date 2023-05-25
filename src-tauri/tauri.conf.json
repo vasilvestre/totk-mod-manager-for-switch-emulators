@@ -28,6 +28,7 @@
         "removeDir": true,
         "createDir": true,
         "scope": [
+          "$APPDATA",
           "$DATA/yuzu",
           "$DATA/yuzu/load/",
           "$DATA/yuzu/load/**",

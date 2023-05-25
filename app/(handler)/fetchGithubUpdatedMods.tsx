@@ -87,6 +87,9 @@ export async function extractZip(filename: string, version: string | null) {
         await path.appDataDir(),
         version ? version : 'latest'
     )
+    if (!(await fs.exists(await path.appDataDir()))) {
+        await fs.createDir(await path.appDataDir())
+    }
     if (
         !(await fs.exists(version ? version : 'latest', {
             dir: fs.BaseDirectory.AppData,
