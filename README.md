@@ -9,17 +9,24 @@ Zelda: Tears of the Kingdom Mod Manager is an open-source application built with
 -   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, updating or removing them from your game installation.
 -   **Mod compatibility**: The application will automatically detect which mods are compatible with others
 -   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
--   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
+-   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows and Linux.
 
 ## How to install
 
 - (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest). The file .msi will install silently, .exe contains an installer.
 - Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
-- Linux installation is possible via AppImage and .deb, they haven't been tested.
+    - If the app don't run, install WebView2 Runtime from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
+- Linux installation is possible via AppImage and .deb.
+  - Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+    - https://stackoverflow.com/a/72633324 for now
 
 ## Contribution install
 
-To use Zelda: Tears of the Kingdom Mod Manager, follow these steps:
+### Pre-requisites
+
+- Simply follow [Tauri guide] https://tauri.app/v1/guides/getting-started/prerequisites/
+
+### To build
 
 1. Clone the repository:
 
@@ -36,7 +43,7 @@ cd totk-mod-manager-for-yuzu
 3. Install the dependencies:
 
 ```bash
-pnpm tauri install
+pnpm install
 ```
 
 4. Start the application:
@@ -77,9 +84,7 @@ You can also reach out to the community on our official Discord server for addit
 ## Roadmap
 
 - Alert you if something succeeded
-- Specify path to Yuzu
 - Implement automatic mod updates.
-- Support for Linux
 - Enhance user interface with additional features.
 
 ## Stay Updated
