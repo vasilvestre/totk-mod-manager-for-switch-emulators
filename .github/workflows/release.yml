@@ -67,5 +67,6 @@ jobs:
 
     - name: Release
       uses: softprops/action-gh-release@v1
+      if: matrix.platform == 'windows-latest'
       with:
         files: src-tauri/target/release/Zelda Tears of the Kingdom Mod Manager.exe
