@@ -11,16 +11,31 @@ export async function fetchGithubUpdatedMods(
     const octokit = new Octokit({
         auth: process.env.NEXT_PUBLIC_GITHUB_AUTH_TOKEN,
     })
-    let mods = await octokit.request(
-        'GET /repos/{owner}/{repo}/releases/latest',
-        {
-            owner: 'HolographicWings',
-            repo: 'TOTK-Mods-collection',
-            headers: {
-                'X-GitHub-Api-Version': '2022-11-28',
-            },
-        }
-    )
+    let mods: GithubRelease
+    try {
+        mods = await octokit.request(
+            'GET /repos/{owner}/{repo}/releases/latest',
+            {
+                owner: 'vasilvestre',
+                repo: 'TOTK-Mods-collection',
+                headers: {
+                    'X-GitHub-Api-Version': '2022-11-28',
+                },
+            }
+        )
+    } catch (e) {
+        mods = await octokit.request(
+            'GET /repos/{owner}/{repo}/releases/latest',
+            {
+                owner: 'HolographicWings',
+                repo: 'TOTK-Mods-collection',
+                headers: {
+                    'X-GitHub-Api-Version': '2022-11-28',
+                },
+            }
+        )
+    }
+
     if (
         !(await fs.exists(mods.data.assets[0].name, {
             dir: fs.BaseDirectory.Download,
