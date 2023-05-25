@@ -24,10 +24,10 @@
         "copyFile": true,
         "removeDir": true,
         "scope": [
-          "$DATA\\yuzu\\load\\0100F2C0115B6000",
-          "$DATA\\yuzu\\load\\0100F2C0115B6000\\**",
-          "$DOWNLOAD\\*",
-          "$APPDATA\\**"
+          "$DATA/yuzu/load/0100F2C0115B6000",
+          "$DATA/yuzu/load/0100F2C0115B6000/**",
+          "$DOWNLOAD/*",
+          "$APPDATA/**"
         ]
       }
     },
