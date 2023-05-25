@@ -69,6 +69,19 @@ export function tryUpdate(mod: ModFile, localMods: LocalMod[], setLocalMods: Fun
         }
     }
 }
+export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
+    return mods.sort((a: ModFile, b: ModFile) => {
+        if (localMods.find(
+            (localMod) =>
+                localMod.name ===
+                a.name
+        )) {
+            return -1
+        }
+        return 0
+    })
+}
+
 export function tryRemove(mod: LocalMod | undefined, setLocalMods: Function, setAlert: Function) {
     return async () => {
         try {
