@@ -4,8 +4,6 @@
 
 Zelda: Tears of the Kingdom Mod Manager is an open-source application built with Next.js and Tauri, designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
 
-Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for Tailwind.
-
 ## Features
 
 -   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, updating or removing them from your game installation.
@@ -13,7 +11,13 @@ Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for
 -   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
 -   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
 
-## Installation
+## How to install
+
+- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest). The file .msi will install silently, .exe contains an installer.
+- Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
+- Linux installation is possible via AppImage and .deb, they haven't been tested.
+
+## Contribution install
 
 To use Zelda: Tears of the Kingdom Mod Manager, follow these steps:
 
@@ -61,7 +65,8 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 
 ## Acknowledgements
 
--   See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
+- Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for Tailwind.
+- See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
 
