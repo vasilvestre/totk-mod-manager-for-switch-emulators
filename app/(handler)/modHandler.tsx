@@ -1,17 +1,23 @@
-import {LocalMod, ModFile} from '@/app/types'
-import fetchYuzuMods from "@/app/(handler)/fetchYuzuMods";
+import { LocalMod, ModFile } from '@/app/types'
+import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
 
-export async function installSingleMod(mod: ModFile, overwrite: boolean = false) {
+export async function installSingleMod(
+    mod: ModFile,
+    overwrite: boolean = false,
+    yuzuDir: string
+) {
     const { invoke, path } = await import('@tauri-apps/api')
 
-    const appDataDir = await path.dataDir()
     const localModsPath = await path.resolve(
-        appDataDir,
-        'yuzu',
+        yuzuDir,
         'load',
         '0100F2C0115B6000'
     )
-    await invoke('copy_dir', { filePath: mod.path, targetDir: localModsPath, overwrite: overwrite })
+    await invoke('copy_dir', {
+        filePath: mod.path,
+        targetDir: localModsPath,
+        overwrite: overwrite,
+    })
 }
 
 export async function removeSingleMod(mod: LocalMod) {
@@ -38,13 +44,21 @@ export async function checkIncompatibilities(
     }
 }
 
-
-export function tryInstall(mod: ModFile, localMods: LocalMod[], setLocalMods: Function, setAlert: Function) {
+export function tryInstall(
+    mod: ModFile,
+    localMods: LocalMod[],
+    setLocalMods: Function,
+    setAlert: Function,
+    yuzuDir: string | undefined
+) {
     return async () => {
         try {
+            if (!yuzuDir) {
+                throw { message: 'Yuzu not found' }
+            }
             await checkIncompatibilities(mod, localMods)
-            await installSingleMod(mod)
-            setLocalMods(await fetchYuzuMods())
+            await installSingleMod(mod, false, yuzuDir)
+            setLocalMods(await fetchYuzuMods(yuzuDir))
         } catch (e: any) {
             console.error(e)
             setAlert({
@@ -56,11 +70,20 @@ export function tryInstall(mod: ModFile, localMods: LocalMod[], setLocalMods: Fu
     }
 }
 
-export function tryUpdate(mod: ModFile, localMods: LocalMod[], setLocalMods: Function, setAlert: Function) {
+export function tryUpdate(
+    mod: ModFile,
+    localMods: LocalMod[],
+    setLocalMods: Function,
+    setAlert: Function,
+    yuzuDir: string | undefined
+) {
     return async () => {
         try {
-            await installSingleMod(mod, true)
-            setLocalMods(await fetchYuzuMods())
+            if (!yuzuDir) {
+                throw { message: 'Yuzu not found' }
+            }
+            await installSingleMod(mod, true, yuzuDir)
+            setLocalMods(await fetchYuzuMods(yuzuDir))
         } catch (e: any) {
             console.error(e)
             setAlert({
@@ -73,23 +96,24 @@ export function tryUpdate(mod: ModFile, localMods: LocalMod[], setLocalMods: Fun
 }
 export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
     return mods.sort((a: ModFile, b: ModFile) => {
-        if (localMods.find(
-            (localMod) =>
-                localMod.name ===
-                a.name
-        )) {
+        if (localMods.find((localMod) => localMod.name === a.name)) {
             return -1
         }
         return 0
     })
 }
 
-export function tryRemove(mod: LocalMod | undefined, setLocalMods: Function, setAlert: Function) {
+export function tryRemove(
+    mod: LocalMod | undefined,
+    setLocalMods: Function,
+    setAlert: Function,
+    yuzuDir: string | undefined
+) {
     return async () => {
         try {
-            if (mod) {
+            if (yuzuDir && mod) {
                 await removeSingleMod(mod)
-                setLocalMods(await fetchYuzuMods())
+                setLocalMods(await fetchYuzuMods(yuzuDir))
             } else {
                 throw new Error()
             }

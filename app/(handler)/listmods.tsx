@@ -2,9 +2,7 @@ import * as yaml from 'yaml'
 import { ModFile, ModConfig } from '@/app/types'
 import { FileEntry } from '@tauri-apps/api/fs'
 
-export default async function listMods(
-    version: string
-): Promise<ModFile[]> {
+export default async function listMods(version: string): Promise<ModFile[]> {
     const { fs, path } = await import('@tauri-apps/api')
 
     let modConfigPath = await path.resolve(
