@@ -77,7 +77,6 @@ export async function checkYuzu() {
         yuzuDir = await path.resolve(await path.dataDir(), 'yuzu')
     }
     let yuzuFound = await fs.exists(yuzuDir)
-    await fs.readDir(await path.resolve(yuzuDir, 'load'))
     return {
         found: yuzuFound,
         path: yuzuDir,
