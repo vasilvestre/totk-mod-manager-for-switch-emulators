@@ -14,10 +14,11 @@ use fs_extra::dir::{
 
 fn main() {
   tauri::Builder::default()
-    .plugin(tauri_plugin_upload::init())
-    .invoke_handler(tauri::generate_handler![unzip, copy_dir])
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+      .plugin(tauri_plugin_upload::init())
+      .plugin(tauri_plugin_persisted_scope::init())
+      .invoke_handler(tauri::generate_handler![unzip, copy_dir])
+      .run(tauri::generate_context!())
+      .expect("error while running tauri application");
 }
 
 // create the error type that represents all errors possible in our program
