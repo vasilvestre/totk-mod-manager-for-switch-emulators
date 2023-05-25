@@ -15,6 +15,9 @@
       "path": {
         "all": true
       },
+      "dialog": {
+        "open": true
+      },
       "fs": {
         "all": false,
         "writeFile": true,
@@ -23,11 +26,16 @@
         "readFile": true,
         "copyFile": true,
         "removeDir": true,
+        "createDir": true,
         "scope": [
+          "$DATA/yuzu",
           "$DATA/yuzu/load/0100F2C0115B6000",
           "$DATA/yuzu/load/0100F2C0115B6000/**",
           "$DOWNLOAD/*",
-          "$APPDATA/**"
+          "$APPDATA/**",
+          "$CONFIG",
+          "$CONFIG/TTKMM",
+          "$CONFIG/TTKMM/**"
         ]
       }
     },
