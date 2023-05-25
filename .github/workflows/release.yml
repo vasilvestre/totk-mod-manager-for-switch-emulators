@@ -64,3 +64,8 @@ jobs:
         releaseName: 'TOTK mod manager v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
         releaseBody: ${{steps.github_release.outputs.changelog}}
         prerelease: true
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: src-tauri/target/release/Zelda Tears of the Kingdom Mod Manager.exe
