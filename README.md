@@ -1,19 +1,17 @@
 # Zelda: Tears of the Kingdom Mod Manager
 
-<img src="src-tauri/icons/Square30x30Logo.png"> [![License](https://img.shields.io/badge/license-BSD3-blue.svg)](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE.md)
+<img src="src-tauri/icons/Square30x30Logo.png" alt='logo with a sword and a shield, in the zelda style'> [![License](https://img.shields.io/badge/license-BSD3-blue.svg)](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE.md)
 
 Zelda: Tears of the Kingdom Mod Manager is an open-source application built with Next.js and Tauri, designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
 
+Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for Tailwind.
+
 ## Features
 
--   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling or removing them from your game installation.
+-   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, updating or removing them from your game installation.
 -   **Mod compatibility**: The application will automatically detect which mods are compatible with others
 -   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
 -   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows.
-
-## Future features
-
--   **Compatibility**: The application will automatically detect which mods are compatible with the current version of Zelda: Tears of the Kingdom.
 
 ## Installation
 
@@ -73,8 +71,9 @@ You can also reach out to the community on our official Discord server for addit
 
 ## Roadmap
 
-- Implement automatic mod updates.
+- Alert you if something succeeded
 - Specify path to Yuzu
+- Implement automatic mod updates.
 - Support for Linux
 - Enhance user interface with additional features.
 

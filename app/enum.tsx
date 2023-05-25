@@ -4,6 +4,8 @@ export enum Enum {
     GRAPHICS,
     UI_UX,
     MISC,
+    CHEATS,
+    COMBOS,
 }
 
 export enum CategoryNames {
@@ -12,4 +14,6 @@ export enum CategoryNames {
     GRAPHICS = 'Graphics',
     UI_UX = 'UI/UX',
     MISC = 'Misc',
+    CHEATS = 'Cheats',
+    COMBOS = 'Combos',
 }

@@ -51,8 +51,9 @@ fn unzip(file_path: String, target_dir: String) -> Result<String, Error> {
 }
 
 #[tauri::command]
-fn copy_dir(file_path: String, target_dir: String) -> Result<String, Error> {
-    let options = CopyOptions::new();
+fn copy_dir(file_path: String, target_dir: String, overwrite: bool) -> Result<String, Error> {
+    let mut options = CopyOptions::new();
+    options.overwrite = overwrite;
     copy(file_path, target_dir, &options)?;
 
     Ok("pas d'erreur".into())

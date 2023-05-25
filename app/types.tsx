@@ -4,19 +4,19 @@ import { UUID } from 'crypto'
 export type ModConfig = {
     id: UUID
     title: string
+    subtitle?: string
     version?: string
     game: {
         titleId: string
         version: string[]
     }
-    author: {
+    author?: {
         name: string
-        link: URL
+        link?: URL
     }
     category: number
-    subtitle: string
-    compatibility: {
-        blacklist: string[]
+    compatibility?: {
+        blacklist?: string[]
     }
 }
 

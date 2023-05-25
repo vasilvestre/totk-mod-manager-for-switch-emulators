@@ -4,3 +4,4 @@ out
 src-tauri
 .next
 .github
+*.md

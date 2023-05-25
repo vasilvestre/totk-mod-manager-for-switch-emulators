@@ -12,7 +12,7 @@ import { ModFile, LocalMod, ModConfig } from '@/app/types'
 import {
     checkIncompatibilities,
     installSingleMod,
-    removeSingleMod,
+    removeSingleMod, tryInstall, tryRemove, tryUpdate,
 } from '@/app/(handler)/modHandler'
 import { FileEntry } from '@tauri-apps/api/fs'
 
@@ -47,43 +47,6 @@ export default function Home() {
         }, 5000)
     }, [alert])
 
-    function tryInstall(mod: { config: ModConfig } & FileEntry) {
-        return async () => {
-            try {
-                await checkIncompatibilities(mod, localMods)
-                await installSingleMod(mod)
-                setLocalMods(await fetchYuzuMods())
-            } catch (e: any) {
-                console.error(e)
-                setAlert({
-                    message: e.message,
-                    type: 'error',
-                    data: e.data,
-                })
-            }
-        }
-    }
-
-    function tryRemove(mod: LocalMod | undefined) {
-        return async () => {
-            try {
-                if (mod) {
-                    await removeSingleMod(mod)
-                    setLocalMods(await fetchYuzuMods())
-                } else {
-                    throw new Error()
-                }
-            } catch (e: any) {
-                console.error(e)
-                setAlert({
-                    message: e.message,
-                    type: 'error',
-                    data: e.data,
-                })
-            }
-        }
-    }
-
     return (
         <main className="min-h-screen justify-between">
             <header
@@ -92,7 +55,7 @@ export default function Home() {
                     "min-h-[300px] bg-[url('https://wallpapercave.com/wp/wp11520757.jpg')]"
                 }
             >
-                <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <div className="text-center sm:text-left">
                             {upToDateMods && (
@@ -125,7 +88,7 @@ export default function Home() {
                     </div>
                 </div>
             </header>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div className="bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                 <div
                     className="bg-blue-600 h-2.5 rounded-full"
                     style={{ width: downloadProgress + '%' }}
@@ -133,31 +96,17 @@ export default function Home() {
             </div>
             <div
                 className={
-                    'flex flex-col min-h-full min-w-full items-center justify-center p-4 mb-auto overflow-x-auto'
+                    'overflow-x-auto'
                 }
             >
-                <table className="min-w-fit divide-y-2 divide-gray-200 bg-white text-sm">
+                <table className="divide-y-2 divide-gray-200 bg-white text-sm w-full">
                     <thead className="ltr:text-left rtl:text-right">
                         <tr>
-                            <th className="px-4 py-2">
-                                <label htmlFor="SelectAll" className="sr-only">
-                                    Select All
-                                </label>
-
-                                <input
-                                    type="checkbox"
-                                    id="SelectAll"
-                                    className="h-5 w-5 rounded border-gray-300"
-                                />
-                            </th>
                             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 Title
                             </th>
                             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 Mod version
-                            </th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                Description
                             </th>
                             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 Author
@@ -174,37 +123,26 @@ export default function Home() {
                             <th className="px-4 py-2"></th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-200">
+                    <tbody className="divide-y divide-gray-200 text-center">
                         {mods &&
                             mods.map((mod) => {
                                 let config = mod.config
                                 return (
-                                    <tr key={config.title}>
-                                        <td className="px-4 py-2">
-                                            <label
-                                                className="sr-only"
-                                                htmlFor="Row1"
-                                            >
-                                                Row 1
-                                            </label>
-
-                                            <input
-                                                className="h-5 w-5 rounded border-gray-300"
-                                                type="checkbox"
-                                                id="Row1"
-                                            />
-                                        </td>
+                                    <tr key={config.id} className={"odd:bg-blue-100"}>
                                         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                             {config.title}
+                                            <br/>
+                                            {config?.subtitle !== config.title && (
+                                                <p className="mt-1.5 text-sm text-gray-700">
+                                                    {config.subtitle}
+                                                </p>
+                                            )}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                             {config.version}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {config.subtitle}
-                                        </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                            {config.author.name}
+                                            {config.author?.name}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                                             {
@@ -227,7 +165,7 @@ export default function Home() {
                                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                                             {mods
                                                 .filter((mod) =>
-                                                    config.compatibility.blacklist.includes(
+                                                    config.compatibility?.blacklist?.includes(
                                                         mod.config.id
                                                     )
                                                 )
@@ -240,32 +178,63 @@ export default function Home() {
                                                 })}
                                         </td>
                                         <td className="whitespace-nowrap px-4 py-2">
-                                            {typeof localMods.find(
-                                                (localMod) =>
-                                                    localMod.name === mod.name
-                                            ) === 'undefined' ? (
-                                                <a
-                                                    href="#"
-                                                    className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                                                    onClick={tryInstall(mod)}
-                                                >
-                                                    Install
-                                                </a>
-                                            ) : (
-                                                <a
-                                                    href="#"
-                                                    className="inline-block rounded px-4 py-2 text-xs font-medium text-white bg-red-700 hover:bg-red-800"
-                                                    onClick={tryRemove(
-                                                        localMods.find(
+                                            <span className="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
+                                                {typeof localMods.find(
+                                                    (localMod) =>
+                                                        localMod.name ===
+                                                        mod.name
+                                                ) === 'undefined' ? (
+                                                    <button
+                                                        className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                                        onClick={tryInstall(
+                                                            mod,
+                                                            localMods,
+                                                            setLocalMods,
+                                                            setAlert
+                                                        )}
+                                                    >
+                                                        Install
+                                                    </button>
+                                                ) : (
+                                                    <>
+                                                        {localMods.find(
                                                             (localMod) =>
                                                                 localMod.name ===
                                                                 mod.name
-                                                        )
-                                                    )}
-                                                >
-                                                    Remove
-                                                </a>
-                                            )}
+                                                        )?.config?.version !==
+                                                            mod.config
+                                                                .version && (
+                                                            <button
+                                                                className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:relative"
+                                                                onClick={tryUpdate(
+                                                                    mod,
+                                                                    localMods,
+                                                                    setLocalMods,
+                                                                    setAlert
+                                                                )}
+                                                            >
+                                                                Update
+                                                            </button>
+                                                        )}
+                                                        <button
+                                                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:relative"
+                                                            onClick={tryRemove(
+                                                                localMods.find(
+                                                                    (
+                                                                        localMod
+                                                                    ) =>
+                                                                        localMod.name ===
+                                                                        mod.name
+                                                                ),
+                                                                setLocalMods,
+                                                                setAlert
+                                                            )}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    </>
+                                                )}
+                                            </span>
                                         </td>
                                     </tr>
                                 )
