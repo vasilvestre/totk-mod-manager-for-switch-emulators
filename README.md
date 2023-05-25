@@ -20,6 +20,11 @@ Zelda: Tears of the Kingdom Mod Manager is an open-source application built with
   - Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
     - https://stackoverflow.com/a/72633324 for now
 
+### Best case scenario
+
+- Your Yuzu is located at C:\Users\myUser\AppData\Roaming\yuzu ? It should work instantly.
+- That's it, that's the scenario. If not, you may have to give your yuzu path at all launch.
+
 ## Contribution install
 
 ### Pre-requisites
