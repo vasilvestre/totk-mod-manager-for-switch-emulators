@@ -1,7 +1,22 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import { UUID } from 'crypto'
 
-export type Yuzu = {
+export type EmulatorChoice = {
+    emulatorChoice: string | null
+    setEmulatorChoice: (emulatorChoice: string | null) => void
+    supportedEmulators: SupportedEmulator[]
+}
+
+export type SupportedEmulator = {
+    name: string
+    picture: string
+    pictureAlt: string
+    text: string
+}
+
+export type AlertType = { message: string; type: string; data?: any[] }
+
+export type YuzuState = {
     version: string | undefined
     path: string | undefined
     found: boolean
@@ -33,3 +48,9 @@ export type ModFile = {
 export type LocalMod = {
     config?: ModConfig
 } & FileEntry
+
+export function notEmpty<TValue>(
+    value: TValue | null | undefined
+): value is TValue {
+    return value !== null && value !== undefined
+}

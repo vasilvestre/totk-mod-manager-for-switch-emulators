@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import { LocalMod, ModFile, Yuzu } from '@/app/types'
+import { LocalMod, ModFile, YuzuState } from '@/app/types'
 import { GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
 
 interface ModContextType {
@@ -7,11 +7,9 @@ interface ModContextType {
     localMods: LocalMod[]
     upToDateMods: GithubRelease | null
     downloadProgress: number
-    alert: { message: string; type: string; data?: any[] } | undefined
-    setAlert: Function
-    setLocalMods: Function
-    setMods: Function
-    yuzuState: Yuzu | undefined
+    setLocalMods: (value: LocalMod[]) => void
+    setMods: (value: ModFile[] | undefined) => void
+    yuzuState: YuzuState | undefined
 }
 export const ModContext = createContext<ModContextType | null>(null)
 
@@ -19,7 +17,9 @@ export const useModContext = (context: Context<ModContextType | null>) => {
     const modContext = useContext(context)
 
     if (!modContext) {
-        throw new Error('useAlert must be used within a ModContext')
+        throw new Error(
+            'A function from ModContext can only be used inside ModContextProvider'
+        )
     }
 
     return modContext

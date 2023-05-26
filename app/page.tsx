@@ -1,129 +1,75 @@
 'use client'
 
-import fetchYuzuMods from './(handler)/fetchYuzuMods'
-import { useEffect, useState } from 'react'
+import React from 'react'
+import Yuzu from '@/app/yuzu/page'
+import Image from 'next/image'
 import {
-    fetchGithubUpdatedMods,
-    GithubRelease,
-} from '@/app/(handler)/fetchGithubUpdatedMods'
-import listMods from '@/app/(handler)/listmods'
-import { LocalMod, ModFile, Yuzu } from '@/app/types'
-import { filterMods } from '@/app/(handler)/modHandler'
-import { ModContext } from '@/app/modContext'
-import Alert from '@/app/alert'
-import { Header } from '@/app/header'
-import { DownloadBar } from '@/app/downloadBar'
-import { ModsTable } from '@/app/modsTable'
-import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/app/emulatorChoiceContext'
+import { AppContext, useAppContext } from '@/app/appContext'
 
 export default function Home() {
-    const [localMods, setLocalMods] = useState<LocalMod[]>([])
-    const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)
-    const [downloadProgress, setDownloadProgress] = useState<number>(0)
-    const [mods, setMods] = useState<ModFile[]>()
-    const [yuzuState, setYuzuState] = useState<Yuzu>()
-    const [alert, setAlert] = useState<
-        { message: string; type: string; data?: any[] } | undefined
-    >()
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                setYuzuState(await checkYuzu())
-            } catch (e: any) {
-                console.error(e)
-                setAlert({ message: e.message, type: 'error' })
-            }
-        })()
-    }, [])
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                if (yuzuState?.found && yuzuState?.path) {
-                    setLocalMods(await fetchYuzuMods(yuzuState.path))
-                    setUpToDateMods(
-                        await fetchGithubUpdatedMods(setDownloadProgress)
-                    )
-                }
-            } catch (e: any) {
-                console.error(e)
-                setAlert({ message: e.message, type: 'error' })
-                setYuzuState({
-                    found: false,
-                    path: undefined,
-                    version: undefined,
-                })
-            }
-            setDownloadProgress(100)
-        })()
-    }, [yuzuState, setYuzuState])
-
-    useEffect(() => {
-        setTimeout(() => {
-            setAlert(undefined)
-        }, 5000)
-    }, [alert])
-
-    useEffect(() => {
-        ;(async () => {
-            try {
-                if (upToDateMods?.data.name) {
-                    setMods(
-                        filterMods(
-                            await listMods(upToDateMods.data.name),
-                            localMods
-                        )
-                    )
-                }
-            } catch (e: any) {
-                console.error(e)
-                setAlert({ message: e.message, type: 'error' })
-            }
-        })()
-    }, [localMods, upToDateMods])
+    const { setAlert } = useAppContext(AppContext)
+    const { emulatorChoice, setEmulatorChoice, supportedEmulators } =
+        useEmulatorChoiceContext(EmulatorChoiceContext)
 
     return (
-        <ModContext.Provider
-            value={{
-                mods,
-                localMods,
-                upToDateMods,
-                downloadProgress,
-                alert,
-                setAlert,
-                setLocalMods,
-                setMods,
-                yuzuState,
-            }}
-        >
-            <main className="min-h-screen justify-between">
-                <Header />
-                <DownloadBar />
-                {yuzuState?.found === false && (
-                    <div>
-                        <button
-                            onClick={async () => {
-                                try {
-                                    setYuzuState(await askForYuzu())
-                                } catch (e: any) {
-                                    console.error(e)
-                                    setAlert({
-                                        message: e.message,
-                                        type: 'error',
-                                    })
-                                }
-                            }}
-                        >
-                            Please locate Yuzu folder
-                        </button>
-                    </div>
-                )}
-                <div className={'overflow-x-auto'}>
-                    <ModsTable />
+        <>
+            {emulatorChoice && emulatorChoice === 'yuzu' ? <Yuzu /> : <></>}
+            {!emulatorChoice && (
+                <div
+                    className={
+                        'flex flex-row h-screen justify-evenly items-center'
+                    }
+                >
+                    {supportedEmulators &&
+                        supportedEmulators.map((emulator) => {
+                            return (
+                                <button
+                                    className="relative block overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8 bg-gray-200"
+                                    key={emulator.name}
+                                    onClick={() => {
+                                        if (emulator.name === 'ryujinx') {
+                                            setAlert({
+                                                message: 'Not available yet',
+                                                type: 'error',
+                                            })
+                                            return
+                                        }
+                                        setEmulatorChoice(emulator.name)
+                                    }}
+                                >
+                                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+
+                                    <div className="sm:flex sm:justify-between sm:gap-4">
+                                        <div>
+                                            <h3 className="text-lg font-bold text-gray-900 sm:text-xl capitalize">
+                                                {emulator.name}
+                                            </h3>
+                                        </div>
+
+                                        <div className="hidden sm:block sm:shrink-0">
+                                            <Image
+                                                alt={emulator.pictureAlt}
+                                                width={64}
+                                                height={64}
+                                                src={emulator.picture}
+                                                className="h-16 w-16 object-cover"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4">
+                                        <p className="max-w-[40ch] text-sm text-gray-500">
+                                            {emulator.text}
+                                        </p>
+                                    </div>
+                                </button>
+                            )
+                        })}
                 </div>
-                <Alert />
-            </main>
-        </ModContext.Provider>
+            )}
+        </>
     )
 }

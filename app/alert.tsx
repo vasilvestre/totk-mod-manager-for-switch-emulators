@@ -1,7 +1,7 @@
-import { ModContext, useModContext } from '@/app/modContext'
+import { AppContext, useAppContext } from '@/app/appContext'
 
 export default function Alert() {
-    const { alert } = useModContext(ModContext)
+    const { alert } = useAppContext(AppContext)
 
     if (!alert) {
         return null
