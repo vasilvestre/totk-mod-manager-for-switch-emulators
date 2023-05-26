@@ -60,12 +60,6 @@ export default function Yuzu() {
     }, [yuzuState, setYuzuState])
 
     useEffect(() => {
-        setTimeout(() => {
-            setAlert(undefined)
-        }, 5000)
-    }, [alert])
-
-    useEffect(() => {
         ;(async () => {
             try {
                 if (upToDateMods?.data.name) {

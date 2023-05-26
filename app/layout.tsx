@@ -2,7 +2,7 @@
 
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AlertType } from '@/app/types'
 import { AppContext } from '@/app/appContext'
 import Alert from '@/app/alert'
@@ -15,6 +15,12 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     const [alert, setAlert] = useState<AlertType | undefined>()
+
+    useEffect(() => {
+        setTimeout(() => {
+            setAlert(undefined)
+        }, 8000)
+    }, [alert])
 
     return (
         <AppContext.Provider value={{ alert, setAlert }}>
