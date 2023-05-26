@@ -13,7 +13,7 @@ Zelda: Tears of the Kingdom Mod Manager is an open-source application built with
 
 ## How to install
 
-- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest). The file .msi will install silently, .exe contains an installer.
+- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest.
 - Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
     - If the app don't run, install WebView2 Runtime from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
 - Linux installation is possible via AppImage and .deb.
@@ -78,13 +78,11 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 ## Acknowledgements
 
 - Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for Tailwind.
-- See [thank-you.md](.github/thank-you.md) for a full list of acknowledgements.
+- See [thank-you.md](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
 
 If you encounter any issues or have questions, please create an issue on the [issue tracker](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/issues). We'll do our best to assist you.
-
-You can also reach out to the community on our official Discord server for additional help and discussions.
 
 ## Roadmap
 
