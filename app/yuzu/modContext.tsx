@@ -7,8 +7,6 @@ interface ModContextType {
     localMods: LocalMod[]
     upToDateMods: GithubRelease | null
     downloadProgress: number
-    alert: { message: string; type: string; data?: any[] } | undefined
-    setAlert: Function
     setLocalMods: Function
     setMods: Function
     yuzuState: YuzuState | undefined

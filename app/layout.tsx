@@ -2,11 +2,10 @@
 
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { createContext, useState } from 'react'
-
-type ThemeContextType = 'light' | 'dark'
-
-const ThemeContext = createContext<ThemeContextType>('light')
+import { useState } from 'react'
+import { AlertType } from '@/app/types'
+import { AppContext } from '@/app/appContext'
+import Alert from '@/app/alert'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +14,16 @@ export default function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    const [theme, setTheme] = useState<ThemeContextType>('light')
+    const [alert, setAlert] = useState<AlertType | undefined>()
 
     return (
-        <ThemeContext.Provider value={theme}>
+        <AppContext.Provider value={{ alert, setAlert }}>
             <html lang="en">
-                <body className={inter.className}>{children}</body>
+                <body className={inter.className}>
+                    {children}
+                    <Alert />
+                </body>
             </html>
-        </ThemeContext.Provider>
+        </AppContext.Provider>
     )
 }

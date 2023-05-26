@@ -1,6 +1,21 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import { UUID } from 'crypto'
 
+export type EmulatorChoice = {
+    emulatorChoice: string | null
+    setEmulatorChoice: Function
+    supportedEmulators: SupportedEmulator[]
+}
+
+export type SupportedEmulator = {
+    name: string
+    picture: string
+    pictureAlt: string
+    text: string
+}
+
+export type AlertType = { message: string; type: string; data?: any[] }
+
 export type YuzuState = {
     version: string | undefined
     path: string | undefined

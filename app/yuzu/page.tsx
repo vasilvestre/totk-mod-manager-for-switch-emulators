@@ -7,7 +7,7 @@ import {
     GithubRelease,
 } from '@/app/(handler)/fetchGithubUpdatedMods'
 import listMods from '@/app/(handler)/listmods'
-import { LocalMod, ModFile, YuzuState } from '@/app/types'
+import { AlertType, LocalMod, ModFile, YuzuState } from '@/app/types'
 import { filterMods } from '@/app/(handler)/modHandler'
 import { ModContext } from '@/app/yuzu/modContext'
 import Alert from '@/app/alert'
@@ -15,16 +15,16 @@ import { Header } from '@/app/yuzu/header'
 import { DownloadBar } from '@/app/yuzu/downloadBar'
 import { ModsTable } from '@/app/yuzu/modsTable'
 import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
+import { AppContext, useAppContext } from '@/app/appContext'
 
 export default function Yuzu() {
+    const { setAlert } = useAppContext(AppContext)
+
     const [localMods, setLocalMods] = useState<LocalMod[]>([])
     const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)
     const [downloadProgress, setDownloadProgress] = useState<number>(0)
     const [mods, setMods] = useState<ModFile[]>()
     const [yuzuState, setYuzuState] = useState<YuzuState>()
-    const [alert, setAlert] = useState<
-        { message: string; type: string; data?: any[] } | undefined
-    >()
 
     useEffect(() => {
         ;(async () => {
@@ -90,8 +90,6 @@ export default function Yuzu() {
                 localMods,
                 upToDateMods,
                 downloadProgress,
-                alert,
-                setAlert,
                 setLocalMods,
                 setMods,
                 yuzuState,
@@ -122,7 +120,6 @@ export default function Yuzu() {
                 <div className={'overflow-x-auto'}>
                     <ModsTable />
                 </div>
-                <Alert />
             </main>
         </ModContext.Provider>
     )

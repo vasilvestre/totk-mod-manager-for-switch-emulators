@@ -4,9 +4,6 @@ import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { LocalMod, ModFile } from '@/app/types'
 
 export function LocalModRow(props: { mod: LocalMod }) {
-    const { localMods, setLocalMods, setAlert, yuzuState } =
-        useModContext(ModContext)
-
     let mod = props.mod
     let config = mod.config
     return (
