@@ -57,7 +57,7 @@ export function tryInstall(
                 throw { message: 'Yuzu not found' }
             }
             await checkIncompatibilities(mod, localMods)
-            await installSingleMod(mod, false, yuzuDir)
+            await installSingleMod(mod, true, yuzuDir)
             setLocalMods(await fetchYuzuMods(yuzuDir))
         } catch (e: any) {
             console.error(e)
