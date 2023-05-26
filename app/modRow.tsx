@@ -51,7 +51,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
             <td className="whitespace-nowrap px-4 py-2">
                 <span className="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
                     {typeof localMods.find(
-                        (localMod) => localMod.name === mod.name
+                        (localMod) => localMod?.config?.id === mod.config.id
                     ) === 'undefined' ? (
                         <button
                             className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
