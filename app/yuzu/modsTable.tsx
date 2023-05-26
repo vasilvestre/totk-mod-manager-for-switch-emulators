@@ -5,9 +5,20 @@ import { LocalModRow } from '@/app/yuzu/localModRow'
 export function ModsTable() {
     const { mods, localMods } = useModContext(ModContext)
 
-    const localUnsportedMods = localMods.filter((localMod) => {
-        return typeof localMod.config === 'undefined'
-    })
+    const localUnsportedMods = localMods
+        .filter((localMod) => {
+            return typeof localMod.config === 'undefined'
+        })
+        .map((localMod) => {
+            if (
+                mods?.find((mod) => {
+                    return localMod.name?.includes(mod?.config?.title)
+                })
+            ) {
+                return { ...localMod, supported: true }
+            }
+            return localMod
+        })
 
     return (
         <>
@@ -22,7 +33,7 @@ export function ModsTable() {
                     </thead>
                     <tbody className="divide-y divide-gray-200 text-center">
                         {localUnsportedMods.map((mod) => (
-                            <LocalModRow key={mod.config?.id} mod={mod} />
+                            <LocalModRow key={mod.name} localMod={mod} />
                         ))}
                     </tbody>
                 </table>
