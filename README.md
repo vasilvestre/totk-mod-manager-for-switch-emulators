@@ -15,8 +15,8 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 
 ## How to install
 
-- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest.
-- Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
+- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
+- Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest/download/Zelda.Tears.of.the.Kingdom.Mod.Manager.exe).
     - If the app don't run, install WebView2 Runtime from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
 - Linux installation is possible via AppImage and .deb.
   - Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
