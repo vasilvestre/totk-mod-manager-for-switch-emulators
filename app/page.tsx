@@ -26,8 +26,6 @@ export default function Home() {
         },
     ]
 
-    useEffect(() => {}, [])
-
     return (
         <EmulatorChoiceContext.Provider
             value={{ emulatorChoice, setEmulatorChoice, supportedEmulators }}

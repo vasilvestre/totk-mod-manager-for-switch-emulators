@@ -1,12 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import {
-    EmulatorChoice,
-    LocalMod,
-    ModFile,
-    SupportedEmulator,
-    YuzuState,
-} from '@/app/types'
-import { GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
+import { SupportedEmulator } from '@/app/types'
 
 interface EmulatorChoiceContextType {
     emulatorChoice: string | null

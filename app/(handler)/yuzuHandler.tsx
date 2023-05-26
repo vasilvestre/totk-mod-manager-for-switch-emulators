@@ -69,14 +69,14 @@ async function writeConfiguration(content: { yuzuDir: string | undefined }) {
 
 export async function checkYuzu() {
     const { fs, path } = await import('@tauri-apps/api')
-    let configuration = await readConfiguration()
+    const configuration = await readConfiguration()
     let yuzuDir
     if (configuration.yuzuDir) {
         yuzuDir = configuration.yuzuDir
     } else {
         yuzuDir = await path.resolve(await path.dataDir(), 'yuzu')
     }
-    let yuzuFound = await fs.exists(yuzuDir)
+    const yuzuFound = await fs.exists(yuzuDir)
     return {
         found: yuzuFound,
         path: yuzuDir,

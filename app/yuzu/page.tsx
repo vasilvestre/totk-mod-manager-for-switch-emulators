@@ -7,10 +7,9 @@ import {
     GithubRelease,
 } from '@/app/(handler)/fetchGithubUpdatedMods'
 import listMods from '@/app/(handler)/listmods'
-import { AlertType, LocalMod, ModFile, YuzuState } from '@/app/types'
+import { LocalMod, ModFile, YuzuState } from '@/app/types'
 import { filterMods } from '@/app/(handler)/modHandler'
 import { ModContext } from '@/app/yuzu/modContext'
-import Alert from '@/app/alert'
 import { Header } from '@/app/yuzu/header'
 import { DownloadBar } from '@/app/yuzu/downloadBar'
 import { ModsTable } from '@/app/yuzu/modsTable'

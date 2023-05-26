@@ -2,14 +2,15 @@ import { CategoryNames, Enum } from '@/app/enum'
 import { tryInstall, tryRemove, tryUpdate } from '@/app/(handler)/modHandler'
 import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { ModFile } from '@/app/types'
+import { AppContext, useAppContext } from '@/app/appContext'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
-    const { localMods, setLocalMods, setAlert, yuzuState } =
-        useModContext(ModContext)
+    const { setAlert } = useAppContext(AppContext)
+    const { localMods, setLocalMods, yuzuState } = useModContext(ModContext)
 
-    let mod = props.mod
-    let mods = props.mods
-    let config = mod.config
+    const mod = props.mod
+    const mods = props.mods
+    const config = mod.config
     return (
         <tr key={config.id} className={'odd:bg-blue-100'}>
             <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">

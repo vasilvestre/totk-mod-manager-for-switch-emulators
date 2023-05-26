@@ -3,7 +3,7 @@ import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
 
 export async function installSingleMod(
     mod: ModFile,
-    overwrite: boolean = false,
+    overwrite = false,
     yuzuDir: string
 ) {
     const { invoke, path } = await import('@tauri-apps/api')
@@ -30,7 +30,7 @@ export async function checkIncompatibilities(
     mod: ModFile,
     localMods: LocalMod[]
 ) {
-    let incompatibilities: string[] = []
+    const incompatibilities: string[] = []
     localMods.forEach((localMod) => {
         if (
             localMod.config &&

@@ -60,8 +60,8 @@ export async function fetchGithubUpdatedModsSource(
 ) {
     const { download } = await import('tauri-plugin-upload-api')
     const { path } = await import('@tauri-apps/api')
-    let downloadDir = await path.downloadDir()
-    let downloadProgress = {
+    const downloadDir = await path.downloadDir()
+    const downloadProgress = {
         downloaded: 0,
         percent: 0,
     }
@@ -81,9 +81,9 @@ export async function fetchGithubUpdatedModsSource(
 
 export async function extractZip(filename: string, version: string | null) {
     const { path, fs, invoke } = await import('@tauri-apps/api')
-    let downloadDir = await path.downloadDir()
-    let filePath = await path.resolve(downloadDir, filename)
-    let targetDir = await path.resolve(
+    const downloadDir = await path.downloadDir()
+    const filePath = await path.resolve(downloadDir, filename)
+    const targetDir = await path.resolve(
         await path.appDataDir(),
         version ? version : 'latest'
     )

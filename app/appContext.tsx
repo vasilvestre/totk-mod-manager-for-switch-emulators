@@ -1,13 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import {
-    AlertType,
-    EmulatorChoice,
-    LocalMod,
-    ModFile,
-    SupportedEmulator,
-    YuzuState,
-} from '@/app/types'
-import { GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
+import { AlertType } from '@/app/types'
 
 interface AppContextType {
     alert: AlertType | undefined
