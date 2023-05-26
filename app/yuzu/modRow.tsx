@@ -1,6 +1,6 @@
 import { CategoryNames, Enum } from '@/app/enum'
 import { tryInstall, tryRemove, tryUpdate } from '@/app/(handler)/modHandler'
-import { ModContext, useModContext } from '@/app/modContext'
+import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { ModFile } from '@/app/types'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {

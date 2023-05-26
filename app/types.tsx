@@ -1,7 +1,7 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import { UUID } from 'crypto'
 
-export type Yuzu = {
+export type YuzuState = {
     version: string | undefined
     path: string | undefined
     found: boolean

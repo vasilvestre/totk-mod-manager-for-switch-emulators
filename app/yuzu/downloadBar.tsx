@@ -1,4 +1,4 @@
-import { ModContext, useModContext } from '@/app/modContext'
+import { ModContext, useModContext } from '@/app/yuzu/modContext'
 
 export function DownloadBar() {
     const { downloadProgress } = useModContext(ModContext)

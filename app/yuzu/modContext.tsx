@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import { LocalMod, ModFile, Yuzu } from '@/app/types'
+import { LocalMod, ModFile, YuzuState } from '@/app/types'
 import { GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
 
 interface ModContextType {
@@ -11,7 +11,7 @@ interface ModContextType {
     setAlert: Function
     setLocalMods: Function
     setMods: Function
-    yuzuState: Yuzu | undefined
+    yuzuState: YuzuState | undefined
 }
 export const ModContext = createContext<ModContextType | null>(null)
 
