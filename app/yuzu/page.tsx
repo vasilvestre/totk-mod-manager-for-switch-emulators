@@ -35,7 +35,7 @@ export default function Yuzu() {
                 setAlert({ message: e.message, type: 'error' })
             }
         })()
-    }, [])
+    }, [setAlert])
 
     useEffect(() => {
         ;(async () => {
@@ -57,7 +57,7 @@ export default function Yuzu() {
             }
             setDownloadProgress(100)
         })()
-    }, [yuzuState, setYuzuState])
+    }, [yuzuState, setYuzuState, setAlert])
 
     useEffect(() => {
         ;(async () => {
@@ -75,7 +75,7 @@ export default function Yuzu() {
                 setAlert({ message: e.message, type: 'error' })
             }
         })()
-    }, [localMods, upToDateMods])
+    }, [localMods, setAlert, upToDateMods])
 
     return (
         <ModContext.Provider
