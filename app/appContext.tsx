@@ -12,7 +12,9 @@ export const useAppContext = (context: Context<AppContextType | null>) => {
     const appContext = useContext(context)
 
     if (!appContext) {
-        throw new Error('useAlert must be used within a AppContext')
+        throw new Error(
+            "A function from AppContext can't be used outside AppContextProvider"
+        )
     }
 
     return appContext

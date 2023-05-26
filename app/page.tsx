@@ -1,35 +1,21 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Yuzu from '@/app/yuzu/page'
 import Image from 'next/image'
-import { SupportedEmulator } from '@/app/types'
-import { EmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/app/emulatorChoiceContext'
 import { AppContext, useAppContext } from '@/app/appContext'
 
 export default function Home() {
     const { setAlert } = useAppContext(AppContext)
-
-    const [emulatorChoice, setEmulatorChoice] = useState<string | null>('yuzu')
-    const supportedEmulators: SupportedEmulator[] = [
-        {
-            name: 'yuzu',
-            picture: 'https://yuzu-emu.org/images/logo.png',
-            pictureAlt: 'yuzu logo',
-            text: 'Yuzu is an experimental open-source emulator for the Nintendo Switch from the creators of Citra.',
-        },
-        {
-            name: 'ryujinx',
-            picture: 'https://ryujinx.org/assets/images/logo.png',
-            pictureAlt: 'ryujinx logo',
-            text: 'Ryujinx is a Nintendo Switch Emulator programmed in C#; unlike most emulators that are created with C++ or C.',
-        },
-    ]
+    const { emulatorChoice, setEmulatorChoice, supportedEmulators } =
+        useEmulatorChoiceContext(EmulatorChoiceContext)
 
     return (
-        <EmulatorChoiceContext.Provider
-            value={{ emulatorChoice, setEmulatorChoice, supportedEmulators }}
-        >
+        <>
             {emulatorChoice && emulatorChoice === 'yuzu' ? <Yuzu /> : <></>}
             {!emulatorChoice && (
                 <div
@@ -84,6 +70,6 @@ export default function Home() {
                         })}
                 </div>
             )}
-        </EmulatorChoiceContext.Provider>
+        </>
     )
 }

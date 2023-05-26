@@ -16,7 +16,9 @@ export const useEmulatorChoiceContext = (
     const emulatorChoiceContext = useContext(context)
 
     if (!emulatorChoiceContext) {
-        throw new Error('useAlert must be used within a EmulatorChoiceContext')
+        throw new Error(
+            "A function from EmulatorChoiceContext can't be used outside EmulatorChoiceContext"
+        )
     }
 
     return emulatorChoiceContext

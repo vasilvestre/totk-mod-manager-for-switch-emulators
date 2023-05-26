@@ -15,9 +15,14 @@ import { DownloadBar } from '@/app/yuzu/downloadBar'
 import { ModsTable } from '@/app/yuzu/modsTable'
 import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
 import { AppContext, useAppContext } from '@/app/appContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/app/emulatorChoiceContext'
 
 export default function Yuzu() {
     const { setAlert } = useAppContext(AppContext)
+    useEmulatorChoiceContext(EmulatorChoiceContext)
 
     const [localMods, setLocalMods] = useState<LocalMod[]>([])
     const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)

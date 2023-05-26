@@ -17,7 +17,9 @@ export const useModContext = (context: Context<ModContextType | null>) => {
     const modContext = useContext(context)
 
     if (!modContext) {
-        throw new Error('useAlert must be used within a ModContext')
+        throw new Error(
+            'A function from ModContext can only be used inside ModContextProvider'
+        )
     }
 
     return modContext
