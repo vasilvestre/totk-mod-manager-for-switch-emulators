@@ -5,3 +5,4 @@ src-tauri
 .next
 .github
 *.md
+pnpm-lock.yaml

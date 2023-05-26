@@ -1,5 +1,5 @@
 import * as yaml from 'yaml'
-import { ModFile, ModConfig } from '@/app/types'
+import { ModFile, ModConfig, notEmpty } from '@/app/types'
 import { FileEntry } from '@tauri-apps/api/fs'
 
 export default async function listMods(version: string): Promise<ModFile[]> {
@@ -44,6 +44,5 @@ export default async function listMods(version: string): Promise<ModFile[]> {
             )
         })
     }
-    // @ts-ignore
-    return (await Promise.all(promises)).filter((mod) => mod !== undefined)
+    return (await Promise.all(promises)).filter(notEmpty)
 }

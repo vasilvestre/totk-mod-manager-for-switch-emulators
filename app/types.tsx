@@ -3,7 +3,7 @@ import { UUID } from 'crypto'
 
 export type EmulatorChoice = {
     emulatorChoice: string | null
-    setEmulatorChoice: Function
+    setEmulatorChoice: (emulatorChoice: string | null) => void
     supportedEmulators: SupportedEmulator[]
 }
 
@@ -48,3 +48,9 @@ export type ModFile = {
 export type LocalMod = {
     config?: ModConfig
 } & FileEntry
+
+export function notEmpty<TValue>(
+    value: TValue | null | undefined
+): value is TValue {
+    return value !== null && value !== undefined
+}

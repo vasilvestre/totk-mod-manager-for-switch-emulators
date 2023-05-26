@@ -3,7 +3,7 @@ import { AlertType } from '@/app/types'
 
 interface AppContextType {
     alert: AlertType | undefined
-    setAlert: Function
+    setAlert: (value: AlertType | undefined) => void
 }
 
 export const AppContext = createContext<AppContextType | null>(null)

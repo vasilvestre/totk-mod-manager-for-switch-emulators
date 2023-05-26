@@ -7,8 +7,8 @@ interface ModContextType {
     localMods: LocalMod[]
     upToDateMods: GithubRelease | null
     downloadProgress: number
-    setLocalMods: Function
-    setMods: Function
+    setLocalMods: (value: LocalMod[]) => void
+    setMods: (value: ModFile[] | undefined) => void
     yuzuState: YuzuState | undefined
 }
 export const ModContext = createContext<ModContextType | null>(null)

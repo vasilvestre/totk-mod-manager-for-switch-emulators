@@ -3,7 +3,7 @@ import { SupportedEmulator } from '@/app/types'
 
 interface EmulatorChoiceContextType {
     emulatorChoice: string | null
-    setEmulatorChoice: Function
+    setEmulatorChoice: (emulatorChoice: string | null) => void
     supportedEmulators: SupportedEmulator[]
 }
 

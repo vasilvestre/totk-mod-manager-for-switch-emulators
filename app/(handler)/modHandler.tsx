@@ -1,4 +1,4 @@
-import { LocalMod, ModFile } from '@/app/types'
+import { AlertType, LocalMod, ModFile } from '@/app/types'
 import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
 
 export async function installSingleMod(
@@ -47,8 +47,8 @@ export async function checkIncompatibilities(
 export function tryInstall(
     mod: ModFile,
     localMods: LocalMod[],
-    setLocalMods: Function,
-    setAlert: Function,
+    setLocalMods: (mods: LocalMod[]) => void,
+    setAlert: (alert: AlertType | undefined) => void,
     yuzuDir: string | undefined
 ) {
     return async () => {
@@ -73,8 +73,8 @@ export function tryInstall(
 export function tryUpdate(
     mod: ModFile,
     localMods: LocalMod[],
-    setLocalMods: Function,
-    setAlert: Function,
+    setLocalMods: (mods: LocalMod[]) => void,
+    setAlert: (alert: AlertType | undefined) => void,
     yuzuDir: string | undefined
 ) {
     return async () => {
@@ -95,7 +95,7 @@ export function tryUpdate(
     }
 }
 export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
-    return mods.sort((a: ModFile, b: ModFile) => {
+    return mods.sort((a: ModFile) => {
         if (localMods.find((localMod) => localMod.name === a.name)) {
             return -1
         }
@@ -105,8 +105,8 @@ export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
 
 export function tryRemove(
     mod: LocalMod | undefined,
-    setLocalMods: Function,
-    setAlert: Function,
+    setLocalMods: (mods: LocalMod[]) => void,
+    setAlert: (alert: AlertType | undefined) => void,
     yuzuDir: string | undefined
 ) {
     return async () => {

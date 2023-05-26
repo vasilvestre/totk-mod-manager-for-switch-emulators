@@ -1,6 +1,6 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import * as yaml from 'yaml'
-import { LocalMod, ModConfig } from '@/app/types'
+import { LocalMod, ModConfig, notEmpty } from '@/app/types'
 
 export default async function fetchYuzuMods(
     yuzuDir: string
@@ -41,8 +41,7 @@ export default async function fetchYuzuMods(
                 })()
             )
         }
-        // @ts-ignore
-        return (await Promise.all(promises)).filter((mod) => mod !== undefined)
+        return (await Promise.all(promises)).filter(notEmpty)
     } catch (e) {
         console.error(e)
         throw new Error('Could not fetch local mods')

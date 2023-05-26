@@ -5,7 +5,7 @@ export type GithubRelease =
     Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
 
 export async function fetchGithubUpdatedMods(
-    setDownloadProgress: Function
+    setDownloadProgress: (value: number) => void
 ): Promise<GithubRelease> {
     const { fs } = await import('@tauri-apps/api')
     const octokit = new Octokit({
@@ -56,7 +56,7 @@ export async function fetchGithubUpdatedModsSource(
     url: string,
     filename: string,
     totalSize: number | null = null,
-    setDownloadProgress: Function
+    setDownloadProgress: (value: number) => void
 ) {
     const { download } = await import('tauri-plugin-upload-api')
     const { path } = await import('@tauri-apps/api')
@@ -107,7 +107,7 @@ function updateProgress(
     progress: number,
     total: number,
     downloadProgress: { downloaded: number; percent: number },
-    setDownloadProgress: Function
+    setDownloadProgress: (value: number) => void
 ) {
     downloadProgress.downloaded = downloadProgress.downloaded + progress
     downloadProgress.percent = (downloadProgress.downloaded / total) * 100
