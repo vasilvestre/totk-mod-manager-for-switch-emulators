@@ -12,7 +12,7 @@ We encourage you to familiarize yourself with our contribution process. By follo
 
 ## Code of Conduct
 
-We value a welcoming and inclusive community. By participating in this project, you agree to abide by our [Code of Conduct](../CODE_OF_CONDUCT.md). We expect all contributors to maintain a respectful and harassment-free environment for everyone.
+We value a welcoming and inclusive community. By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). We expect all contributors to maintain a respectful and harassment-free environment for everyone.
 
 ## Feedback and Support
 
@@ -24,7 +24,7 @@ We appreciate your feedback and support. Together, let's make this project amazi
 
 ## License
 
-This project is licensed under the [BSD 3] - see the [LICENSE.md](../LICENSE.md) file for details.
+This project is licensed under the BSD 3 - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Acknowledgments
 

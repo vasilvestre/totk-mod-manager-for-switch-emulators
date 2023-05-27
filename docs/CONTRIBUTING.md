@@ -1,4 +1,4 @@
-# Contributing to [TOTK Mod Manager]
+# Contributing to TOTK Mod Manager
 
 Welcome to the [TOTK Mod Manager] project! We appreciate your interest in contributing to our project. By contributing, you can help us improve and enhance the functionality, stability, and overall user experience.
 
@@ -77,4 +77,4 @@ To set up your local development environment, please follow these steps:
 
 ## Code of Conduct
 
-We expect all contributors to follow our [Code of Conduct](../CODE_OF_CONDUCT.md). Please be respectful and considerate when interacting with other community members.
+We expect all contributors to follow our [Code of Conduct](CODE_OF_CONDUCT.md). Please be respectful and considerate when interacting with other community members.
