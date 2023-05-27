@@ -29,51 +29,9 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 - If the mod ask you to locate Yuzu, please refer to this : https://yuzu-emu.org/wiki/user-directory/
     - There's another path for Yuzu, which isn't the one required.
 
-## Contribution install
-
-### Pre-requisites
-
-- Simply follow [Tauri guide] https://tauri.app/v1/guides/getting-started/prerequisites/
-
-### To build
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/vasilvestre/totk-mod-manager-for-yuzu.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd totk-mod-manager-for-yuzu
-```
-
-3. Install the dependencies:
-
-```bash
-pnpm install
-```
-
-4. Start the application:
-
-```bash
-pnpm tauri dev
-```
-
-The application will open a window.
-
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to Zelda: Tears of the Kingdom Mod Manager, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make the necessary changes and commit your code.
-4. Push your branch to your forked repository.
-5. Submit a pull request to the main repository.
-
-Please ensure that your code adheres to the project's coding standards and includes appropriate documentation and tests.
+Please refer to [CONTRIBUTING](docs/CONTRIBUTING.md).
 
 ## License
 
