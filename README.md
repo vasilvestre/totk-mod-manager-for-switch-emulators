@@ -88,8 +88,13 @@ If you encounter any issues or have questions, please create an issue on the [is
 
 ## Roadmap
 
-- Alert you if something succeeded
+- Implement seach and filter.
+- Document which Yuzu folder to pick.
+- RPM distribution (not supported by Tauri now)
+- Windows defender submission to prevent false positive.
+- Alert you if something succeeded.
 - Implement automatic mod updates.
+- Implement gamebanana.
 - Enhance user interface with additional features.
 
 ## Stay Updated
