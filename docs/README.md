@@ -6,7 +6,7 @@ Please take a moment to read our contribution guidelines before getting started.
 
 ## Contributing
 
-To learn about the different ways you can contribute to the project, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file. It contains detailed information on how to get started, guidelines for submitting code changes, reporting issues, suggesting improvements, and more.
+To learn about the different ways you can contribute to the project, please refer to the [CONTRIBUTING.md](../CONTRIBUTING.md) file. It contains detailed information on how to get started, guidelines for submitting code changes, reporting issues, suggesting improvements, and more.
 
 We encourage you to familiarize yourself with our contribution process. By following the guidelines, you can help maintain the quality and consistency of the project.
 
@@ -23,7 +23,7 @@ To get started with contributing, please follow these steps:
 
 ## Code of Conduct
 
-We value a welcoming and inclusive community. By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). We expect all contributors to maintain a respectful and harassment-free environment for everyone.
+We value a welcoming and inclusive community. By participating in this project, you agree to abide by our [Code of Conduct](../CODE_OF_CONDUCT.md). We expect all contributors to maintain a respectful and harassment-free environment for everyone.
 
 ## Feedback and Support
 
