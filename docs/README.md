@@ -6,7 +6,7 @@ Please take a moment to read our contribution guidelines before getting started.
 
 ## Contributing
 
-To learn about the different ways you can contribute to the project, please refer to the [CONTRIBUTING.md](../CONTRIBUTING.md) file. It contains detailed information on how to get started, guidelines for submitting code changes, reporting issues, suggesting improvements, and more.
+To learn about the different ways you can contribute to the project, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file. It contains detailed information on how to get started, guidelines for submitting code changes, reporting issues, suggesting improvements, and more.
 
 We encourage you to familiarize yourself with our contribution process. By following the guidelines, you can help maintain the quality and consistency of the project.
 
@@ -35,7 +35,7 @@ We appreciate your feedback and support. Together, let's make this project amazi
 
 ## License
 
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the [BSD 3] - see the [LICENSE.md](../LICENSE.md) file for details.
 
 ## Acknowledgments
 
