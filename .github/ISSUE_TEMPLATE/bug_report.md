@@ -34,6 +34,19 @@ body:
      render: bash
    validations:
      required: true
+ - type: textarea
+   id: context
+   attributes:
+     label: Additional context
+     description: "Add any other context about the problem here."
+     value: |
+       1.
+       2.
+       3.
+       ...
+     render: bash
+   validations:
+     required: false
  - type: dropdown
    id: os
    attributes:
@@ -46,10 +59,3 @@ body:
       - Other
    validations:
      required: true
----
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Additional context**
-Add any other context about the problem here.
