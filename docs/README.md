@@ -1,5 +1,3 @@
-# TOTK Mod Manager
-
 This repository serves as a central hub for contributing to the project. Whether you're a developer, designer, tester, or documentation enthusiast, we appreciate your interest in contributing to our project. Your contributions are valuable and will help make this project even better.
 
 Please take a moment to read our contribution guidelines before getting started. These guidelines will ensure a smooth and collaborative experience for everyone involved.
