@@ -10,17 +10,6 @@ To learn about the different ways you can contribute to the project, please refe
 
 We encourage you to familiarize yourself with our contribution process. By following the guidelines, you can help maintain the quality and consistency of the project.
 
-## Getting Started
-
-To get started with contributing, please follow these steps:
-
-1. Fork the repository on GitHub.
-2. Clone the forked repository to your local machine.
-3. Make the necessary changes or additions.
-4. Test your changes to ensure they work as intended.
-5. Commit your changes and push them to your forked repository.
-6. Submit a pull request to the main repository.
-
 ## Code of Conduct
 
 We value a welcoming and inclusive community. By participating in this project, you agree to abide by our [Code of Conduct](../CODE_OF_CONDUCT.md). We expect all contributors to maintain a respectful and harassment-free environment for everyone.
