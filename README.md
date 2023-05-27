@@ -23,10 +23,11 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
   - Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
     - https://stackoverflow.com/a/72633324 for now
 
-### Best case scenario
+### How to setup the path
 
 - Your Yuzu is located at C:\Users\myUser\AppData\Roaming\yuzu ? It should work instantly.
-- That's it, that's the scenario. If not, you may have to give your yuzu path at all launch.
+- If the mod ask you to locate Yuzu, please refer to this : https://yuzu-emu.org/wiki/user-directory/
+    - There's another path for Yuzu, which isn't the one required.
 
 ## Contribution install
 
