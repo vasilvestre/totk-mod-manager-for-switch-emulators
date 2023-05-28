@@ -14,6 +14,12 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 -   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
 -   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows and Linux.
 
+## Possible future features
+
+- **Merge mods**: To prevent duplicated code and mod loaded twice
+- **Support Ryujinx**: To help more people!
+- **Support more games**: Require modders or community help 
+
 ## How to install
 
 - (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
@@ -48,13 +54,13 @@ If you encounter any issues or have questions, please create an issue on the [is
 
 ## Roadmap
 
+- Dark mod
 - Implement seach and filter.
-- RPM distribution (not supported by Tauri now)
 - Windows defender submission to prevent false positive.
 - Alert you if something succeeded.
 - Implement automatic mod updates.
 - Implement gamebanana.
-- Enhance user interface with additional features.
+- RPM distribution (not supported by Tauri now).
 
 ## Stay Updated
 
