@@ -40,7 +40,7 @@ export async function fetchGithubUpdatedMods(
             setDownloadProgress
         )
     }
-    await extractZip(mods.data.assets[0].name, mods.data.name)
+    await extractZip(zipAsset.name, mods.data.name)
     return mods
 }
 
