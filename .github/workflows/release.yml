@@ -67,7 +67,7 @@ jobs:
         releaseName: 'TOTK mod manager v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
         releaseBody: ${{steps.github_release.outputs.changelog}}
         prerelease: false
-        draft: false
+        releaseDraft: false
         includeUpdaterJson: true
 
     - name: Release
