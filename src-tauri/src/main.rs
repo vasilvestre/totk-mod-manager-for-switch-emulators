@@ -20,7 +20,7 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_persisted_scope::init())
-        .plugin(tauri_plugin_aptabase::Builder::new(&env::var("TRACKING_ID").unwrap_or_default()).build())
+        .plugin(tauri_plugin_aptabase::Builder::new(env!("TRACKING_ID")).build())
         .invoke_handler(tauri::generate_handler![unzip, copy_dir])
         .setup(|app| {
             app.track_event("app_started", None);
