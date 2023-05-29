@@ -96,10 +96,14 @@ export function tryUpdate(
 }
 export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
     return mods.sort((a: ModFile) => {
-        if (localMods.find((localMod) => localMod.name === a.name)) {
+        if (
+            localMods.find((localMod) =>
+                localMod.name?.includes(a.config.title)
+            )
+        ) {
             return -1
         }
-        return 0
+        return +1
     })
 }
 
