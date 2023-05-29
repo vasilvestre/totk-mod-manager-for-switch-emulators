@@ -61,6 +61,7 @@ jobs:
         NEXT_PUBLIC_GITHUB_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_GITHUB_AUTH_TOKEN }}
         TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
         TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        TRACKING_ID: ${{ secrets.TRACKING_ID }}
       with:
         tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
         releaseName: 'TOTK mod manager v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
