@@ -27,6 +27,8 @@ export function tryInstall(
     yuzuDir: string | undefined
 ) {
     return async () => {
+        const { trackEvent } = await import('@aptabase/tauri')
+
         try {
             if (!yuzuDir) {
                 throw { message: 'Yuzu not found' }
@@ -41,6 +43,8 @@ export function tryInstall(
                 type: 'error',
                 data: e.data,
             })
+        } finally {
+            trackEvent('mod_install', { name: mod.config.title })
         }
     }
 }
@@ -53,6 +57,8 @@ export function tryUpdate(
     yuzuDir: string | undefined
 ) {
     return async () => {
+        const { trackEvent } = await import('@aptabase/tauri')
+
         try {
             if (!yuzuDir) {
                 throw { message: 'Yuzu not found' }
@@ -73,6 +79,8 @@ export function tryUpdate(
                 type: 'error',
                 data: e.data,
             })
+        } finally {
+            trackEvent('mod_update', { name: mod.config.title })
         }
     }
 }
@@ -101,6 +109,8 @@ export function tryRemove(
     yuzuDir: string | undefined
 ) {
     return async () => {
+        const { trackEvent } = await import('@aptabase/tauri')
+
         try {
             if (yuzuDir && mod) {
                 await removeSingleMod(mod)
@@ -115,6 +125,8 @@ export function tryRemove(
                 type: 'error',
                 data: e.data,
             })
+        } finally {
+            trackEvent('mod_remove', { name: mod?.name ?? 'unknown' })
         }
     }
 }
