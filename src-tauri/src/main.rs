@@ -2,7 +2,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 extern crate fs_extra;
-extern crate dotenv;
 
 use std::{
     fs,
@@ -11,7 +10,6 @@ use std::{
     env,
 };
 
-use dotenv::dotenv;
 use fs_extra::dir::{
     copy,
     CopyOptions,
@@ -19,7 +17,6 @@ use fs_extra::dir::{
 use tauri_plugin_aptabase::EventTracker;
 
 fn main() {
-    dotenv().ok();
     tauri::Builder::default()
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_persisted_scope::init())

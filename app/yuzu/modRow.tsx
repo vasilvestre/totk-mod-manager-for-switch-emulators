@@ -4,7 +4,6 @@ import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { ModFile } from '@/app/types'
 import { AppContext, useAppContext } from '@/app/appContext'
 import { useEffect, useState } from 'react'
-import { trackEvent } from '@aptabase/tauri'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const { setAlert } = useAppContext(AppContext)
