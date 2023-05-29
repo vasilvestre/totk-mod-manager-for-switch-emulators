@@ -29,6 +29,7 @@ export default function Yuzu() {
     const [downloadProgress, setDownloadProgress] = useState<number>(0)
     const [mods, setMods] = useState<ModFile[]>()
     const [yuzuState, setYuzuState] = useState<YuzuState>()
+    const [searchTerms, setSearchTerms] = useState<string>('')
 
     useEffect(() => {
         ;(async () => {
@@ -91,6 +92,8 @@ export default function Yuzu() {
                 setLocalMods,
                 setMods,
                 yuzuState,
+                searchTerms,
+                setSearchTerms,
             }}
         >
             <main className="min-h-screen justify-between">

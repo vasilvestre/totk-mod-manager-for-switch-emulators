@@ -3,16 +3,44 @@ import { tryInstall, tryRemove, tryUpdate } from '@/app/(handler)/modHandler'
 import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { ModFile } from '@/app/types'
 import { AppContext, useAppContext } from '@/app/appContext'
+import { useEffect, useState } from 'react'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const { setAlert } = useAppContext(AppContext)
-    const { localMods, setLocalMods, yuzuState } = useModContext(ModContext)
+    const { localMods, setLocalMods, yuzuState, searchTerms } =
+        useModContext(ModContext)
+    const [visibility, setVisibility] = useState<'visible' | 'hidden'>(
+        'visible'
+    )
 
     const mod = props.mod
     const mods = props.mods
     const config = mod.config
+
+    useEffect(() => {
+        if (searchTerms !== '') {
+            if (
+                !config.title
+                    .toLowerCase()
+                    .includes(searchTerms.toLowerCase()) &&
+                !config.subtitle
+                    ?.toLowerCase()
+                    .includes(searchTerms.toLowerCase()) &&
+                !CategoryNames[
+                    Enum[config.category] as keyof typeof CategoryNames
+                ]
+                    .toLowerCase()
+                    .includes(searchTerms.toLowerCase())
+            ) {
+                setVisibility('hidden')
+            }
+        } else {
+            setVisibility('visible')
+        }
+    }, [searchTerms, config.title, config.subtitle, config.category])
+
     return (
-        <tr key={config.id} className={'odd:bg-blue-100'}>
+        <tr key={config.id} className={'odd:bg-blue-100 ' + visibility}>
             <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 {config.title}
                 <br />
