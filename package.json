@@ -19,7 +19,7 @@
         "eslint-config-next": "13.4.3",
         "eslint-plugin-unused-imports": "^2.0.0",
         "husky": "^8.0.3",
-        "next": "13.4.3",
+        "next": "13.4.4",
         "octokit": "^2.0.16",
         "postcss": "8.4.23",
         "react": "18.2.0",
