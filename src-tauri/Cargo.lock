@@ -71,11 +71,13 @@ checksum = "9c7d0618f0e0b7e8ff11427422b64564d5fb0be1940354bfe2e0529b18a9d9b8"
 name = "app"
 version = "0.7.0"
 dependencies = [
+ "dotenv",
  "fs_extra",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
+ "tauri-plugin-aptabase",
  "tauri-plugin-persisted-scope",
  "tauri-plugin-upload",
  "thiserror",
@@ -635,6 +637,12 @@ name = "dispatch"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0c93bb4b0c6d9b77f4435b0ae98c24d17f1c45b2ff844c6151a07256ca923b"
+
+[[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
 
 [[package]]
 name = "dtoa"
@@ -1966,6 +1974,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "os_info"
+version = "3.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "006e42d5b888366f1880eda20371fedde764ed2213dc8496f49622fa0c99cd5e"
+dependencies = [
+ "log",
+ "serde",
+ "winapi",
+]
+
+[[package]]
 name = "overload"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2913,6 +2932,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "sys-locale"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ea0b9eefabb91675082b41eb94c3ecd91af7656caee3fb4961a07c0ec8c7ca6f"
+dependencies = [
+ "libc",
+ "windows-sys 0.45.0",
+]
+
+[[package]]
 name = "system-deps"
 version = "5.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3119,6 +3148,25 @@ dependencies = [
  "syn 1.0.109",
  "tauri-codegen",
  "tauri-utils",
+]
+
+[[package]]
+name = "tauri-plugin-aptabase"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8f5119715f95eb986412fca799364c138c8ba2dda3e9b01d8100f67d3cb03578"
+dependencies = [
+ "log",
+ "os_info",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sys-locale",
+ "tauri",
+ "thiserror",
+ "time",
+ "uuid",
+ "wry",
 ]
 
 [[package]]

@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@aptabase/tauri':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@octokit/types':
     specifier: ^9.2.3
     version: 9.2.3
@@ -87,6 +90,12 @@ packages:
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+    dev: false
+
+  /@aptabase/tauri@0.2.0:
+    resolution: {integrity: sha512-mj/GhwSqcnVhrMvVCVWHXyqC8AXIw/SyUacr9po/d5fFW83YW2fHkhMLNPdvdh/GZ6Rcr/AnLTp45UfvLL5Gqg==}
+    dependencies:
+      '@tauri-apps/api': 1.3.0
     dev: false
 
   /@babel/runtime@7.21.5:

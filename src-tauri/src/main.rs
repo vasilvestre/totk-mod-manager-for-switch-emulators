@@ -1,24 +1,36 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+extern crate fs_extra;
+extern crate dotenv;
+
 use std::{
     fs,
     path::{PathBuf},
     io::{Cursor},
-};
-extern crate fs_extra;
-use fs_extra::dir::{
-    copy,
-    CopyOptions
+    env,
 };
 
+use dotenv::dotenv;
+use fs_extra::dir::{
+    copy,
+    CopyOptions,
+};
+use tauri_plugin_aptabase::EventTracker;
+
 fn main() {
-  tauri::Builder::default()
-      .plugin(tauri_plugin_upload::init())
-      .plugin(tauri_plugin_persisted_scope::init())
-      .invoke_handler(tauri::generate_handler![unzip, copy_dir])
-      .run(tauri::generate_context!())
-      .expect("error while running tauri application");
+    dotenv().ok();
+    tauri::Builder::default()
+        .plugin(tauri_plugin_upload::init())
+        .plugin(tauri_plugin_persisted_scope::init())
+        .plugin(tauri_plugin_aptabase::Builder::new(env::var("TRACKING_ID").unwrap().as_ref()).build())
+        .invoke_handler(tauri::generate_handler![unzip, copy_dir])
+        .setup(|app| {
+            app.track_event("app_started", None);
+            Ok(())
+        })
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
 
 // create the error type that represents all errors possible in our program
@@ -29,7 +41,7 @@ enum Error {
     #[error(transparent)]
     Zip(#[from] zip_extract::ZipExtractError),
     #[error(transparent)]
-    Fs(#[from] fs_extra::error::Error)
+    Fs(#[from] fs_extra::error::Error),
 }
 
 // we must manually implement serde::Serialize
