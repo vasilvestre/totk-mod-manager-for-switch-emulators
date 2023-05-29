@@ -55,8 +55,7 @@ If you encounter any issues or have questions, please create an issue on the [is
 ## Roadmap
 
 - Dark mod
-- Implement seach and filter.
-- Windows defender submission to prevent false positive.
+- Persistent Windows defender submission to prevent false positive.
 - Alert you if something succeeded.
 - Implement automatic mod updates.
 - Implement gamebanana.
