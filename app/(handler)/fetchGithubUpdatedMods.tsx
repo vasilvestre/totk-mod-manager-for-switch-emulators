@@ -36,15 +36,21 @@ export async function fetchGithubUpdatedMods(
         )
     }
 
-    if (
-        !(await fs.exists(mods.data.assets[0].name, {
+    const zipAsset = mods.data.assets.find((asset) => {
+        return asset.name.endsWith('.zip')
+    })
+
+    if (!zipAsset) {
+        throw new Error('No zip asset found')
+    } else if (
+        !(await fs.exists(zipAsset.name, {
             dir: fs.BaseDirectory.Download,
         }))
     ) {
         await fetchGithubUpdatedModsSource(
-            mods.data.assets[0].browser_download_url,
-            mods.data.assets[0].name,
-            mods.data.assets[0].size,
+            zipAsset.browser_download_url,
+            zipAsset.name,
+            zipAsset.size,
             setDownloadProgress
         )
     }
