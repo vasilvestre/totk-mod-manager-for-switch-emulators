@@ -10,6 +10,8 @@ interface ModContextType {
     setLocalMods: (value: LocalMod[]) => void
     setMods: (value: ModFile[] | undefined) => void
     yuzuState: YuzuState | undefined
+    searchTerms: string
+    setSearchTerms: (value: string) => void
 }
 export const ModContext = createContext<ModContextType | null>(null)
 
