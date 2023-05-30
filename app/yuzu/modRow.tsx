@@ -15,17 +15,16 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const config = mod.config
 
     useEffect(() => {
-        if (searchTerms !== '') {
-            if (
-                !config.title.toLowerCase().includes(searchTerms.toLowerCase()) &&
-                !config.subtitle?.toLowerCase().includes(searchTerms.toLowerCase()) &&
-                !CategoryNames[Enum[config.category] as keyof typeof CategoryNames]
-                    .toLowerCase()
-                    .includes(searchTerms.toLowerCase()) &&
-                !config.game.version.includes(searchTerms)
-            ) {
-                setVisibility('hidden')
-            }
+        if (
+            searchTerms !== '' &&
+            !config.title.toLowerCase().includes(searchTerms.toLowerCase()) &&
+            !config.subtitle?.toLowerCase().includes(searchTerms.toLowerCase()) &&
+            !CategoryNames[Enum[config.category] as keyof typeof CategoryNames]
+                .toLowerCase()
+                .includes(searchTerms.toLowerCase()) &&
+            !config.game.version.includes(searchTerms)
+        ) {
+            setVisibility('hidden')
         } else {
             setVisibility('visible')
         }
