@@ -19,7 +19,7 @@ export async function fetchGithubUpdatedMods(
     })
 
     const zipAsset = mods.data.assets.find((asset) => {
-        return asset.name.endsWith('.zip')
+        return asset.name.startsWith('TOTK-Mods-collection') && asset.name.endsWith('.zip')
     })
 
     if (!zipAsset) {
