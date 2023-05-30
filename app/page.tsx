@@ -3,10 +3,7 @@
 import React from 'react'
 import Yuzu from '@/app/yuzu/page'
 import Image from 'next/image'
-import {
-    EmulatorChoiceContext,
-    useEmulatorChoiceContext,
-} from '@/app/emulatorChoiceContext'
+import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
 import { AppContext, useAppContext } from '@/app/appContext'
 
 export default function Home() {
@@ -18,11 +15,7 @@ export default function Home() {
         <>
             {emulatorChoice && emulatorChoice === 'yuzu' ? <Yuzu /> : <></>}
             {!emulatorChoice && (
-                <div
-                    className={
-                        'flex flex-row h-screen justify-evenly items-center'
-                    }
-                >
+                <div className={'flex flex-row h-screen justify-evenly items-center'}>
                     {supportedEmulators &&
                         supportedEmulators.map((emulator) => {
                             return (

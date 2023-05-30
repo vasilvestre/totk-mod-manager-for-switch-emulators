@@ -4,9 +4,7 @@ const fs = require('fs')
 const cargoTomlContents = fs.readFileSync('src-tauri/Cargo.toml', 'utf8')
 
 // Extract the version number from src-tauri/Cargo.toml
-const cargoVersionMatch = cargoTomlContents.match(
-    /version\s*=\s*["']([^"']+)["']/
-)
+const cargoVersionMatch = cargoTomlContents.match(/version\s*=\s*["']([^"']+)["']/)
 const cargoVersion = cargoVersionMatch ? cargoVersionMatch[1] : null
 
 // Retrieve the latest Git tag

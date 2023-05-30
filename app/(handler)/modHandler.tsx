@@ -1,16 +1,10 @@
 import { AlertType, LocalMod, ModFile } from '@/app/types'
 import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
 
-export async function checkIncompatibilities(
-    mod: ModFile,
-    localMods: LocalMod[]
-) {
+export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
     localMods.forEach((localMod) => {
-        if (
-            localMod.config &&
-            localMod.config.compatibility?.blacklist?.includes(mod.config.id)
-        ) {
+        if (localMod.config && localMod.config.compatibility?.blacklist?.includes(mod.config.id)) {
             incompatibilities.push(localMod.config.title)
         }
     })
@@ -36,6 +30,10 @@ export function tryInstall(
             await checkIncompatibilities(mod, localMods)
             await installSingleMod(mod, true, yuzuDir)
             setLocalMods(await fetchYuzuMods(yuzuDir))
+            setAlert({
+                message: 'Mod installed',
+                type: 'success',
+            })
         } catch (e: any) {
             console.error(e)
             setAlert({
@@ -72,6 +70,10 @@ export function tryUpdate(
             }
             await removeSingleMod(previousMod)
             setLocalMods(await fetchYuzuMods(yuzuDir))
+            setAlert({
+                message: 'Mod updated',
+                type: 'success',
+            })
         } catch (e: any) {
             console.error(e)
             setAlert({
@@ -131,18 +133,10 @@ export function tryRemove(
     }
 }
 
-async function installSingleMod(
-    mod: ModFile,
-    overwrite = false,
-    yuzuDir: string
-) {
+async function installSingleMod(mod: ModFile, overwrite = false, yuzuDir: string) {
     const { invoke, path } = await import('@tauri-apps/api')
 
-    const localModsPath = await path.resolve(
-        yuzuDir,
-        'load',
-        '0100F2C0115B6000'
-    )
+    const localModsPath = await path.resolve(yuzuDir, 'load', '0100F2C0115B6000')
     await invoke('copy_dir', {
         filePath: mod.path,
         targetDir: localModsPath,

@@ -1,12 +1,11 @@
 markdown: kramdown
 favicon: ../src-tauri/icons/Square30x30Logo.png
 plugins:
-  - jekyll-relative-links
+    - jekyll-relative-links
 relative_links:
-  enabled: true
-  collections: true
+    enabled: true
+    collections: true
 include:
-  - CONTRIBUTING.md
-  - README.md
-  - LICENSE.md
-  - CODE_OF_CONDUCT.md
+    - CONTRIBUTING.md
+    - README.md
+    - CODE_OF_CONDUCT.md

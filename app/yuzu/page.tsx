@@ -2,23 +2,16 @@
 
 import fetchYuzuMods from '../(handler)/fetchYuzuMods'
 import { useEffect, useState } from 'react'
-import {
-    fetchGithubUpdatedMods,
-    GithubRelease,
-} from '@/app/(handler)/fetchGithubUpdatedMods'
+import { fetchGithubUpdatedMods, GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
 import listMods from '@/app/(handler)/listmods'
 import { LocalMod, ModFile, YuzuState } from '@/app/types'
 import { filterMods } from '@/app/(handler)/modHandler'
 import { ModContext } from '@/app/yuzu/modContext'
 import { Header } from '@/app/yuzu/header'
-import { DownloadBar } from '@/app/yuzu/downloadBar'
 import { ModsTable } from '@/app/yuzu/modsTable'
 import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
 import { AppContext, useAppContext } from '@/app/appContext'
-import {
-    EmulatorChoiceContext,
-    useEmulatorChoiceContext,
-} from '@/app/emulatorChoiceContext'
+import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
 
 export default function Yuzu() {
     const { setAlert } = useAppContext(AppContext)
@@ -47,9 +40,7 @@ export default function Yuzu() {
             try {
                 if (yuzuState?.found && yuzuState?.path) {
                     setLocalMods(await fetchYuzuMods(yuzuState.path))
-                    setUpToDateMods(
-                        await fetchGithubUpdatedMods(setDownloadProgress)
-                    )
+                    setUpToDateMods(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
             } catch (e: any) {
                 console.error(e)
@@ -68,12 +59,7 @@ export default function Yuzu() {
         ;(async () => {
             try {
                 if (upToDateMods?.data.name) {
-                    setMods(
-                        filterMods(
-                            await listMods(upToDateMods.data.name),
-                            localMods
-                        )
-                    )
+                    setMods(filterMods(await listMods(upToDateMods.data.name), localMods))
                 }
             } catch (e: any) {
                 console.error(e)
@@ -98,7 +84,6 @@ export default function Yuzu() {
         >
             <main className="min-h-screen justify-between">
                 <Header />
-                <DownloadBar />
                 {yuzuState?.found === false && (
                     <div>
                         <button

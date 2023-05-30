@@ -7,14 +7,12 @@ import { AlertType, SupportedEmulator } from '@/app/types'
 import { AppContext } from '@/app/appContext'
 import Alert from '@/app/alert'
 import { EmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import { themeChange } from 'theme-change'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+    const [theme, setTheme] = useState<'light' | 'dark'>('dark')
     const [alert, setAlert] = useState<AlertType | undefined>()
     const [emulatorChoice, setEmulatorChoice] = useState<string | null>('yuzu')
     const supportedEmulators: SupportedEmulator[] = [
@@ -38,8 +36,15 @@ export default function RootLayout({
         }, 8000)
     }, [alert])
 
+    useEffect(() => {
+        themeChange(false)
+        return () => {
+            themeChange(false)
+        }
+    }, [])
+
     return (
-        <AppContext.Provider value={{ alert, setAlert }}>
+        <AppContext.Provider value={{ alert, setAlert, theme, setTheme }}>
             <EmulatorChoiceContext.Provider
                 value={{
                     emulatorChoice,
@@ -47,7 +52,7 @@ export default function RootLayout({
                     supportedEmulators,
                 }}
             >
-                <html lang="en">
+                <html lang="en" data-theme={'dark'}>
                     <body className={inter.className}>
                         {children}
                         <Alert />

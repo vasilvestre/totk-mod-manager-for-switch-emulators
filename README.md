@@ -45,7 +45,7 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 
 ## Acknowledgements
 
-- Most assets comes from [hyperui.dev](https://www.hyperui.dev/), a UI library for Tailwind.
+- Most assets comes from [daisyui](https://daisyui.com).
 - See [thank-you.md](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
@@ -54,9 +54,7 @@ If you encounter any issues or have questions, please create an issue on the [is
 
 ## Roadmap
 
-- Dark mod
 - Persistent Windows defender submission to prevent false positive.
-- Alert you if something succeeded.
 - Implement automatic mod updates.
 - Implement gamebanana.
 - RPM distribution (not supported by Tauri now).
