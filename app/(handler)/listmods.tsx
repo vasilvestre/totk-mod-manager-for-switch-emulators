@@ -26,15 +26,10 @@ export default async function listMods(version: string): Promise<ModFile[]> {
         category?.children?.forEach((mod: FileEntry) => {
             promises.push(
                 (async (): Promise<ModFile | undefined> => {
-                    const configPath = await path.resolve(
-                        mod.path,
-                        'config.yaml'
-                    )
+                    const configPath = await path.resolve(mod.path, 'config.yaml')
                     const exists = await fs.exists(configPath)
                     if (exists) {
-                        const config: ModConfig = yaml.parse(
-                            await fs.readTextFile(configPath)
-                        )
+                        const config: ModConfig = yaml.parse(await fs.readTextFile(configPath))
                         return {
                             ...mod,
                             config,

@@ -7,11 +7,8 @@ import { useEffect, useState } from 'react'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const { setAlert } = useAppContext(AppContext)
-    const { localMods, setLocalMods, yuzuState, searchTerms } =
-        useModContext(ModContext)
-    const [visibility, setVisibility] = useState<'visible' | 'hidden'>(
-        'visible'
-    )
+    const { localMods, setLocalMods, yuzuState, searchTerms } = useModContext(ModContext)
+    const [visibility, setVisibility] = useState<'visible' | 'hidden'>('visible')
 
     const mod = props.mod
     const mods = props.mods
@@ -20,70 +17,50 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     useEffect(() => {
         if (searchTerms !== '') {
             if (
-                !config.title
+                !config.title.toLowerCase().includes(searchTerms.toLowerCase()) &&
+                !config.subtitle?.toLowerCase().includes(searchTerms.toLowerCase()) &&
+                !CategoryNames[Enum[config.category] as keyof typeof CategoryNames]
                     .toLowerCase()
                     .includes(searchTerms.toLowerCase()) &&
-                !config.subtitle
-                    ?.toLowerCase()
-                    .includes(searchTerms.toLowerCase()) &&
-                !CategoryNames[
-                    Enum[config.category] as keyof typeof CategoryNames
-                ]
-                    .toLowerCase()
-                    .includes(searchTerms.toLowerCase())
+                !config.game.version.includes(searchTerms)
             ) {
                 setVisibility('hidden')
             }
         } else {
             setVisibility('visible')
         }
-    }, [searchTerms, config.title, config.subtitle, config.category])
+    }, [searchTerms, config.title, config.subtitle, config.category, config.game.version])
 
     return (
-        <tr key={config.id} className={'odd:bg-blue-100 ' + visibility}>
-            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+        <tr key={config.id} className={visibility}>
+            <td>
                 {config.title}
                 <br />
                 {config?.subtitle !== config.title && (
-                    <p className="mt-1.5 text-sm text-gray-700">
-                        {config.subtitle}
-                    </p>
+                    <p className="mt-1.5 text-sm">{config.subtitle}</p>
                 )}
             </td>
-            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {config.version}
-            </td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {config.author?.name}
-            </td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {
-                    CategoryNames[
-                        Enum[config.category] as keyof typeof CategoryNames
-                    ]
-                }
-            </td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+            <td>{config.version}</td>
+            <td>{config.author?.name}</td>
+            <td>{CategoryNames[Enum[config.category] as keyof typeof CategoryNames]}</td>
+            <td>
                 {config.game.version.map((item, index) => (
                     <div key={index}>{item}</div>
                 ))}
             </td>
-            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+            <td>
                 {mods
-                    .filter((mod) =>
-                        config.compatibility?.blacklist?.includes(mod.config.id)
-                    )
+                    .filter((mod) => config.compatibility?.blacklist?.includes(mod.config.id))
                     .map((mod, index) => {
                         return <div key={index}>{mod.config.title}</div>
                     })}
             </td>
             <td className="whitespace-nowrap px-4 py-2">
-                <span className="inline-flex -space-x-px overflow-hidden rounded-md border bg-white shadow-sm">
-                    {typeof localMods.find(
-                        (localMod) => localMod?.config?.id === mod.config.id
-                    ) === 'undefined' ? (
+                <div className="btn-group btn-group-vertical lg:btn-group-horizontal">
+                    {typeof localMods.find((localMod) => localMod?.config?.id === mod.config.id) ===
+                    'undefined' ? (
                         <button
-                            className="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                            className="btn btn-outline btn-xs"
                             onClick={tryInstall(
                                 mod,
                                 localMods,
@@ -96,11 +73,10 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                         </button>
                     ) : (
                         <>
-                            {localMods.find(
-                                (localMod) => localMod.name === mod.name
-                            )?.config?.version !== mod.config.version && (
+                            {localMods.find((localMod) => localMod.name === mod.name)?.config
+                                ?.version !== mod.config.version && (
                                 <button
-                                    className="inline-block px-4 py-2 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:relative"
+                                    className="btn btn-outline btn-info btn-xs"
                                     onClick={tryUpdate(
                                         mod,
                                         localMods,
@@ -113,11 +89,9 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                                 </button>
                             )}
                             <button
-                                className="inline-block px-4 py-2 text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:relative"
+                                className="btn btn-outline btn-error btn-xs"
                                 onClick={tryRemove(
-                                    localMods.find(
-                                        (localMod) => localMod.name === mod.name
-                                    ),
+                                    localMods.find((localMod) => localMod.name === mod.name),
                                     setLocalMods,
                                     setAlert,
                                     yuzuState?.path
@@ -127,7 +101,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                             </button>
                         </>
                     )}
-                </span>
+                </div>
             </td>
         </tr>
     )

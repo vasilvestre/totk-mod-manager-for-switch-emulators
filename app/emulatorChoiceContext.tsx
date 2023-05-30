@@ -7,12 +7,9 @@ interface EmulatorChoiceContextType {
     supportedEmulators: SupportedEmulator[]
 }
 
-export const EmulatorChoiceContext =
-    createContext<EmulatorChoiceContextType | null>(null)
+export const EmulatorChoiceContext = createContext<EmulatorChoiceContextType | null>(null)
 
-export const useEmulatorChoiceContext = (
-    context: Context<EmulatorChoiceContextType | null>
-) => {
+export const useEmulatorChoiceContext = (context: Context<EmulatorChoiceContextType | null>) => {
     const emulatorChoiceContext = useContext(context)
 
     if (!emulatorChoiceContext) {

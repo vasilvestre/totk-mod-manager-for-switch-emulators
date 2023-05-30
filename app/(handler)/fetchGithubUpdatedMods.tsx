@@ -1,8 +1,7 @@
 import { Octokit } from 'octokit'
 import { Endpoints } from '@octokit/types'
 
-export type GithubRelease =
-    Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
+export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
 
 export async function fetchGithubUpdatedMods(
     setDownloadProgress: (value: number) => void
@@ -11,16 +10,13 @@ export async function fetchGithubUpdatedMods(
     const octokit = new Octokit({
         auth: process.env.NEXT_PUBLIC_GITHUB_AUTH_TOKEN,
     })
-    const mods = await octokit.request(
-        'GET /repos/{owner}/{repo}/releases/latest',
-        {
-            owner: 'HolographicWings',
-            repo: 'TOTK-Mods-collection',
-            headers: {
-                'X-GitHub-Api-Version': '2022-11-28',
-            },
-        }
-    )
+    const mods = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
+        owner: 'HolographicWings',
+        repo: 'TOTK-Mods-collection',
+        headers: {
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+    })
 
     const zipAsset = mods.data.assets.find((asset) => {
         return asset.name.endsWith('.zip')
@@ -75,10 +71,7 @@ export async function extractZip(filename: string, version: string | null) {
     const { path, fs, invoke } = await import('@tauri-apps/api')
     const downloadDir = await path.downloadDir()
     const filePath = await path.resolve(downloadDir, filename)
-    const targetDir = await path.resolve(
-        await path.appDataDir(),
-        version ? version : 'latest'
-    )
+    const targetDir = await path.resolve(await path.appDataDir(), version ? version : 'latest')
     if (!(await fs.exists(await path.appDataDir()))) {
         await fs.createDir(await path.appDataDir())
     }
