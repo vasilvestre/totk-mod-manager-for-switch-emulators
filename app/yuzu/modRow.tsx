@@ -32,7 +32,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     }, [searchTerms, config.title, config.subtitle, config.category, config.game.version])
 
     return (
-        <tr key={config.id} className={visibility}>
+        <tr key={config.id} className={visibility + ' ' + 'hover'}>
             <td>
                 {config.title}
                 <br />
