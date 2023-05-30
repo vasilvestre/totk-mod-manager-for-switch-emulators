@@ -1,8 +1,6 @@
 # Zelda: Tears of the Kingdom Mod Manager
 
-<img src="src-tauri/icons/Square30x30Logo.png" alt='logo with a sword and a shield, in the zelda style'> 
-[![License](https://img.shields.io/badge/license-BSD3-blue.svg)](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE.md)
-[![Discord](https://img.shields.io/badge/license-BSD3-blue.svg)](https://discord.gg/yyeMqCXB)
+<img src="src-tauri/icons/Square30x30Logo.png" alt='logo with a sword and a shield, in the zelda style'> [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=for-the-badge)](https://opensource.org/licenses/BSD-3-Clause) [![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/yyeMqCXB)
 
 
 Zelda: Tears of the Kingdom Mod Manager is an open-source application designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
