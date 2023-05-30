@@ -20,10 +20,6 @@ If you have any questions, suggestions, or need assistance, feel free to reach o
 
 We appreciate your feedback and support. Together, let's make this project amazing!
 
-## License
-
-This project is licensed under the BSD 3 - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## Acknowledgments
 
 We would like to express our gratitude to the contributors who have helped shape and improve this project. Your efforts are sincerely appreciated. Thank you for making this project possible!
