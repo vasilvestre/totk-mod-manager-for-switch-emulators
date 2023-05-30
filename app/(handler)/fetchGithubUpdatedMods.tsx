@@ -8,7 +8,10 @@ export async function fetchGithubUpdatedMods(
 ): Promise<GithubRelease> {
     const { fs } = await import('@tauri-apps/api')
     const octokit = new Octokit({
-        auth: process.env.NEXT_PUBLIC_GITHUB_AUTH_TOKEN,
+        appId: 336782,
+        privateKey: process.env.NEXT_PUBLIC_GITHUB_PRIVATE_KEY,
+        clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
+        clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
     })
     const mods = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
         owner: 'HolographicWings',
