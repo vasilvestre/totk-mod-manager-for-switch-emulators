@@ -1,5 +1,5 @@
-import { ModContext, useModContext } from '@/app/modContext'
-import { AppContext, useAppContext } from '@/app/appContext'
+import { ModContext, useModContext } from '@/src/context/modContext'
+import { AppContext, useAppContext } from '@/src/context/appContext'
 import { useEffect, useState } from 'react'
 import { ModFile } from '@/src/types'
 import { CategoryNames, Enum } from '@/src/enum'

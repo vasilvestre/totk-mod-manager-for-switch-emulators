@@ -1,7 +1,10 @@
 'use client'
 
-import { ModContext, useModContext } from '@/app/modContext'
-import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import { ModContext, useModContext } from '@/src/context/modContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/src/context/emulatorChoiceContext'
 import React from 'react'
 
 export function Header() {

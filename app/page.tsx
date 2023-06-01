@@ -2,8 +2,11 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
-import EmulatorPage from '@/app/(emulators)/emulatorPage'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/src/context/emulatorChoiceContext'
+import EmulatorPage from '@/app/emulators/emulatorPage'
 
 export default function EmulatorChoice() {
     const { supportedEmulators, emulatorState, setEmulatorState } =

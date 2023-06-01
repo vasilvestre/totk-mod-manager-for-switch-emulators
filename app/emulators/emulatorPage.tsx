@@ -1,19 +1,21 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { ModContext } from '@/app/modContext'
-import { AppContext, useAppContext } from '@/app/appContext'
-import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import { ModContext } from '@/src/context/modContext'
+import { AppContext, useAppContext } from '@/src/context/appContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/src/context/emulatorChoiceContext'
 import { LocalMod, ModFile } from '@/src/types'
 import { fetchGithubUpdatedMods, GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
 import getErrorMessage from '@/src/handler/errorHandler'
 import { filterMods } from '@/src/handler/modHandler'
-import listMods from '@/src/handler/listmods'
 import { clearInnerCache } from '@/src/handler/debugHandler'
 import { askEmulator, checkEmulator, emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
-import fetchMods from '@/src/handler/fetchMods'
-import { Header } from '@/app/(emulators)/header'
-import { ModsTable } from '@/app/(emulators)/modsTable'
+import { fetchMods, listMods } from '@/src/handler/localModHandler'
+import { Header } from '@/app/emulators/header'
+import { ModsTable } from '@/app/emulators/modsTable'
 
 export default function EmulatorPage(props: { emulatorName: string }) {
     const { setAlert, appVersion } = useAppContext(AppContext)

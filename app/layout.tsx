@@ -3,9 +3,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import React, { useEffect, useState } from 'react'
-import { AppContext } from '@/app/appContext'
+import { AppContext } from '@/src/context/appContext'
 import Alert from '@/app/alert'
-import { EmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import { EmulatorChoiceContext } from '@/src/context/emulatorChoiceContext'
 import { themeChange } from 'theme-change'
 import { AlertType, EmulatorState, SupportedEmulator } from '@/src/types'
 

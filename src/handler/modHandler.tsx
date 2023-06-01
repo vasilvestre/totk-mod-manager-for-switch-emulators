@@ -1,7 +1,7 @@
 import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
-import fetchMods from '@/src/handler/fetchMods'
+import { fetchMods } from '@/src/handler/localModHandler'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
