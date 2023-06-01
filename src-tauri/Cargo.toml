@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "0.8.2"
+version = "0.8.3"
 description = "Mod Manager designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game."
 authors = ["vasilvestre"]
 license = ""
