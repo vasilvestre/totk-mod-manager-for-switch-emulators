@@ -3,7 +3,7 @@
 <img src="src-tauri/icons/Square30x30Logo.png" alt='logo with a sword and a shield, in the zelda style'> [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg?style=for-the-badge)](https://opensource.org/licenses/BSD-3-Clause) ![GitHub all releases](https://img.shields.io/github/downloads/vasilvestre/totk-mod-manager-for-yuzu/total?style=for-the-badge) [![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/yyeMqCXB)
 
 
-Zelda: Tears of the Kingdom Mod Manager is an open-source application designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game.
+Zelda: Tears of the Kingdom Mod Manager is an open-source application designed to assist players of Zelda: Tears of the Kingdom on the Yuzu & Ryujinx emulators in managing mods for the game.
 It fetch distant mod collection and install/update the mods for you.
 
 They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
@@ -14,6 +14,7 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 -   **Mod compatibility**: The application will automatically detect which mods are compatible with others
 -   **Intuitive User Interface**: The application provides a user-friendly interface, making it simple to navigate and manage mods efficiently.
 -   **Desktop Client**: The mod manager is built using Tauri, providing a cross-platform desktop client that runs seamlessly on Windows and Linux.
+-   **Emulator compatiblity**: Work on Ryujinx and Yuzu
 
 ## Possible future features
 
@@ -32,9 +33,14 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 
 ### How to setup the path
 
+#### Yuzu
 - Your Yuzu is located at C:\Users\myUser\AppData\Roaming\yuzu ? It should work instantly.
 - If the mod ask you to locate Yuzu, please refer to this : https://yuzu-emu.org/wiki/user-directory/
     - There's another path for Yuzu, which isn't the one required.
+
+#### Ryujinx
+- Locate the directory shown in their documentation
+  - See here : https://github.com/Ryujinx/Ryujinx/wiki/Ryujinx-Setup-&-Configuration-Guide#managing-mods
 
 ## Contributing
 
