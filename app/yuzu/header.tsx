@@ -2,6 +2,7 @@
 
 import { ModContext, useModContext } from '@/app/yuzu/modContext'
 import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import React from "react";
 
 export function Header() {
     const { upToDateMods, downloadProgress, setSearchTerms } = useModContext(ModContext)
@@ -33,9 +34,10 @@ export function Header() {
                     </>
                 )}
                 <div className="navbar-end">
+
                     <button
                         className="btn btn-square btn-ghost"
-                        onClick={(event) => toggleTheme(event)}
+                        onClick={(event ) => toggleTheme(event)}
                     >
                         <label className="swap swap-rotate">
                             <input
@@ -81,8 +83,9 @@ export function Header() {
     )
 }
 
-function toggleTheme(evt: any) {
-    const themesList = evt.target.getAttribute('data-toggle-theme')
+function toggleTheme(evt: React.MouseEvent<HTMLButtonElement>) {
+    const target = evt.target as HTMLButtonElement
+    const themesList = target.getAttribute('data-toggle-theme')
     if (themesList) {
         const themesArray = themesList.split(',')
         if (document.documentElement.getAttribute('data-theme') == themesArray[0]) {

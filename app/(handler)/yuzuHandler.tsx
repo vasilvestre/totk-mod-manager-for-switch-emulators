@@ -16,7 +16,7 @@ export async function askForYuzu() {
                 version: undefined,
             }
         }
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.error(e)
         return {
             path: undefined,
@@ -25,6 +25,25 @@ export async function askForYuzu() {
         }
     }
 }
+
+
+export async function checkYuzu() {
+    const { fs, path } = await import('@tauri-apps/api')
+    const configuration = await readConfiguration()
+    let yuzuDir
+    if (configuration.yuzuDir) {
+        yuzuDir = configuration.yuzuDir
+    } else {
+        yuzuDir = await path.resolve(await path.dataDir(), 'yuzu')
+    }
+    const yuzuFound = await fs.exists(yuzuDir)
+    return {
+        found: yuzuFound,
+        path: yuzuDir,
+        version: undefined,
+    }
+}
+
 
 async function readConfiguration() {
     const { fs, path } = await import('@tauri-apps/api')
@@ -46,7 +65,7 @@ async function readConfiguration() {
             )
         }
         return yaml.parse(await fs.readTextFile(configPath))
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.error(e)
     }
 }
@@ -62,24 +81,7 @@ async function writeConfiguration(content: { yuzuDir: string | undefined }) {
         }
         const configPath = await path.resolve(configDir, 'config.yaml')
         await fs.writeFile(configPath, yaml.stringify(content))
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.error(e)
-    }
-}
-
-export async function checkYuzu() {
-    const { fs, path } = await import('@tauri-apps/api')
-    const configuration = await readConfiguration()
-    let yuzuDir
-    if (configuration.yuzuDir) {
-        yuzuDir = configuration.yuzuDir
-    } else {
-        yuzuDir = await path.resolve(await path.dataDir(), 'yuzu')
-    }
-    const yuzuFound = await fs.exists(yuzuDir)
-    return {
-        found: yuzuFound,
-        path: yuzuDir,
-        version: undefined,
     }
 }

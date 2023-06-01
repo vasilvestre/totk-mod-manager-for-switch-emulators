@@ -12,6 +12,7 @@ import { ModsTable } from '@/app/yuzu/modsTable'
 import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
 import { AppContext, useAppContext } from '@/app/appContext'
 import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import getErrorMessage from "@/app/(handler)/errorHandler";
 
 export default function Yuzu() {
     const { setAlert } = useAppContext(AppContext)
@@ -28,9 +29,9 @@ export default function Yuzu() {
         ;(async () => {
             try {
                 setYuzuState(await checkYuzu())
-            } catch (e: any) {
+            } catch (e) {
                 console.error(e)
-                setAlert({ message: e.message, type: 'error' })
+                setAlert({ message: getErrorMessage(e), type: 'error' })
             }
         })()
     }, [setAlert])
@@ -42,9 +43,9 @@ export default function Yuzu() {
                     setLocalMods(await fetchYuzuMods(yuzuState.path))
                     setUpToDateMods(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
-            } catch (e: any) {
+            } catch (e) {
                 console.error(e)
-                setAlert({ message: e.message, type: 'error' })
+                setAlert({ message: getErrorMessage(e), type: 'error' })
                 setYuzuState({
                     found: false,
                     path: undefined,
@@ -61,9 +62,9 @@ export default function Yuzu() {
                 if (upToDateMods?.data.name) {
                     setMods(filterMods(await listMods(upToDateMods.data.name), localMods))
                 }
-            } catch (e: any) {
+            } catch (e) {
                 console.error(e)
-                setAlert({ message: e.message, type: 'error' })
+                setAlert({ message: getErrorMessage(e), type: 'error' })
             }
         })()
     }, [localMods, setAlert, upToDateMods])
@@ -90,10 +91,10 @@ export default function Yuzu() {
                             onClick={async () => {
                                 try {
                                     setYuzuState(await askForYuzu())
-                                } catch (e: any) {
+                                } catch (e) {
                                     console.error(e)
                                     setAlert({
-                                        message: e.message,
+                                        message: getErrorMessage(e),
                                         type: 'error',
                                     })
                                 }

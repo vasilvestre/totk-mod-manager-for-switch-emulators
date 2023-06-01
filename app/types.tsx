@@ -14,7 +14,7 @@ export type SupportedEmulator = {
     text: string
 }
 
-export type AlertType = { message: string; type: string; data?: any[] }
+export type AlertType = { message: string; type: string; data?: string[] }
 
 export type YuzuState = {
     version: string | undefined

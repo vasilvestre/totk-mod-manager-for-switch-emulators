@@ -1,5 +1,6 @@
 import { AlertType, LocalMod, ModFile } from '@/app/types'
 import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
+import getErrorMessage, {getErrorData} from "@/app/(handler)/errorHandler";
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
@@ -34,12 +35,12 @@ export function tryInstall(
                 message: 'Mod installed',
                 type: 'success',
             })
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error(e)
             setAlert({
-                message: e.message,
+                message: getErrorMessage(e),
                 type: 'error',
-                data: e.data,
+                data: getErrorData(e),
             })
         } finally {
             trackEvent('mod_install', { name: mod.config.title })
@@ -74,12 +75,12 @@ export function tryUpdate(
                 message: 'Mod updated',
                 type: 'success',
             })
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error(e)
             setAlert({
-                message: e.message,
+                message: getErrorMessage(e),
                 type: 'error',
-                data: e.data,
+                data: getErrorData(e),
             })
         } finally {
             trackEvent('mod_update', { name: mod.config.title })
@@ -120,12 +121,12 @@ export function tryRemove(
             } else {
                 throw new Error()
             }
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error(e)
             setAlert({
-                message: e.message,
+                message: getErrorMessage(e),
                 type: 'error',
-                data: e.data,
+                data: getErrorData(e),
             })
         } finally {
             trackEvent('mod_remove', { name: mod?.name ?? 'unknown' })
