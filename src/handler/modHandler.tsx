@@ -1,6 +1,6 @@
-import { AlertType, LocalMod, ModFile } from '@/app/types'
-import fetchYuzuMods from '@/app/(handler)/fetchYuzuMods'
-import getErrorMessage, {getErrorData} from "@/app/(handler)/errorHandler";
+import { AlertType, LocalMod, ModFile } from '@/src/types'
+import fetchYuzuMods from '@/src/handler/fetchYuzuMods'
+import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []

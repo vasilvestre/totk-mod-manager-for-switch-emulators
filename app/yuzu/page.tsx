@@ -1,19 +1,19 @@
 'use client'
 
-import fetchYuzuMods from '../(handler)/fetchYuzuMods'
-import { useEffect, useState } from 'react'
-import { fetchGithubUpdatedMods, GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
-import listMods from '@/app/(handler)/listmods'
-import { LocalMod, ModFile, YuzuState } from '@/app/types'
-import { filterMods } from '@/app/(handler)/modHandler'
+import React, { useEffect, useState } from 'react'
 import { ModContext } from '@/app/yuzu/modContext'
 import { Header } from '@/app/yuzu/header'
 import { ModsTable } from '@/app/yuzu/modsTable'
-import { askForYuzu, checkYuzu } from '@/app/(handler)/yuzuHandler'
 import { AppContext, useAppContext } from '@/app/appContext'
 import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
-import getErrorMessage from "@/app/(handler)/errorHandler";
-
+import { LocalMod, ModFile, YuzuState } from '@/src/types'
+import { fetchGithubUpdatedMods, GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
+import { askForYuzu, checkYuzu } from '@/src/handler/yuzuHandler'
+import getErrorMessage from '@/src/handler/errorHandler'
+import fetchYuzuMods from '@/src/handler/fetchYuzuMods'
+import { filterMods } from '@/src/handler/modHandler'
+import listMods from '@/src/handler/listmods'
+import { clearInnerCache } from '@/src/handler/debugHandler'
 export default function Yuzu() {
     const { setAlert } = useAppContext(AppContext)
     useEmulatorChoiceContext(EmulatorChoiceContext)
@@ -107,6 +107,20 @@ export default function Yuzu() {
                 <div className={'overflow-x-auto'}>
                     <ModsTable />
                 </div>
+                <dialog id="app_modal" className="modal">
+                    <form method="dialog" className="modal-box">
+                        <h3 className="font-bold text-lg">Debug panel</h3>
+                        <p className="py-4">Got issues ? Try these.</p>
+                        <p className="py-4">
+                            <button className="btn" onClick={() => clearInnerCache()}>
+                                Clear inner cache (force relaunch)
+                            </button>
+                        </p>
+                        <div className="modal-action">
+                            <button className="btn">Close</button>
+                        </div>
+                    </form>
+                </dialog>
             </main>
         </ModContext.Provider>
     )

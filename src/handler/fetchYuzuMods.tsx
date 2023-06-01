@@ -1,6 +1,6 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import * as yaml from 'yaml'
-import { LocalMod, ModConfig, notEmpty } from '@/app/types'
+import { LocalMod, ModConfig, notEmpty } from '@/src/types'
 
 export default async function fetchYuzuMods(yuzuDir: string): Promise<LocalMod[]> {
     const { fs, path } = await import('@tauri-apps/api')

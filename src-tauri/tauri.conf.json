@@ -18,6 +18,11 @@
       "dialog": {
         "open": true
       },
+      "process": {
+        "all": false,
+        "exit": true,
+        "relaunch": true
+      },
       "fs": {
         "all": false,
         "writeFile": true,
