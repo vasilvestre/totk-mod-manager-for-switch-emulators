@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import { AlertType } from '@/app/types'
+import { AlertType } from '@/src/types'
 
 interface AppContextType {
     alert: AlertType | undefined

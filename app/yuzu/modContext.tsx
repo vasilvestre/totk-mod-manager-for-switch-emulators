@@ -1,6 +1,6 @@
 import { Context, createContext, useContext } from 'react'
-import { LocalMod, ModFile, YuzuState } from '@/app/types'
-import { GithubRelease } from '@/app/(handler)/fetchGithubUpdatedMods'
+import { LocalMod, ModFile, YuzuState } from '@/src/types'
+import { GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
 
 interface ModContextType {
     mods: ModFile[] | undefined

@@ -1,9 +1,9 @@
-import { CategoryNames, Enum } from '@/app/enum'
-import { tryInstall, tryRemove, tryUpdate } from '@/app/(handler)/modHandler'
 import { ModContext, useModContext } from '@/app/yuzu/modContext'
-import { ModFile } from '@/app/types'
 import { AppContext, useAppContext } from '@/app/appContext'
 import { useEffect, useState } from 'react'
+import { ModFile } from '@/src/types'
+import { CategoryNames, Enum } from '@/src/enum'
+import { tryInstall, tryRemove, tryUpdate } from '@/src/handler/modHandler'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const { setAlert } = useAppContext(AppContext)

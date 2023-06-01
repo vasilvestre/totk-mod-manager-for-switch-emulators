@@ -47,6 +47,7 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 ## Acknowledgements
 
 - Most assets comes from [daisyui](https://daisyui.com).
+- Icons from [iconify](https://icon-sets.iconify.design/carbon/).
 - See [thank-you.md](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support

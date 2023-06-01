@@ -1,4 +1,4 @@
-import { LocalMod } from '@/app/types'
+import { LocalMod } from '@/src/types'
 
 export function LocalModRow(props: { localMod: LocalMod & { supported?: boolean | undefined } }) {
     const mod = props.localMod

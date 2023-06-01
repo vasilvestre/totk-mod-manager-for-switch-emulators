@@ -3,11 +3,11 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import React, { useEffect, useState } from 'react'
-import { AlertType, SupportedEmulator } from '@/app/types'
 import { AppContext } from '@/app/appContext'
 import Alert from '@/app/alert'
 import { EmulatorChoiceContext } from '@/app/emulatorChoiceContext'
 import { themeChange } from 'theme-change'
+import { AlertType, SupportedEmulator } from '@/src/types'
 
 const inter = Inter({ subsets: ['latin'] })
 

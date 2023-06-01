@@ -1,6 +1,12 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import { UUID } from 'crypto'
 
+declare global {
+    interface Window {
+        app_modal: HTMLDialogElement
+    }
+}
+
 export type EmulatorChoice = {
     emulatorChoice: string | null
     setEmulatorChoice: (emulatorChoice: string | null) => void
