@@ -24,12 +24,11 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 
 ## How to install
 
-- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest).
-- Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest/download/Zelda.Tears.of.the.Kingdom.Mod.Manager.exe).
+- (Recommended) Windows installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/releases/latest).
+- Portable windows Installation is in the [latest release](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/releases/latest/download/Zelda.Tears.of.the.Kingdom.Mod.Manager.exe).
     - If the app don't run, install WebView2 Runtime from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
 - Linux installation is possible via AppImage and .deb.
-  - Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
-    - https://stackoverflow.com/a/72633324 for now
+  - `Error : zelda-tears-of-the-kingdom-mod-manager: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory` see : https://stackoverflow.com/a/72633324 
 
 ### How to setup the path
 
@@ -48,18 +47,18 @@ Please refer to [CONTRIBUTING](docs/CONTRIBUTING.md).
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/LICENSE) file for more information.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/blob/main/LICENSE) file for more information.
 
 ## Acknowledgements
 
 - Most assets comes from [daisyui](https://daisyui.com).
 - Icons from [iconify](https://icon-sets.iconify.design/carbon/).
-- See [thank-you.md](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/blob/main/.github/thank-you.md) for a full list of acknowledgements.
+- See [thank-you.md](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/blob/main/.github/thank-you.md) for a full list of acknowledgements.
 
 ## Support
 
 Join me on discord https://discord.gg/yyeMqCXB !
-If you encounter any issues or have questions, please create an issue on the [issue tracker](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/issues). We'll do our best to assist you.
+If you encounter any issues or have questions, please create an issue on the [issue tracker](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/issues). We'll do our best to assist you.
 
 ## Roadmap
 
