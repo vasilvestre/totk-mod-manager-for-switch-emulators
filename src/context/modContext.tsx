@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import { LocalMod, ModFile, YuzuState } from '@/src/types'
+import { LocalMod, ModFile, EmulatorState } from '@/src/types'
 import { GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
 
 interface ModContextType {
@@ -9,7 +9,7 @@ interface ModContextType {
     downloadProgress: number
     setLocalMods: (value: LocalMod[]) => void
     setMods: (value: ModFile[] | undefined) => void
-    yuzuState: YuzuState | undefined
+    emulatorState: EmulatorState | undefined
     searchTerms: string
     setSearchTerms: (value: string) => void
 }

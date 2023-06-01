@@ -1,52 +1,55 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { ModContext } from '@/app/yuzu/modContext'
-import { Header } from '@/app/yuzu/header'
-import { ModsTable } from '@/app/yuzu/modsTable'
-import { AppContext, useAppContext } from '@/app/appContext'
-import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
-import { LocalMod, ModFile, YuzuState } from '@/src/types'
+import { ModContext } from '@/src/context/modContext'
+import { AppContext, useAppContext } from '@/src/context/appContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/src/context/emulatorChoiceContext'
+import { LocalMod, ModFile } from '@/src/types'
 import { fetchGithubUpdatedMods, GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
-import { askForYuzu, checkYuzu } from '@/src/handler/yuzuHandler'
 import getErrorMessage from '@/src/handler/errorHandler'
-import fetchYuzuMods from '@/src/handler/fetchYuzuMods'
 import { filterMods } from '@/src/handler/modHandler'
-import listMods from '@/src/handler/listmods'
 import { clearInnerCache } from '@/src/handler/debugHandler'
-export default function Yuzu() {
+import { askEmulator, checkEmulator, emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
+import { fetchMods, listMods } from '@/src/handler/localModHandler'
+import { Header } from '@/app/emulators/header'
+import { ModsTable } from '@/app/emulators/modsTable'
+
+export default function EmulatorPage(props: { emulatorName: string }) {
     const { setAlert, appVersion } = useAppContext(AppContext)
-    useEmulatorChoiceContext(EmulatorChoiceContext)
+    const { emulatorState, setEmulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
 
     const [localMods, setLocalMods] = useState<LocalMod[]>([])
     const [upToDateMods, setUpToDateMods] = useState<GithubRelease | null>(null)
     const [downloadProgress, setDownloadProgress] = useState<number>(0)
     const [mods, setMods] = useState<ModFile[]>()
-    const [yuzuState, setYuzuState] = useState<YuzuState>()
     const [searchTerms, setSearchTerms] = useState<string>('')
 
     useEffect(() => {
         ;(async () => {
             try {
-                setYuzuState(await checkYuzu())
+                setEmulatorState(await checkEmulator({ name: props.emulatorName }))
             } catch (e) {
                 console.error(e)
                 setAlert({ message: getErrorMessage(e), type: 'error' })
             }
         })()
-    }, [setAlert])
+    }, [props.emulatorName, setAlert, setEmulatorState])
 
     useEffect(() => {
         ;(async () => {
             try {
-                if (yuzuState?.found && yuzuState?.path) {
-                    setLocalMods(await fetchYuzuMods(yuzuState.path))
+                if (emulatorState) {
+                    setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
                     setUpToDateMods(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
             } catch (e) {
                 console.error(e)
                 setAlert({ message: getErrorMessage(e), type: 'error' })
-                setYuzuState({
+                setEmulatorState({
+                    name: props.emulatorName,
                     found: false,
                     path: undefined,
                     version: undefined,
@@ -54,7 +57,7 @@ export default function Yuzu() {
             }
             setDownloadProgress(100)
         })()
-    }, [yuzuState, setYuzuState, setAlert])
+    }, [emulatorState, props.emulatorName, setAlert, setEmulatorState])
 
     useEffect(() => {
         ;(async () => {
@@ -78,19 +81,21 @@ export default function Yuzu() {
                 downloadProgress,
                 setLocalMods,
                 setMods,
-                yuzuState,
+                emulatorState,
                 searchTerms,
                 setSearchTerms,
             }}
         >
             <main className="min-h-screen justify-between">
                 <Header />
-                {yuzuState?.found === false && (
+                {emulatorState?.found === false && (
                     <div>
                         <button
                             onClick={async () => {
                                 try {
-                                    setYuzuState(await askForYuzu())
+                                    setEmulatorState(
+                                        await askEmulator({ name: emulatorState.name })
+                                    )
                                 } catch (e) {
                                     console.error(e)
                                     setAlert({

@@ -1,5 +1,5 @@
-import { ModContext, useModContext } from '@/app/yuzu/modContext'
-import { AppContext, useAppContext } from '@/app/appContext'
+import { ModContext, useModContext } from '@/src/context/modContext'
+import { AppContext, useAppContext } from '@/src/context/appContext'
 import { useEffect, useState } from 'react'
 import { ModFile } from '@/src/types'
 import { CategoryNames, Enum } from '@/src/enum'
@@ -7,7 +7,7 @@ import { tryInstall, tryRemove, tryUpdate } from '@/src/handler/modHandler'
 
 export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
     const { setAlert } = useAppContext(AppContext)
-    const { localMods, setLocalMods, yuzuState, searchTerms } = useModContext(ModContext)
+    const { localMods, setLocalMods, emulatorState, searchTerms } = useModContext(ModContext)
     const [visibility, setVisibility] = useState<'visible' | 'hidden'>('visible')
 
     const mod = props.mod
@@ -65,7 +65,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                                 localMods,
                                 setLocalMods,
                                 setAlert,
-                                yuzuState?.path
+                                emulatorState
                             )}
                         >
                             Install
@@ -81,7 +81,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                                         localMods,
                                         setLocalMods,
                                         setAlert,
-                                        yuzuState?.path
+                                        emulatorState
                                     )}
                                 >
                                     Update
@@ -93,7 +93,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                                     localMods.find((localMod) => localMod.name === mod.name),
                                     setLocalMods,
                                     setAlert,
-                                    yuzuState?.path
+                                    emulatorState
                                 )}
                             >
                                 Remove

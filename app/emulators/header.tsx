@@ -1,12 +1,15 @@
 'use client'
 
-import { ModContext, useModContext } from '@/app/yuzu/modContext'
-import { EmulatorChoiceContext, useEmulatorChoiceContext } from '@/app/emulatorChoiceContext'
+import { ModContext, useModContext } from '@/src/context/modContext'
+import {
+    EmulatorChoiceContext,
+    useEmulatorChoiceContext,
+} from '@/src/context/emulatorChoiceContext'
 import React from 'react'
 
 export function Header() {
     const { upToDateMods, downloadProgress, setSearchTerms } = useModContext(ModContext)
-    const { setEmulatorChoice } = useEmulatorChoiceContext(EmulatorChoiceContext)
+    const { setEmulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
 
     return (
         <>
@@ -15,7 +18,7 @@ export function Header() {
                     <button
                         className="btn btn-ghost"
                         onClick={() => {
-                            setEmulatorChoice(null)
+                            setEmulatorState(undefined)
                         }}
                     >
                         Get to emulator choice

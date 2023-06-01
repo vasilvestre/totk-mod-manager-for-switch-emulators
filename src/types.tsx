@@ -22,10 +22,11 @@ export type SupportedEmulator = {
 
 export type AlertType = { message: string; type: string; data?: string[] }
 
-export type YuzuState = {
-    version: string | undefined
-    path: string | undefined
-    found: boolean
+export type EmulatorState = {
+    name: string
+    version?: string | undefined
+    path?: string | undefined
+    found?: boolean
 }
 
 export type ModConfig = {

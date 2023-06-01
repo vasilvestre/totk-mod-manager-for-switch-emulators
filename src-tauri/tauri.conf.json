@@ -43,7 +43,8 @@
           "$APPDATA/**",
           "$CONFIG",
           "$CONFIG/TTKMM",
-          "$CONFIG/TTKMM/**"
+          "$CONFIG/TTKMM/**",
+          "$CONFIG/Ryujinx/**"
         ]
       }
     },

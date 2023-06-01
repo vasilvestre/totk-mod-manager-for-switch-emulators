@@ -23,7 +23,7 @@ function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
     }
 }
 
-export function getErrorData(error: unknown): undefined|string[] {
+export function getErrorData(error: unknown): undefined | string[] {
     if (typeof error === 'object' && error !== null && 'data' in error) {
         return (error as Record<string, unknown>).data as string[]
     }

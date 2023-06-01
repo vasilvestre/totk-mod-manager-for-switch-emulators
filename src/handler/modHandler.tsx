@@ -1,6 +1,7 @@
-import { AlertType, LocalMod, ModFile } from '@/src/types'
-import fetchYuzuMods from '@/src/handler/fetchYuzuMods'
+import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
+import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
+import { fetchMods } from '@/src/handler/localModHandler'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
@@ -19,18 +20,19 @@ export function tryInstall(
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
-    yuzuDir: string | undefined
+    emulatorState: EmulatorState | undefined
 ) {
     return async () => {
         const { trackEvent } = await import('@aptabase/tauri')
 
         try {
-            if (!yuzuDir) {
-                throw { message: 'Yuzu not found' }
+            if (typeof emulatorState === 'undefined' || !emulatorState.path) {
+                throw { message: 'Emulator not found' }
             }
             await checkIncompatibilities(mod, localMods)
-            await installSingleMod(mod, true, yuzuDir)
-            setLocalMods(await fetchYuzuMods(yuzuDir))
+            const emulatorModDir = await emulatorDefaultModFolder(emulatorState)
+            await installSingleMod(mod, true, emulatorModDir)
+            setLocalMods(await fetchMods(emulatorModDir))
             setAlert({
                 message: 'Mod installed',
                 type: 'success',
@@ -53,16 +55,17 @@ export function tryUpdate(
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
-    yuzuDir: string | undefined
+    emulatorState: EmulatorState | undefined
 ) {
     return async () => {
         const { trackEvent } = await import('@aptabase/tauri')
 
         try {
-            if (!yuzuDir) {
-                throw { message: 'Yuzu not found' }
+            if (typeof emulatorState === 'undefined' || !emulatorState.path) {
+                throw { message: 'Emulator not found' }
             }
-            await installSingleMod(mod, true, yuzuDir)
+            const emulatorModDir = await emulatorDefaultModFolder(emulatorState)
+            await installSingleMod(mod, true, emulatorModDir)
             const previousMod = localMods.find((localMod) =>
                 localMod.name?.includes(mod.config.title)
             )
@@ -70,7 +73,7 @@ export function tryUpdate(
                 throw { message: 'Previous installed folder not found' }
             }
             await removeSingleMod(previousMod)
-            setLocalMods(await fetchYuzuMods(yuzuDir))
+            setLocalMods(await fetchMods(emulatorModDir))
             setAlert({
                 message: 'Mod updated',
                 type: 'success',
@@ -109,15 +112,15 @@ export function tryRemove(
     mod: LocalMod | undefined,
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
-    yuzuDir: string | undefined
+    emulatorState: EmulatorState | undefined
 ) {
     return async () => {
         const { trackEvent } = await import('@aptabase/tauri')
 
         try {
-            if (yuzuDir && mod) {
+            if (emulatorState && mod) {
                 await removeSingleMod(mod)
-                setLocalMods(await fetchYuzuMods(yuzuDir))
+                setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
                 setAlert({
                     message: 'Mod removed',
                     type: 'success',
@@ -138,13 +141,12 @@ export function tryRemove(
     }
 }
 
-async function installSingleMod(mod: ModFile, overwrite = false, yuzuDir: string) {
-    const { invoke, path } = await import('@tauri-apps/api')
+async function installSingleMod(mod: ModFile, overwrite = false, emulatorModDir: string) {
+    const { invoke } = await import('@tauri-apps/api')
 
-    const localModsPath = await path.resolve(yuzuDir, 'load', '0100F2C0115B6000')
     await invoke('copy_dir', {
         filePath: mod.path,
-        targetDir: localModsPath,
+        targetDir: emulatorModDir,
         overwrite: overwrite,
     })
 }
