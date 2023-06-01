@@ -1,11 +1,11 @@
 [package]
 name = "app"
-version = "0.9.0"
+version = "0.9.1"
 description = "Mod Manager designed to assist players of Zelda: Tears of the Kingdom on the Yuzu emulator in managing mods for the game."
 authors = ["vasilvestre"]
 license = ""
-homepage = "https://github.com/vasilvestre/totk-mod-manager-for-yuzu"
-repository = "https://github.com/vasilvestre/totk-mod-manager-for-yuzu"
+homepage = "https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators"
+repository = "https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators"
 keywords = ["emulation","zelda","mod"]
 default-run = "app"
 edition = "2021"

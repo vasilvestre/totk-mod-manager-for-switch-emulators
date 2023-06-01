@@ -87,7 +87,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://github.com/vasilvestre/totk-mod-manager-for-yuzu/releases/latest/download/latest.json"
+        "https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/releases/latest/download/latest.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDMxRkYyNjE5OTdGQUJCMDEKUldRQnUvcVhHU2IvTWZRUWc4RkZIV292akRrVWZqMDVYbDV1ekl2S2d1NzlhUlRJTHZzVEoxbGEK"

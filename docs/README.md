@@ -16,7 +16,7 @@ We value a welcoming and inclusive community. By participating in this project, 
 
 If you have any questions, suggestions, or need assistance, feel free to reach out to us. You can contact us through the following channels:
 
-- Issue Tracker: [GitHub Issues](https://github.com/vasilvestre/totk-mod-manager-for-yuzu/issues)
+- Issue Tracker: [GitHub Issues](https://github.com/vasilvestre/totk-mod-manager-for-switch-emulators/issues)
 
 We appreciate your feedback and support. Together, let's make this project amazing!
 
