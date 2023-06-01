@@ -34,6 +34,7 @@ export function Header() {
                     </>
                 )}
                 <div className="navbar-end">
+
                     <button
                         className="btn btn-square btn-ghost"
                         onClick={(event ) => toggleTheme(event)}
