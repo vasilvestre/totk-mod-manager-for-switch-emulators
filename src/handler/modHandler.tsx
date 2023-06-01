@@ -118,6 +118,10 @@ export function tryRemove(
             if (yuzuDir && mod) {
                 await removeSingleMod(mod)
                 setLocalMods(await fetchYuzuMods(yuzuDir))
+                setAlert({
+                    message: 'Mod removed',
+                    type: 'success',
+                })
             } else {
                 throw new Error()
             }

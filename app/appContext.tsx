@@ -6,6 +6,7 @@ interface AppContextType {
     setAlert: (value: AlertType | undefined) => void
     theme: 'light' | 'dark'
     setTheme: (value: 'light' | 'dark') => void
+    appVersion: string
 }
 
 export const AppContext = createContext<AppContextType | null>(null)

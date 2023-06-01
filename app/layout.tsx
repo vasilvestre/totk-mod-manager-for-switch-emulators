@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     const [theme, setTheme] = useState<'light' | 'dark'>('dark')
     const [alert, setAlert] = useState<AlertType | undefined>()
     const [emulatorChoice, setEmulatorChoice] = useState<string | null>('yuzu')
+    const [appVersion, setAppVersion] = useState<string>('')
     const supportedEmulators: SupportedEmulator[] = [
         {
             name: 'yuzu',
@@ -38,13 +39,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     useEffect(() => {
         themeChange(false)
+        ;(async () => {
+            const { getVersion } = await import('@tauri-apps/api/app')
+
+            setAppVersion(await getVersion())
+        })()
         return () => {
             themeChange(false)
         }
     }, [])
 
     return (
-        <AppContext.Provider value={{ alert, setAlert, theme, setTheme }}>
+        <AppContext.Provider value={{ alert, setAlert, theme, setTheme, appVersion }}>
             <EmulatorChoiceContext.Provider
                 value={{
                     emulatorChoice,

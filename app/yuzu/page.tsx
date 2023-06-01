@@ -15,7 +15,7 @@ import { filterMods } from '@/src/handler/modHandler'
 import listMods from '@/src/handler/listmods'
 import { clearInnerCache } from '@/src/handler/debugHandler'
 export default function Yuzu() {
-    const { setAlert } = useAppContext(AppContext)
+    const { setAlert, appVersion } = useAppContext(AppContext)
     useEmulatorChoiceContext(EmulatorChoiceContext)
 
     const [localMods, setLocalMods] = useState<LocalMod[]>([])
@@ -109,7 +109,7 @@ export default function Yuzu() {
                 </div>
                 <dialog id="app_modal" className="modal">
                     <form method="dialog" className="modal-box">
-                        <h3 className="font-bold text-lg">Debug panel</h3>
+                        <h3 className="font-bold text-lg">Debug panel for {appVersion}</h3>
                         <p className="py-4">Got issues ? Try these.</p>
                         <p className="py-4">
                             <button className="btn" onClick={() => clearInnerCache()}>
