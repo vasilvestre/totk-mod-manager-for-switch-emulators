@@ -1,5 +1,5 @@
 import { Context, createContext, useContext } from 'react'
-import { SupportedEmulator } from '@/app/types'
+import { SupportedEmulator } from '@/src/types'
 
 interface EmulatorChoiceContextType {
     emulatorChoice: string | null
