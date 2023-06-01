@@ -17,3 +17,8 @@ export enum CategoryNames {
     CHEATS = 'Cheats',
     COMBOS = 'Combos',
 }
+
+export enum SupportedEmulators {
+    YUZU = 'Yuzu',
+    RYUJINX = 'Ryujinx',
+}

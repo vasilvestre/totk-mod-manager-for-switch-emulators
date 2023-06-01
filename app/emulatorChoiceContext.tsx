@@ -1,10 +1,10 @@
 import { Context, createContext, useContext } from 'react'
-import { SupportedEmulator } from '@/src/types'
+import { SupportedEmulator, EmulatorState } from '@/src/types'
 
 interface EmulatorChoiceContextType {
-    emulatorChoice: string | null
-    setEmulatorChoice: (emulatorChoice: string | null) => void
     supportedEmulators: SupportedEmulator[]
+    emulatorState: EmulatorState | undefined
+    setEmulatorState: (value: EmulatorState | undefined) => void
 }
 
 export const EmulatorChoiceContext = createContext<EmulatorChoiceContextType | null>(null)

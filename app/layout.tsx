@@ -7,14 +7,14 @@ import { AppContext } from '@/app/appContext'
 import Alert from '@/app/alert'
 import { EmulatorChoiceContext } from '@/app/emulatorChoiceContext'
 import { themeChange } from 'theme-change'
-import { AlertType, SupportedEmulator } from '@/src/types'
+import { AlertType, EmulatorState, SupportedEmulator } from '@/src/types'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<'light' | 'dark'>('dark')
     const [alert, setAlert] = useState<AlertType | undefined>()
-    const [emulatorChoice, setEmulatorChoice] = useState<string | null>('yuzu')
+    const [emulatorState, setEmulatorState] = useState<EmulatorState | undefined>(undefined)
     const [appVersion, setAppVersion] = useState<string>('')
     const supportedEmulators: SupportedEmulator[] = [
         {
@@ -53,9 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppContext.Provider value={{ alert, setAlert, theme, setTheme, appVersion }}>
             <EmulatorChoiceContext.Provider
                 value={{
-                    emulatorChoice,
-                    setEmulatorChoice,
                     supportedEmulators,
+                    emulatorState,
+                    setEmulatorState,
                 }}
             >
                 <html lang="en" data-theme={'dark'}>

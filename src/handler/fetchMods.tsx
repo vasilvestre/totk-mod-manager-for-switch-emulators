@@ -2,13 +2,11 @@ import { FileEntry } from '@tauri-apps/api/fs'
 import * as yaml from 'yaml'
 import { LocalMod, ModConfig, notEmpty } from '@/src/types'
 
-export default async function fetchYuzuMods(yuzuDir: string): Promise<LocalMod[]> {
+export default async function fetchMods(modsDir: string): Promise<LocalMod[]> {
     const { fs, path } = await import('@tauri-apps/api')
     try {
-        const yuzuModDir = await path.resolve(yuzuDir, 'load', '0100F2C0115B6000')
-        await fs.exists(yuzuModDir)
-        const localMods = await fs.readDir(yuzuModDir, {
-            dir: path.BaseDirectory.Data,
+        await fs.exists(modsDir)
+        const localMods = await fs.readDir(modsDir, {
             recursive: true,
         })
         const promises: Promise<FileEntry | undefined>[] = []
