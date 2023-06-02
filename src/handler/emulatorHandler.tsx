@@ -98,7 +98,7 @@ async function askFor(emulator: Emulator, dialogTitle: string): Promise<Emulator
             recursive: true,
         })
         if (selectedPath && typeof selectedPath === 'string') {
-            await writeConfiguration(emulator)
+            await writeConfiguration({ ...emulator, path: selectedPath })
             return {
                 name: emulator.name,
                 path: selectedPath,
