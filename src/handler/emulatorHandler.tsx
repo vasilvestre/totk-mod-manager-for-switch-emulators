@@ -1,9 +1,12 @@
-import { SupportedEmulators } from '@/src/enum'
 import { EmulatorState } from '@/src/types'
 
 interface Emulator {
     name: string
     path?: string | undefined
+}
+
+type Config = {
+    emulators?: Emulator[]
 }
 
 export async function askEmulator(emulator: Emulator) {
@@ -65,14 +68,17 @@ async function check(emulator: Emulator) {
     let emulatorDir
     if (
         configuration &&
-        configuration.find((e: Emulator) => e.name.toLowerCase() === emulator.name.toLowerCase())
+        configuration.emulators &&
+        configuration.emulators.find(
+            (e: Emulator) => e.name.toLowerCase() === emulator.name.toLowerCase()
+        )
     ) {
-        const emulatorConfig = configuration.find(
+        const emulatorConfig = configuration.emulators.find(
             (e: Emulator) => e.name.toLowerCase() === emulator.name.toLowerCase()
         )
         emulatorDir = emulatorConfig?.path
     }
-    if (!emulatorDir) {
+    if (typeof emulatorDir === 'undefined') {
         emulatorDir = await emulatorDefaultFolder(emulator)
         if (await fs.exists(emulatorDir)) {
             await writeConfiguration({ ...emulator, path: emulatorDir })
@@ -118,7 +124,17 @@ async function askFor(emulator: Emulator, dialogTitle: string): Promise<Emulator
     }
 }
 
-async function readConfiguration(): Promise<Emulator[] | null | undefined> {
+async function isValidYAML(contents: string) {
+    const yaml = await import('yaml')
+    try {
+        yaml.parse(contents)
+        return true
+    } catch {
+        return false
+    }
+}
+
+async function readConfiguration(): Promise<Config | null | undefined> {
     const { fs, path } = await import('@tauri-apps/api')
     const yaml = await import('yaml')
 
@@ -131,20 +147,11 @@ async function readConfiguration(): Promise<Emulator[] | null | undefined> {
         }
 
         const configPath = await path.resolve(configDir, 'config.yaml')
-
-        if (!(await fs.exists(configPath))) {
-            const config: Emulator[] = []
-            for (const emulator in SupportedEmulators) {
-                config.push({
-                    name: emulator.toLowerCase(),
-                    path: undefined,
-                })
-            }
-            await fs.writeFile(configPath, yaml.stringify(config))
-        }
-
         const contents = await fs.readTextFile(configPath)
-        return yaml.parse(contents)
+        if (await isValidYAML(contents)) {
+            return yaml.parse(contents)
+        }
+        return null
     } catch (e: unknown) {
         console.error(e)
     }
@@ -165,19 +172,25 @@ async function writeConfiguration(content: Emulator) {
         const configPath = await path.resolve(configDir, 'config.yaml')
         const currentConfig = await readConfiguration()
 
-        const contentToWrite: Emulator[] = []
-
-        if (!currentConfig) {
-            contentToWrite.push(content)
+        let emulatorsConfig
+        if (currentConfig && currentConfig.emulators) {
+            if (currentConfig.emulators.find((e: Emulator) => e.name === content.name)) {
+                emulatorsConfig = currentConfig.emulators.map((config: Emulator) => {
+                    if (config.name.toLowerCase() === content.name.toLowerCase()) {
+                        config.path = content.path
+                    }
+                    return config
+                })
+            } else {
+                emulatorsConfig = [...currentConfig.emulators, content]
+            }
         } else {
-            currentConfig.forEach((config: Emulator) => {
-                if (config.name.toLowerCase() === content.name.toLowerCase()) {
-                    config.path = content.path
-                }
-                contentToWrite.push(config)
-            })
+            emulatorsConfig = [content]
         }
-        await fs.writeFile(configPath, yaml.stringify(contentToWrite))
+        await fs.writeFile(
+            configPath,
+            yaml.stringify({ ...currentConfig, emulators: emulatorsConfig })
+        )
     } catch (e: unknown) {
         console.error(e)
     }

@@ -38,8 +38,9 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
     - There's another path for Yuzu, which isn't the one required.
 
 #### Ryujinx
-- Locate the directory shown in their documentation
-  - See here : https://github.com/Ryujinx/Ryujinx/wiki/Ryujinx-Setup-&-Configuration-Guide#managing-mods
+- Locate the directory shown in their documentation : https://github.com/Ryujinx/Ryujinx/wiki/Ryujinx-Setup-&-Configuration-Guide#managing-mods
+  - Linux : `~/.config/ryujinx`
+  - Windows : `%appdata%/Roaming/Ryujinx`
 
 ## Contributing
 
