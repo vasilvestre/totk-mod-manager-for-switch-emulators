@@ -8,6 +8,8 @@ import Alert from '@/app/alert'
 import { EmulatorChoiceContext } from '@/src/context/emulatorChoiceContext'
 import { themeChange } from 'theme-change'
 import { AlertType, EmulatorState, SupportedEmulator } from '@/src/types'
+import { clearConfigFile, clearInnerCache } from '@/src/handler/debugHandler'
+import { Header } from '@/app/header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -62,6 +64,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <body className={inter.className}>
                         {children}
                         <Alert />
+                        <dialog id="app_modal" className="modal">
+                            <form method="dialog" className="modal-box flex flex-col items-center">
+                                <h3 className="font-bold text-lg">Debug panel for {appVersion}</h3>
+                                <p className="py-4">Got issues ? Try these.</p>
+                                <p className="py-4">
+                                    <button className="btn" onClick={() => clearInnerCache()}>
+                                        Clear inner cache (force relaunch)
+                                    </button>
+                                </p>
+                                <p className="py-4">
+                                    <button className="btn" onClick={() => clearConfigFile()}>
+                                        Clear config file (force relaunch)
+                                    </button>
+                                </p>
+                                <div className="modal-action">
+                                    <button className="btn">Close</button>
+                                </div>
+                            </form>
+                        </dialog>
                     </body>
                 </html>
             </EmulatorChoiceContext.Provider>

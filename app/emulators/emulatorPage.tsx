@@ -105,32 +105,13 @@ export default function EmulatorPage(props: { emulatorName: string }) {
                                 }
                             }}
                         >
-                            Please locate Yuzu folder
+                            Please locate {emulatorState.name} folder containing Mods folder
                         </button>
                     </div>
                 )}
                 <div className={'overflow-x-auto'}>
                     <ModsTable />
                 </div>
-                <dialog id="app_modal" className="modal">
-                    <form method="dialog" className="modal-box flex flex-col items-center">
-                        <h3 className="font-bold text-lg">Debug panel for {appVersion}</h3>
-                        <p className="py-4">Got issues ? Try these.</p>
-                        <p className="py-4">
-                            <button className="btn" onClick={() => clearInnerCache()}>
-                                Clear inner cache (force relaunch)
-                            </button>
-                        </p>
-                        <p className="py-4">
-                            <button className="btn" onClick={() => clearConfigFile()}>
-                                Clear config file (force relaunch)
-                            </button>
-                        </p>
-                        <div className="modal-action">
-                            <button className="btn">Close</button>
-                        </div>
-                    </form>
-                </dialog>
             </main>
         </ModContext.Provider>
     )
