@@ -11,7 +11,7 @@ import { LocalMod, ModFile } from '@/src/types'
 import { fetchGithubUpdatedMods, GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
 import getErrorMessage from '@/src/handler/errorHandler'
 import { filterMods } from '@/src/handler/modHandler'
-import { clearInnerCache } from '@/src/handler/debugHandler'
+import { clearConfigFile, clearInnerCache } from '@/src/handler/debugHandler'
 import { askEmulator, checkEmulator, emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
 import { fetchMods, listMods } from '@/src/handler/localModHandler'
 import { Header } from '@/app/emulators/header'
@@ -41,7 +41,7 @@ export default function EmulatorPage(props: { emulatorName: string }) {
     useEffect(() => {
         ;(async () => {
             try {
-                if (emulatorState) {
+                if (emulatorState && emulatorState.found) {
                     setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
                     setUpToDateMods(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
@@ -113,12 +113,17 @@ export default function EmulatorPage(props: { emulatorName: string }) {
                     <ModsTable />
                 </div>
                 <dialog id="app_modal" className="modal">
-                    <form method="dialog" className="modal-box">
+                    <form method="dialog" className="modal-box flex flex-col items-center">
                         <h3 className="font-bold text-lg">Debug panel for {appVersion}</h3>
                         <p className="py-4">Got issues ? Try these.</p>
                         <p className="py-4">
                             <button className="btn" onClick={() => clearInnerCache()}>
                                 Clear inner cache (force relaunch)
+                            </button>
+                        </p>
+                        <p className="py-4">
+                            <button className="btn" onClick={() => clearConfigFile()}>
+                                Clear config file (force relaunch)
                             </button>
                         </p>
                         <div className="modal-action">
