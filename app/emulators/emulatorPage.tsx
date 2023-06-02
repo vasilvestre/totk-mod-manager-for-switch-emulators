@@ -41,7 +41,7 @@ export default function EmulatorPage(props: { emulatorName: string }) {
     useEffect(() => {
         ;(async () => {
             try {
-                if (emulatorState && emulatorState.found) {
+                if (emulatorState && emulatorState.found && emulatorState.path) {
                     setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
                     setUpToDateMods(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
@@ -51,7 +51,6 @@ export default function EmulatorPage(props: { emulatorName: string }) {
                 setEmulatorState({
                     name: props.emulatorName,
                     found: false,
-                    path: undefined,
                     version: undefined,
                 })
             }
