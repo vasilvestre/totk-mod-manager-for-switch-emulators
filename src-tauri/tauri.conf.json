@@ -44,6 +44,7 @@
           "$CONFIG",
           "$CONFIG/TTKMM",
           "$CONFIG/TTKMM/**",
+          "$CONFIG/Ryujinx",
           "$CONFIG/Ryujinx/**"
         ]
       }
