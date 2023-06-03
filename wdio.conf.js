@@ -1,13 +1,8 @@
 // keep track of the `tauri-driver` child process
-let tauriDriver;
-
-exports.config = {
-    // ...
-    // ensure the rust project is built
-    // since we expect this binary to exist
-    // for the webdriver sessions
-    // ...
-};
+const { spawn, spawnSync } = require('child_process')
+const { homedir } = require('os')
+const path = require('path')
+let tauriDriver
 
 exports.config = {
     //
@@ -16,7 +11,7 @@ exports.config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
-    
+
     //
     // ==================
     // Specify Test Files
@@ -33,9 +28,7 @@ exports.config = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
-    specs: [
-        './test/specs/**/*.js'
-    ],
+    specs: ['./test/specs/**/*.js'],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -62,10 +55,12 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        // capabilities for local browser web tests
-        browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
-    }],
+    capabilities: [
+        {
+            // capabilities for local browser web tests
+            browserName: 'chrome', // or "firefox", "microsoftedge", "safari"
+        },
+    ],
     //
     // ===================
     // Test Configurations
@@ -114,7 +109,7 @@ exports.config = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     services: ['chromedriver'],
-    
+
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -137,13 +132,12 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     // reporters: ['dot'],
 
-    
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 60000,
     },
     //
     // =====
@@ -158,7 +152,7 @@ exports.config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    onPrepare: () => spawnSync("cargo", ["build", "--release"]),
+    onPrepare: () => spawnSync('cargo', ['build', '--release']),
 
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
@@ -191,11 +185,9 @@ exports.config = {
     // ensure we are running `tauri-driver` before the session starts
     // so that we can proxy the webdriver requests
     beforeSession: () =>
-      (tauriDriver = spawn(
-        path.resolve(os.homedir(), ".cargo", "bin", "tauri-driver"),
-        [],
-        { stdio: [null, process.stdout, process.stderr] }
-      )),
+        (tauriDriver = spawn(path.resolve(homedir(), '.cargo', 'bin', 'tauri-driver'), [], {
+            stdio: [null, process.stdout, process.stderr],
+        })),
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.
@@ -248,7 +240,6 @@ exports.config = {
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
 
-
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
@@ -291,10 +282,10 @@ exports.config = {
     // onComplete: function(exitCode, config, capabilities, results) {
     // },
     /**
-    * Gets executed when a refresh happens.
-    * @param {string} oldSessionId session ID of the old session
-    * @param {string} newSessionId session ID of the new session
-    */
+     * Gets executed when a refresh happens.
+     * @param {string} oldSessionId session ID of the old session
+     * @param {string} newSessionId session ID of the new session
+     */
     // onReload: function(oldSessionId, newSessionId) {
     // }
 }
