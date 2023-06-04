@@ -5,7 +5,7 @@ import { GithubRelease } from '@/src/handler/fetchGithubUpdatedMods'
 interface ModContextType {
     mods: ModFile[] | undefined
     localMods: LocalMod[]
-    upToDateMods: GithubRelease | null
+    modGithubRelease: GithubRelease | null
     downloadProgress: number
     setLocalMods: (value: LocalMod[]) => void
     setMods: (value: ModFile[] | undefined) => void

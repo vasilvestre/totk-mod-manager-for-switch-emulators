@@ -1,6 +1,6 @@
 import { ModContext, useModContext } from '@/src/context/modContext'
-import { LocalModRow } from '@/app/emulators/localModRow'
-import { ModRow } from '@/app/emulators/modRow'
+import { LocalModRow } from '@/app/emulators/[name]/localModRow'
+import { ModRow } from '@/app/emulators/[name]/modRow'
 
 export function ModsTable() {
     const { mods, localMods } = useModContext(ModContext)

@@ -10,10 +10,12 @@ import { themeChange } from 'theme-change'
 import { AlertType, EmulatorState, SupportedEmulator } from '@/src/types'
 import { clearConfigFile, clearInnerCache } from '@/src/handler/debugHandler'
 import { Header } from '@/app/header'
+import { useRouter } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+    const router = useRouter()
     const [theme, setTheme] = useState<'light' | 'dark'>('dark')
     const [alert, setAlert] = useState<AlertType | undefined>()
     const [emulatorState, setEmulatorState] = useState<EmulatorState | undefined>(undefined)

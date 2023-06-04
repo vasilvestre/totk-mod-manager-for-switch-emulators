@@ -7,36 +7,38 @@ import {
 } from '@/src/context/emulatorChoiceContext'
 import React from 'react'
 
-export function Header() {
-    const { upToDateMods, downloadProgress, setSearchTerms } = useModContext(ModContext)
-    const { setEmulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
+export function Header(props: { title?: string }) {
+    const { downloadProgress, setSearchTerms } = useModContext(ModContext)
+    const { emulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
 
     return (
         <>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                    <button
-                        className="btn btn-ghost"
-                        onClick={() => {
-                            setEmulatorState(undefined)
-                        }}
-                    >
-                        Get to emulator choice
-                    </button>
+                    <label htmlFor="my-drawer" className="btn btn-square btn-ghost drawer-button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            className="inline-block w-5 h-5 stroke-current"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            ></path>
+                        </svg>
+                    </label>
                 </div>
-                {upToDateMods && (
-                    <>
-                        <div className="navbar-center">
-                            <p className="normal-case text-xl">
-                                Mod collection version : {upToDateMods.data.name} released on{' '}
-                                {new Date(
-                                    Date.parse(upToDateMods.data.created_at)
-                                ).toLocaleDateString()}
-                            </p>
-                        </div>
-                    </>
-                )}
+                <>
+                    <div className="navbar-center">
+                        <p className="normal-case text-xl">{props.title ? props.title : ''}</p>
+                    </div>
+                </>
                 <div className="navbar-end">
+                    <p>{emulatorState?.name}</p>
+
                     <button
                         className={'btn btn-square btn-ghost'}
                         onClick={() => window.app_modal.showModal()}
