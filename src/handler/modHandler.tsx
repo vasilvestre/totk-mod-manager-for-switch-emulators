@@ -60,11 +60,13 @@ export function tryUpdate(
     return async () => {
         const { trackEvent } = await import('@aptabase/tauri')
 
+        let emulatorModDir
+
         try {
             if (typeof emulatorState === 'undefined' || !emulatorState.path) {
                 throw { message: 'Emulator not found' }
             }
-            const emulatorModDir = await emulatorDefaultModFolder(emulatorState)
+            emulatorModDir = await emulatorDefaultModFolder(emulatorState)
             await installSingleMod(mod, true, emulatorModDir)
             const previousMod = localMods.find((localMod) =>
                 localMod.name?.includes(mod.config.title)
@@ -73,7 +75,6 @@ export function tryUpdate(
                 throw { message: 'Previous installed folder not found' }
             }
             await removeSingleMod(previousMod)
-            setLocalMods(await fetchMods(emulatorModDir))
             setAlert({
                 message: 'Mod updated',
                 type: 'success',
@@ -86,6 +87,9 @@ export function tryUpdate(
                 data: getErrorData(e),
             })
         } finally {
+            if (emulatorModDir) {
+                setLocalMods(await fetchMods(emulatorModDir))
+            }
             trackEvent('mod_update', { name: mod.config.title })
         }
     }
@@ -95,7 +99,7 @@ export function filterMods(mods: ModFile[], localMods: LocalMod[]) {
     return mods.sort((a: ModFile) => {
         if (
             localMods.find((localMod) => {
-                if (localMod?.config?.title === a.config.title) {
+                if (localMod?.config?.id === a.config.id) {
                     return true
                 }
                 const matches = localMod.name?.match(regexp)

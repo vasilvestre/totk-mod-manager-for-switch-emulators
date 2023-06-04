@@ -6,7 +6,7 @@ export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest
 export async function fetchGithubUpdatedMods(
     setDownloadProgress: (value: number) => void
 ): Promise<GithubRelease> {
-    const { fs } = await import('@tauri-apps/api')
+    const { fs, path } = await import('@tauri-apps/api')
     const octokit = new Octokit({
         appId: 336782,
         privateKey: process.env.NEXT_PUBLIC_GITHUB_PRIVATE_KEY,
@@ -39,19 +39,35 @@ export async function fetchGithubUpdatedMods(
 
     if (!zipAsset) {
         throw new Error('No zip asset found')
-    } else if (
-        !(await fs.exists(zipAsset.name, {
-            dir: fs.BaseDirectory.Download,
-        }))
-    ) {
-        await fetchGithubUpdatedModsSource(
-            zipAsset.browser_download_url,
-            zipAsset.name,
-            zipAsset.size,
-            setDownloadProgress
-        )
     }
+
+    if (!(await fs.exists(await path.appDataDir()))) {
+        await fs.createDir(await path.appDataDir())
+    }
+
+    if (
+        await fs.exists(mods.data.name ? mods.data.name : 'latest', {
+            dir: fs.BaseDirectory.AppData,
+        })
+    ) {
+        if (await fs.exists(zipAsset.name, { dir: fs.BaseDirectory.Download })) {
+            fs.removeFile(zipAsset.name, {
+                dir: fs.BaseDirectory.Download,
+            })
+        }
+        return mods
+    }
+
+    await fetchGithubUpdatedModsSource(
+        zipAsset.browser_download_url,
+        zipAsset.name,
+        zipAsset.size,
+        setDownloadProgress
+    )
     await extractZip(zipAsset.name, mods.data.name)
+    fs.removeFile(zipAsset.name, {
+        dir: fs.BaseDirectory.Download,
+    })
     return mods
 }
 
