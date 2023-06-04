@@ -2,8 +2,7 @@ import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
 import { fetchMods } from '@/src/handler/localModHandler'
-import { ModModel } from '@/src/gamebanana/types'
-import { getMod } from '@/src/gamebanaApi'
+import { File, ModModel, ModType } from '@/src/gamebanana/types'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
@@ -18,7 +17,8 @@ export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]
 }
 
 export function tryGamebananaInstall(
-    mod: ModModel,
+    file: File,
+    modRecord: ModType,
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
@@ -35,12 +35,13 @@ export function tryGamebananaInstall(
             emulatorModDir = await emulatorDefaultModFolder(emulatorState)
             const { download } = await import('tauri-plugin-upload-api')
             const { path } = await import('@tauri-apps/api')
-            const modInformations = await getMod(mod._idRow)
-            console.log(modInformations._sDownloadUrl)
-            if (modInformations?._sDownloadUrl) {
+            if (file._sDownloadUrl && modRecord._sName) {
                 await download(
-                    modInformations._sDownloadUrl,
-                    await path.resolve(await emulatorDefaultModFolder(emulatorState), mod._sName)
+                    file._sDownloadUrl,
+                    await path.resolve(
+                        await emulatorDefaultModFolder(emulatorState),
+                        modRecord._sName
+                    )
                 )
             }
             setAlert({
@@ -58,7 +59,10 @@ export function tryGamebananaInstall(
             if (emulatorModDir) {
                 setLocalMods(await fetchMods(emulatorModDir))
             }
-            trackEvent('mod_install', { name: mod._sName, collection: 'gamebanana' })
+            trackEvent('mod_install', {
+                name: modRecord._sName ? modRecord._sName : 'unknown',
+                collection: 'gamebanana',
+            })
         }
     }
 }

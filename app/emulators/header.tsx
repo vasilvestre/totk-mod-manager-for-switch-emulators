@@ -5,13 +5,22 @@ import {
     EmulatorChoiceContext,
     useEmulatorChoiceContext,
 } from '@/src/context/emulatorChoiceContext'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import debounce from 'lodash.debounce'
+import { Simulate } from 'react-dom/test-utils'
 
 export function Header(props: { title?: string }) {
     const { downloadProgress, setSearchTerms } = useModContext(ModContext)
     const { emulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
+
+    const changeHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const target = event.target as HTMLButtonElement
+        setSearchTerms(target.value)
+    }
+
+    const debouncedChangeHandler = useCallback(debounce(changeHandler, 500), [])
 
     return (
         <>
@@ -76,7 +85,7 @@ export function Header(props: { title?: string }) {
                         type="text"
                         placeholder="Search by name, description or category"
                         className="input input-bordered w-1/2"
-                        onChange={(event) => setSearchTerms(event.target.value)}
+                        onChange={debouncedChangeHandler}
                     />
                 </div>
             </header>

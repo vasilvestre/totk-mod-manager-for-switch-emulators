@@ -58,7 +58,6 @@ export function Header() {
 }
 
 function toggleTheme(evt: React.MouseEvent<HTMLButtonElement>) {
-    const target = evt.target as HTMLButtonElement
     const themesList = target.getAttribute('data-toggle-theme')
     if (themesList) {
         const themesArray = themesList.split(',')

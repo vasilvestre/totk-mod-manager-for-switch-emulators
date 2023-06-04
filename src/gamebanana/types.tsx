@@ -16,9 +16,16 @@ type ImageRecord = {
 }
 type Medias = { _aImages: ImageRecord[] }
 
+export type File = {
+    _idRow: number
+    _sFile: string
+    _sDescription: string
+    _nDownloadCount: number
+    _sDownloadUrl: string
+}
 export type ModType = {
     _idRow?: number
-    _aFiles?: []
+    _aFiles?: File[]
     _sName?: string
     _sDownloadUrl?: string
 }
