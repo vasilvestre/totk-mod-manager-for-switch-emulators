@@ -2,6 +2,7 @@ import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
 import { fetchMods } from '@/src/handler/localModHandler'
+import { ModRecord } from '@/src/gamebanana/types'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
@@ -15,8 +16,8 @@ export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]
     }
 }
 
-export function tryInstall(
-    mod: ModFile,
+export function tryGamebananaInstall(
+    mod: ModRecord,
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
@@ -24,15 +25,14 @@ export function tryInstall(
 ) {
     return async () => {
         const { trackEvent } = await import('@aptabase/tauri')
+        let emulatorModDir
 
         try {
             if (typeof emulatorState === 'undefined' || !emulatorState.path) {
                 throw { message: 'Emulator not found' }
             }
-            await checkIncompatibilities(mod, localMods)
-            const emulatorModDir = await emulatorDefaultModFolder(emulatorState)
-            await installSingleMod(mod, true, emulatorModDir)
-            setLocalMods(await fetchMods(emulatorModDir))
+            emulatorModDir = await emulatorDefaultModFolder(emulatorState)
+            await installDownloadedMod(mod, true, emulatorModDir)
             setAlert({
                 message: 'Mod installed',
                 type: 'success',
@@ -45,6 +45,46 @@ export function tryInstall(
                 data: getErrorData(e),
             })
         } finally {
+            if (emulatorModDir) {
+                setLocalMods(await fetchMods(emulatorModDir))
+            }
+            trackEvent('mod_install', { name: mod._sName, collection: 'gamebanana' })
+        }
+    }
+}
+
+export function tryInstall(
+    mod: ModFile,
+    localMods: LocalMod[],
+    setLocalMods: (mods: LocalMod[]) => void,
+    setAlert: (alert: AlertType | undefined) => void,
+    emulatorState: EmulatorState | undefined
+) {
+    return async () => {
+        const { trackEvent } = await import('@aptabase/tauri')
+        let emulatorModDir
+        try {
+            if (typeof emulatorState === 'undefined' || !emulatorState.path) {
+                throw { message: 'Emulator not found' }
+            }
+            await checkIncompatibilities(mod, localMods)
+            emulatorModDir = await emulatorDefaultModFolder(emulatorState)
+            await installDownloadedMod(mod, true, emulatorModDir)
+            setAlert({
+                message: 'Mod installed',
+                type: 'success',
+            })
+        } catch (e: unknown) {
+            console.error(e)
+            setAlert({
+                message: getErrorMessage(e),
+                type: 'error',
+                data: getErrorData(e),
+            })
+        } finally {
+            if (emulatorModDir) {
+                setLocalMods(await fetchMods(emulatorModDir))
+            }
             trackEvent('mod_install', { name: mod.config.title })
         }
     }
@@ -67,7 +107,7 @@ export function tryUpdate(
                 throw { message: 'Emulator not found' }
             }
             emulatorModDir = await emulatorDefaultModFolder(emulatorState)
-            await installSingleMod(mod, true, emulatorModDir)
+            await installDownloadedMod(mod, true, emulatorModDir)
             const previousMod = localMods.find((localMod) =>
                 localMod.name?.includes(mod.config.title)
             )
@@ -145,7 +185,15 @@ export function tryRemove(
     }
 }
 
-async function installSingleMod(mod: ModFile, overwrite = false, emulatorModDir: string) {
+async function downloadMod(mod: ModRecord) {
+    const { download } = await import('tauri-plugin-upload-api')
+}
+
+async function installDownloadedMod(
+    mod: { path: string },
+    overwrite = false,
+    emulatorModDir: string
+) {
     const { invoke } = await import('@tauri-apps/api')
 
     await invoke('copy_dir', {

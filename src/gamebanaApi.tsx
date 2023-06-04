@@ -14,6 +14,7 @@ async function getArtistAlbums(username: string) {
 
 export async function getMods(params: RequestParams) {
     params['_csvModelInclusions'] = 'Mod'
+    params['_sName'] = params['_sName'] ? params['_sName'] : ''
     params['_sSort'] = params['_sSort'] ? params['_sSort'] : 'default'
     const res = await fetch(baseUrl + '/Game/7617/Subfeed?' + buildURLSearchParams(params))
     // The return value is *not* serialized

@@ -15,7 +15,7 @@ type ImageRecord = {
     _sFile: string
 }
 type Medias = { _aImages: ImageRecord[] }
-type ModRecord = {
+export type ModRecord = {
     _idRow: number
     _sModelName: string
     _sName: string

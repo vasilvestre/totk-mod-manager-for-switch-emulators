@@ -3,13 +3,14 @@
 import { getMods } from '@/src/gamebanaApi'
 import { useEffect, useState } from 'react'
 import { ApiResponse } from '@/src/gamebanana/types'
-import { Header } from '@/app/emulators/[name]/header'
+import { Header } from '@/app/emulators/header'
 import { AppContext, useAppContext } from '@/src/context/appContext'
 import {
     EmulatorChoiceContext,
     useEmulatorChoiceContext,
 } from '@/src/context/emulatorChoiceContext'
 import { ModContext, useModContext } from '@/src/context/modContext'
+import { tryGamebananaInstall, tryInstall } from '@/src/handler/modHandler'
 
 const range = (start: number, end: number) => {
     const length = end - start
@@ -22,13 +23,13 @@ export default function Page() {
     const [loading, setLoading] = useState<boolean>(false)
     const { setAlert } = useAppContext(AppContext)
     const { emulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
-    const { localMods } = useModContext(ModContext)
+    const { localMods, searchTerms, setLocalMods } = useModContext(ModContext)
 
     useEffect(() => {
         ;(async () => {
             try {
                 setLoading(true)
-                setApiResponse(await getMods({ _nPage: pageLoaded }))
+                setApiResponse(await getMods({ _nPage: pageLoaded, _sName: searchTerms }))
             } catch (e) {
                 console.error(e)
             } finally {
@@ -101,11 +102,24 @@ export default function Page() {
                                             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                                         ></path>
                                     </svg>{' '}
-                                    {modRecord._nLikeCount} likes{' '}
+                                    {modRecord._nLikeCount ? modRecord._nLikeCount : 0} likes{' '}
                                 </p>
                                 <div className={'flex justify-evenly'}>
-                                    <button className="btn btn-primary">Install in Yuzu</button>
-                                    <button className="btn btn-primary">Install in Ryujinx</button>
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={() =>
+                                            tryGamebananaInstall(
+                                                modRecord,
+                                                localMods,
+                                                setLocalMods,
+                                                setAlert,
+                                                emulatorState
+                                            )
+                                        }
+                                    >
+                                        Install in{' '}
+                                        <label className={'uppercase'}>{emulatorState?.name}</label>
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -8,7 +8,7 @@ import {
 } from '@/src/context/emulatorChoiceContext'
 import getErrorMessage from '@/src/handler/errorHandler'
 import { askEmulator, checkEmulator } from '@/src/handler/emulatorHandler'
-import { Header } from '@/app/emulators/[name]/header'
+import { Header } from '@/app/emulators/header'
 import { ModsTable } from '@/app/emulators/[name]/modsTable'
 import { ModContext, useModContext } from '@/src/context/modContext'
 

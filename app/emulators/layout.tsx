@@ -13,7 +13,7 @@ import getErrorMessage from '@/src/handler/errorHandler'
 import { filterMods } from '@/src/handler/modHandler'
 import { askEmulator, checkEmulator, emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
 import { fetchMods, listMods } from '@/src/handler/localModHandler'
-import { Header } from '@/app/emulators/[name]/header'
+import { Header } from '@/app/emulators/header'
 import { ModsTable } from '@/app/emulators/[name]/modsTable'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
