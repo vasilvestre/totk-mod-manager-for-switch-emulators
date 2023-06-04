@@ -1,7 +1,7 @@
 export async function clearInnerCache() {
     const { path, fs, process } = await import('@tauri-apps/api')
-    if (!(await fs.exists(await path.appDataDir()))) {
-        await fs.removeDir(await path.appDataDir())
+    if (await fs.exists(await path.appDataDir())) {
+        await fs.removeDir(await path.appDataDir(), { recursive: true })
     }
     try {
         await process.relaunch()

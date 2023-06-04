@@ -31,6 +31,7 @@
         "readFile": true,
         "copyFile": true,
         "removeDir": true,
+        "removeFile": true,
         "createDir": true,
         "scope": [
           "$APPDATA",
