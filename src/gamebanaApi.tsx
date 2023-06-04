@@ -1,14 +1,16 @@
-import { RequestParams } from '@/src/gamebanana/types'
+import { ModType, RequestParams } from '@/src/gamebanana/types'
 
 const baseUrl = 'https://gamebanana.com/apiv11'
 
-async function getArtist(username: string) {
-    const res = await fetch(`https://api.example.com/artist/${username}`)
-    return res.json()
-}
+export async function getMod(id: number): Promise<ModType> {
+    const res = await fetch(baseUrl + '/Mod/' + id + '?_csvProperties=_aFiles')
 
-async function getArtistAlbums(username: string) {
-    const res = await fetch(`https://api.example.com/artist/${username}/albums`)
+    // Recommendation: handle errors
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error('Failed to fetch mod')
+    }
+
     return res.json()
 }
 

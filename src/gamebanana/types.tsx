@@ -15,7 +15,15 @@ type ImageRecord = {
     _sFile: string
 }
 type Medias = { _aImages: ImageRecord[] }
-export type ModRecord = {
+
+export type ModType = {
+    _idRow?: number
+    _aFiles?: []
+    _sName?: string
+    _sDownloadUrl?: string
+}
+
+export type ModModel = {
     _idRow: number
     _sModelName: string
     _sName: string
@@ -35,4 +43,4 @@ export type RequestParams = {
     _sSort?: string
 }
 
-export type ApiResponse = { _aMetadata: Metadata; _aRecords: ModRecord[] }
+export type ApiResponse = { _aMetadata: Metadata; _aRecords: ModModel[] }

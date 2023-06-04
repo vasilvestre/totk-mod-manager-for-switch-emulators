@@ -36,7 +36,7 @@ export default function Page() {
                 setLoading(false)
             }
         })()
-    }, [pageLoaded])
+    }, [pageLoaded, searchTerms])
 
     if (!apiResponse) {
         return <></>
@@ -107,15 +107,13 @@ export default function Page() {
                                 <div className={'flex justify-evenly'}>
                                     <button
                                         className="btn btn-primary"
-                                        onClick={() =>
-                                            tryGamebananaInstall(
-                                                modRecord,
-                                                localMods,
-                                                setLocalMods,
-                                                setAlert,
-                                                emulatorState
-                                            )
-                                        }
+                                        onClick={tryGamebananaInstall(
+                                            modRecord,
+                                            localMods,
+                                            setLocalMods,
+                                            setAlert,
+                                            emulatorState
+                                        )}
                                     >
                                         Install in{' '}
                                         <label className={'uppercase'}>{emulatorState?.name}</label>

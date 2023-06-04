@@ -2,7 +2,8 @@ import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
 import { fetchMods } from '@/src/handler/localModHandler'
-import { ModRecord } from '@/src/gamebanana/types'
+import { ModModel } from '@/src/gamebanana/types'
+import { getMod } from '@/src/gamebanaApi'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
     const incompatibilities: string[] = []
@@ -17,7 +18,7 @@ export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]
 }
 
 export function tryGamebananaInstall(
-    mod: ModRecord,
+    mod: ModModel,
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
@@ -32,7 +33,16 @@ export function tryGamebananaInstall(
                 throw { message: 'Emulator not found' }
             }
             emulatorModDir = await emulatorDefaultModFolder(emulatorState)
-            await installDownloadedMod(mod, true, emulatorModDir)
+            const { download } = await import('tauri-plugin-upload-api')
+            const { path } = await import('@tauri-apps/api')
+            const modInformations = await getMod(mod._idRow)
+            console.log(modInformations._sDownloadUrl)
+            if (modInformations?._sDownloadUrl) {
+                await download(
+                    modInformations._sDownloadUrl,
+                    await path.resolve(await emulatorDefaultModFolder(emulatorState), mod._sName)
+                )
+            }
             setAlert({
                 message: 'Mod installed',
                 type: 'success',
@@ -185,9 +195,7 @@ export function tryRemove(
     }
 }
 
-async function downloadMod(mod: ModRecord) {
-    const { download } = await import('tauri-plugin-upload-api')
-}
+async function downloadMod(mod: ModModel) {}
 
 async function installDownloadedMod(
     mod: { path: string },
