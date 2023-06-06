@@ -19,7 +19,6 @@ They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 ## Possible future features
 
 - **Merge mods**: To prevent duplicated code and mod loaded twice
-- **Support Ryujinx**: To help more people!
 - **Support more games**: Require modders or community help 
 
 ## How to install
