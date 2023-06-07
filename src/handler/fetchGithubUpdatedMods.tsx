@@ -21,21 +21,9 @@ export async function fetchGithubUpdatedMods(
         },
     })
 
-    let zipAsset = mods.data.assets.find((asset) => {
+    const zipAsset = mods.data.assets.find((asset) => {
         return asset.name.endsWith('_full.zip')
     })
-
-    // Backward compatibility
-    if (!zipAsset) {
-        zipAsset = mods.data.assets.find((asset) => {
-            return asset.name.startsWith('TOTK-Mods-collection') && asset.name.endsWith('.zip')
-        })
-    }
-    if (!zipAsset) {
-        zipAsset = mods.data.assets.find((asset) => {
-            return asset.name.endsWith('.zip')
-        })
-    }
 
     if (!zipAsset) {
         throw new Error('No zip asset found')
