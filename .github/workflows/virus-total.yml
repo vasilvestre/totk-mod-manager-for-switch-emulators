@@ -2,7 +2,7 @@ name: Virus total on release
 
 on:
   release:
-    types: [published]
+    types: [released]
 
 jobs:
   virustotal:
