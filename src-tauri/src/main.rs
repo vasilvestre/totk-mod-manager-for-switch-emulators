@@ -20,6 +20,7 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_persisted_scope::init())
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_aptabase::Builder::new(option_env!("TRACKING_ID").unwrap_or_default()).build())
         .invoke_handler(tauri::generate_handler![unzip, copy_dir])
         .setup(|app| {

@@ -25,7 +25,9 @@ tauri-plugin-upload = { git = "https://github.com/tauri-apps/plugins-workspace",
 thiserror = "1"
 zip-extract = "0.1"
 fs_extra = "1.3"
-tauri-plugin-persisted-scope = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+# When https://github.com/tauri-apps/plugins-workspace/issues/25 is fixed we should drop this fork
+tauri-plugin-persisted-scope = { git = "https://github.com/vasilvestre/plugins-workspace", branch = "v1" }
+tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-aptabase = "0.2"
 dotenv = "0.15.0"
 
