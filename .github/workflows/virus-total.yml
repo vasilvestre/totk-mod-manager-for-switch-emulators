@@ -1,0 +1,18 @@
+name: Virus total on release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  virustotal:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: VirusTotal Scan
+        uses: crazy-max/ghaction-virustotal@v3
+        with:
+          vt_api_key: ${{ secrets.VT_API_KEY }}
+          update_release_body: true
+          files: |
+            .exe$
