@@ -209,8 +209,6 @@ export function tryRemove(
     }
 }
 
-async function downloadMod(mod: ModModel) {}
-
 async function installDownloadedMod(
     mod: { path: string },
     overwrite = false,
