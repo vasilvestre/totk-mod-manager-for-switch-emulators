@@ -73,21 +73,22 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                         </button>
                     ) : (
                         <>
-                            {localMods.find((localMod) => localMod.name === mod.name)?.config
-                                ?.version !== mod.config.version && (
-                                <button
-                                    className="btn btn-outline btn-info btn-xs"
-                                    onClick={tryUpdate(
-                                        mod,
-                                        localMods,
-                                        setLocalMods,
-                                        setAlert,
-                                        emulatorState
-                                    )}
-                                >
-                                    Update
-                                </button>
-                            )}
+                            {mod.name &&
+                                localMods.find((localMod) => localMod.name?.includes(mod.name))
+                                    ?.config?.version !== mod.config.version && (
+                                    <button
+                                        className="btn btn-outline btn-info btn-xs"
+                                        onClick={tryUpdate(
+                                            mod,
+                                            localMods,
+                                            setLocalMods,
+                                            setAlert,
+                                            emulatorState
+                                        )}
+                                    >
+                                        Update
+                                    </button>
+                                )}
                             <button
                                 className="btn btn-outline btn-error btn-xs"
                                 onClick={tryRemove(

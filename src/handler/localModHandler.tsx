@@ -34,7 +34,9 @@ export async function fetchLocalMods(modsDir: string): Promise<LocalMod[]> {
                 })()
             )
         }
-        return (await Promise.all(promises)).filter(notEmpty)
+        return (await Promise.all(promises))
+            .filter(notEmpty)
+            .filter((mod) => !mod.path.startsWith('mm_'))
     } catch (e) {
         console.error(e)
         throw new Error('Could not fetch local mods')
