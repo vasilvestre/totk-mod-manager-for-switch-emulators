@@ -54,6 +54,7 @@ export function ModRow(props: { mod: ModFile; mods: ModFile[] }) {
                         return <div key={index}>{mod.config.title}</div>
                     })}
             </td>
+            <td>Holographics repository</td>
             <td className="whitespace-nowrap px-4 py-2">
                 <div className="btn-group btn-group-vertical lg:btn-group-horizontal">
                     {typeof localMods.find((localMod) => localMod?.config?.id === mod.config.id) ===

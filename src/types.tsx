@@ -1,5 +1,6 @@
 import { FileEntry } from '@tauri-apps/api/fs'
 import { UUID } from 'crypto'
+import { File, ModModel } from '@/src/gamebanana/types'
 
 declare global {
     interface Window {
@@ -54,6 +55,10 @@ export type ModFile = {
 
 export type LocalMod = {
     config?: ModConfig
+    gamebanana?: {
+        mod: ModModel
+        file: File
+    }
 } & FileEntry
 
 export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
