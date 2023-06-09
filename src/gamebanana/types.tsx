@@ -22,6 +22,7 @@ export type File = {
     _sDescription: string
     _nDownloadCount: number
     _sDownloadUrl: string
+    _sMd5Checksum: string
 }
 export type ModType = {
     _idRow?: number

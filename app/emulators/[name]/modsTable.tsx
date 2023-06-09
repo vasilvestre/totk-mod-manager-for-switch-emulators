@@ -1,13 +1,16 @@
 import { ModContext, useModContext } from '@/src/context/modContext'
 import { LocalModRow } from '@/app/emulators/[name]/localModRow'
 import { ModRow } from '@/app/emulators/[name]/modRow'
+import { GamebananaModRow } from '@/app/emulators/[name]/gamebananaModRow'
 
 export function ModsTable() {
     const { mods, localMods } = useModContext(ModContext)
 
     const localUnsportedMods = localMods
         .filter((localMod) => {
-            return typeof localMod.config === 'undefined'
+            return (
+                typeof localMod.config === 'undefined' && typeof localMod.gamebanana === 'undefined'
+            )
         })
         .map((localMod) => {
             if (
@@ -19,6 +22,9 @@ export function ModsTable() {
             }
             return localMod
         })
+    const gameBananaMods = localMods.filter((localMod) => {
+        return typeof localMod.gamebanana !== 'undefined'
+    })
 
     return (
         <>
@@ -50,10 +56,19 @@ export function ModsTable() {
                                 <th>Category</th>
                                 <th>Game version</th>
                                 <th>Incompatibility</th>
+                                <th>Source</th>
                                 <th className="px-4 py-2"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {gameBananaMods.length > 0 &&
+                                gameBananaMods.map((mod) => (
+                                    <GamebananaModRow
+                                        key={mod.gamebanana?.mod._idRow}
+                                        mod={mod}
+                                        mods={mods}
+                                    />
+                                ))}
                             {mods.map((mod) => (
                                 <ModRow key={mod.config.id} mod={mod} mods={mods} />
                             ))}

@@ -12,7 +12,7 @@ import { fetchGithubUpdatedMods, GithubRelease } from '@/src/handler/fetchGithub
 import getErrorMessage from '@/src/handler/errorHandler'
 import { filterMods } from '@/src/handler/modHandler'
 import { askEmulator, checkEmulator, emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
-import { fetchMods, listMods } from '@/src/handler/localModHandler'
+import { fetchLocalMods, listMods } from '@/src/handler/localModHandler'
 import { Header } from '@/app/emulators/header'
 import { ModsTable } from '@/app/emulators/[name]/modsTable'
 
@@ -30,7 +30,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ;(async () => {
             try {
                 if (emulatorState && emulatorState.found) {
-                    setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
+                    setLocalMods(
+                        await fetchLocalMods(await emulatorDefaultModFolder(emulatorState))
+                    )
                     setModGithubRelease(await fetchGithubUpdatedMods(setDownloadProgress))
                 }
             } catch (e) {

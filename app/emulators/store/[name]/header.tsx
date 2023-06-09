@@ -9,14 +9,19 @@ import React, { useCallback } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import debounce from 'lodash.debounce'
+import { useRouter, usePathname } from 'next/navigation'
 
-export function Header(props: { title?: string }) {
+export function Header(props: { title?: string; setPageLoaded: (number: number) => void }) {
+    const router = useRouter()
     const { downloadProgress, searchTerms, setSearchTerms } = useModContext(ModContext)
     const { emulatorState } = useEmulatorChoiceContext(EmulatorChoiceContext)
 
     const changeHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         const target = event.target as HTMLButtonElement
-        setSearchTerms(target.value)
+        if (target.value.length >= 3 || target.value.length === 0) {
+            props.setPageLoaded(1)
+            setSearchTerms(target.value)
+        }
     }
 
     const debouncedChangeHandler = useCallback(debounce(changeHandler, 500), [])
@@ -28,12 +33,9 @@ export function Header(props: { title?: string }) {
                     <Link className="btn btn-square btn-ghost" href="/">
                         <Icon icon={'mdi:home-outline'} height={32} width={32} />
                     </Link>
-                    <Link
-                        className={'btn btn-square btn-ghost'}
-                        href="/emulators/store/gamebanana/"
-                    >
-                        <Icon icon={'mdi:store-plus-outline'} height={32} width={32} />
-                    </Link>
+                    <button className="btn btn-square btn-ghost" onClick={() => router.back()}>
+                        <Icon icon={'mdi:arrow-left'} height={32} width={32} />
+                    </button>
                 </div>
                 <>
                     <div className="navbar-center">
@@ -87,6 +89,7 @@ export function Header(props: { title?: string }) {
                         type="text"
                         placeholder="Search by name, description or category"
                         className="input input-bordered w-1/2"
+                        minLength={3}
                         defaultValue={searchTerms}
                         // @ts-ignore
                         onChange={debouncedChangeHandler}

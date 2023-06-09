@@ -3,7 +3,6 @@
 import { getMods } from '@/src/gamebanaApi'
 import { useEffect, useState } from 'react'
 import { ApiResponse } from '@/src/gamebanana/types'
-import { Header } from '@/app/emulators/header'
 import { AppContext, useAppContext } from '@/src/context/appContext'
 import {
     EmulatorChoiceContext,
@@ -12,6 +11,7 @@ import {
 import { ModContext, useModContext } from '@/src/context/modContext'
 import { GamebananaModInstallModal } from '@/app/emulators/store/[name]/modInstallModal'
 import Image from 'next/image'
+import { Header } from '@/app/emulators/store/[name]/header'
 
 const range = (start: number, end: number) => {
     const length = end - start
@@ -45,14 +45,14 @@ export default function Page() {
 
     return (
         <>
-            <Header title={'Browsing Gamebanana store'} />
+            <Header title={'Browsing Gamebanana store'} setPageLoaded={setPageLoaded} />
             <div className={'flex items-center content-center justify-center'}>
                 <div className="join">
                     {range(
                         1,
                         Math.ceil(
                             apiResponse._aMetadata._nRecordCount / apiResponse._aMetadata._nPerpage
-                        )
+                        ) + 1
                     ).map((num, i) => (
                         <button
                             key={'pagination-' + i}
@@ -83,7 +83,7 @@ export default function Page() {
                         apiResponse._aRecords.map((modRecord) => (
                             <div
                                 key={modRecord._idRow}
-                                className="card p-2 basis-1/5 w-96 bg-base-300 shadow-xl odd:bg-base-100"
+                                className="card p-2 sm:basis-1/3 md:basis-1/5 w-96 bg-base-300 shadow-xl odd:bg-base-100"
                             >
                                 <figure>
                                     <Image
@@ -93,13 +93,13 @@ export default function Page() {
                                             modRecord._aPreviewMedia._aImages[0]._sFile
                                         }
                                         alt={modRecord._sName}
-                                        width={'400'}
-                                        height={'400'}
+                                        width={'300'}
+                                        height={'300'}
                                         quality={50}
                                     />
                                 </figure>
-                                <div className="card-body">
-                                    <h2 className="card-title">{modRecord._sName}</h2>
+                                <div className="sm:p-3 lg:p-8 card-body">
+                                    <h2 className="text-md">{modRecord._sName}</h2>
                                     <p>
                                         {' '}
                                         <svg
@@ -119,13 +119,13 @@ export default function Page() {
                                     </p>
                                     <div className={'flex justify-evenly'}>
                                         <button
-                                            className="btn btn-primary"
+                                            className="btn btn-primary btn-sm"
                                             onClick={() =>
                                                 // @ts-ignore
                                                 window['my_modal_' + modRecord._idRow].showModal()
                                             }
                                         >
-                                            Choose file to install
+                                            Install
                                         </button>
                                         <GamebananaModInstallModal
                                             emulatorState={emulatorState}

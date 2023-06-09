@@ -1,7 +1,7 @@
 import { AlertType, EmulatorState, LocalMod, ModFile } from '@/src/types'
 import getErrorMessage, { getErrorData } from '@/src/handler/errorHandler'
 import { emulatorDefaultModFolder } from '@/src/handler/emulatorHandler'
-import { fetchMods } from '@/src/handler/localModHandler'
+import { fetchLocalMods } from '@/src/handler/localModHandler'
 import { File, ModModel, ModType } from '@/src/gamebanana/types'
 
 export async function checkIncompatibilities(mod: ModFile, localMods: LocalMod[]) {
@@ -22,9 +22,11 @@ export function tryGamebananaInstall(
     localMods: LocalMod[],
     setLocalMods: (mods: LocalMod[]) => void,
     setAlert: (alert: AlertType | undefined) => void,
-    emulatorState: EmulatorState | undefined
+    emulatorState: EmulatorState | undefined,
+    modInformations: ModModel
 ) {
     return async () => {
+        const { invoke, fs } = await import('@tauri-apps/api')
         const { trackEvent } = await import('@aptabase/tauri')
         let emulatorModDir
 
@@ -36,12 +38,20 @@ export function tryGamebananaInstall(
             const { download } = await import('tauri-plugin-upload-api')
             const { path } = await import('@tauri-apps/api')
             if (file._sDownloadUrl && modRecord._sName) {
-                await download(
-                    file._sDownloadUrl,
-                    await path.resolve(
-                        await emulatorDefaultModFolder(emulatorState),
-                        modRecord._sName
-                    )
+                const filePath = await path.resolve(
+                    await emulatorDefaultModFolder(emulatorState),
+                    file._sFile
+                )
+                const filePathTarget = await path.resolve(
+                    await emulatorDefaultModFolder(emulatorState),
+                    modRecord._sName
+                )
+                await download(file._sDownloadUrl, filePath)
+                await invoke('unzip', { filePath: filePath, targetDir: filePathTarget })
+                await fs.removeFile(filePath)
+                await fs.writeFile(
+                    filePathTarget + '/gamebanana_metadata.json',
+                    JSON.stringify({ mod: modInformations, file: file })
                 )
             }
             setAlert({
@@ -57,7 +67,7 @@ export function tryGamebananaInstall(
             })
         } finally {
             if (emulatorModDir) {
-                setLocalMods(await fetchMods(emulatorModDir))
+                setLocalMods(await fetchLocalMods(emulatorModDir))
             }
             trackEvent('mod_install', {
                 name: modRecord._sName ? modRecord._sName : 'unknown',
@@ -97,7 +107,7 @@ export function tryInstall(
             })
         } finally {
             if (emulatorModDir) {
-                setLocalMods(await fetchMods(emulatorModDir))
+                setLocalMods(await fetchLocalMods(emulatorModDir))
             }
             trackEvent('mod_install', { name: mod.config.title })
         }
@@ -142,7 +152,7 @@ export function tryUpdate(
             })
         } finally {
             if (emulatorModDir) {
-                setLocalMods(await fetchMods(emulatorModDir))
+                setLocalMods(await fetchLocalMods(emulatorModDir))
             }
             trackEvent('mod_update', { name: mod.config.title })
         }
@@ -178,7 +188,7 @@ export function tryRemove(
         try {
             if (emulatorState && mod) {
                 await removeSingleMod(mod)
-                setLocalMods(await fetchMods(await emulatorDefaultModFolder(emulatorState)))
+                setLocalMods(await fetchLocalMods(await emulatorDefaultModFolder(emulatorState)))
                 setAlert({
                     message: 'Mod removed',
                     type: 'success',

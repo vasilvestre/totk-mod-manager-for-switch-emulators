@@ -2,7 +2,7 @@ import { FileEntry } from '@tauri-apps/api/fs'
 import * as yaml from 'yaml'
 import { LocalMod, ModConfig, ModFile, notEmpty } from '@/src/types'
 
-export async function fetchMods(modsDir: string): Promise<LocalMod[]> {
+export async function fetchLocalMods(modsDir: string): Promise<LocalMod[]> {
     const { fs, path } = await import('@tauri-apps/api')
     try {
         await fs.exists(modsDir)
@@ -12,13 +12,21 @@ export async function fetchMods(modsDir: string): Promise<LocalMod[]> {
         const promises: Promise<FileEntry | undefined>[] = []
         for (const localMod of localMods) {
             promises.push(
-                (async (): Promise<({ config?: ModConfig } & FileEntry) | undefined> => {
+                (async (): Promise<LocalMod | undefined> => {
                     const configPath = await path.resolve(localMod.path, 'config.yaml')
-                    const exists = await fs.exists(configPath)
-                    if (exists) {
+                    const gamebananaMetadata = await path.resolve(
+                        localMod.path,
+                        'gamebanana_metadata.json'
+                    )
+                    if (await fs.exists(configPath)) {
                         return {
                             ...localMod,
                             config: yaml.parse(await fs.readTextFile(configPath)),
+                        }
+                    } else if (await fs.exists(gamebananaMetadata)) {
+                        return {
+                            ...localMod,
+                            gamebanana: JSON.parse(await fs.readTextFile(gamebananaMetadata)),
                         }
                     } else {
                         return { ...localMod }

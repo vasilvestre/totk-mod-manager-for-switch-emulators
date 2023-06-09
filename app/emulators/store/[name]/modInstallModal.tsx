@@ -60,7 +60,8 @@ export function GamebananaModInstallModal(props: {
                                                     props.localMods,
                                                     props.setLocalMods,
                                                     props.setAlert,
-                                                    props.emulatorState
+                                                    props.emulatorState,
+                                                    props.modRecord
                                                 )}
                                             >
                                                 Install in{' '}
