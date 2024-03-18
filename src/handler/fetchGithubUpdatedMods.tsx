@@ -13,15 +13,15 @@ export async function fetchGithubUpdatedMods(
         clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
     })
-    const mods = await octokit.request('GET /repos/{owner}/{repo}/releases/latest', {
-        owner: 'HolographicWings',
+    const mods: any = await octokit.request('GET /repos/{owner}/{repo}/releases/tags/v3.1', {
+        owner: 'hoverbike1',
         repo: 'TOTK-Mods-collection',
         headers: {
             'X-GitHub-Api-Version': '2022-11-28',
         },
     })
 
-    const zipAsset = mods.data.assets.find((asset) => {
+    const zipAsset = mods.data.assets.find((asset: any) => {
         return asset.name.endsWith('_full.zip')
     })
 
