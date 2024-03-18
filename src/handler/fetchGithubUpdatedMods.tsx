@@ -21,7 +21,7 @@ export async function fetchGithubUpdatedMods(
         },
     })
 
-    const zipAsset = mods.data.assets.find((asset) => {
+    const zipAsset = mods.data.assets.find((asset: any) => {
         return asset.name.endsWith('_full.zip')
     })
 
