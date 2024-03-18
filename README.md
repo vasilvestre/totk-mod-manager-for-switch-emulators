@@ -6,10 +6,10 @@
 Zelda: Tears of the Kingdom Mod Manager is an open-source application designed to assist players of Zelda: Tears of the Kingdom on the Yuzu & Ryujinx emulators in managing mods for the game.
 It fetch distant mod collection and install/update the mods for you.
 
-They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
+They are sourced from https://github.com/hoverbike1/TOTK-Mods-collection
 
 > [!IMPORTANT]  
-> Holographic now uses TOTKOptimizer to handle mods easily. [Give it a try !](https://github.com/HolographicWings/TOTK-Mods-collection)
+> Holographic now uses TOTKOptimizer to handle mods easily. [Give it a try !](https://github.com/hoverbike1/TOTK-Mods-collection)
 
 ## Features
 
