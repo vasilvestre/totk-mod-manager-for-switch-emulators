@@ -9,7 +9,7 @@ It fetch distant mod collection and install/update the mods for you.
 They are sourced from https://github.com/hoverbike1/TOTK-Mods-collection
 
 > [!IMPORTANT]  
-> Holographic now uses TOTKOptimizer to handle mods easily. [Give it a try !](https://github.com/hoverbike1/TOTK-Mods-collection)
+> Mod collection now uses TOTKOptimizer to handle mods easily. [Give it a try !](https://github.com/hoverbike1/TOTK-Mods-collection)
 
 ## Features
 
