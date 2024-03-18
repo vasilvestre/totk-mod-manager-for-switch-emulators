@@ -1,7 +1,7 @@
 import { Octokit } from 'octokit'
 import { Endpoints } from '@octokit/types'
 
-export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
+export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/v3.1']['response']
 
 export async function fetchGithubUpdatedMods(
     setDownloadProgress: (value: number) => void
@@ -13,7 +13,7 @@ export async function fetchGithubUpdatedMods(
         clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
     })
-    const mods = await octokit.request('GET /repos/{owner}/{repo}/releases/tag/v3.1', {
+    const mods: GithubRelease = await octokit.request('GET /repos/{owner}/{repo}/releases/v3.1', {
         owner: 'HolographicWings',
         repo: 'TOTK-Mods-collection',
         headers: {
@@ -21,7 +21,7 @@ export async function fetchGithubUpdatedMods(
         },
     })
 
-    const zipAsset = mods.data.assets.find((asset: any) => {
+    const zipAsset = mods.data.assets.find((asset) => {
         return asset.name.endsWith('_full.zip')
     })
 
