@@ -1,13 +1,6 @@
 import { Octokit } from 'octokit'
 import { GetResponseTypeFromEndpointMethod, GetResponseDataTypeFromEndpointMethod } from '@octokit/types'
 
-export type GithubRelease = GetResponseTypeFromEndpointMethod<
-    typeof octokit.releases
->;
-export type GithubReleaseResponse = GetResponseTypeFromEndpointMethod<
-    typeof octokit.releases
->;
-
 export async function fetchGithubUpdatedMods(
     setDownloadProgress: (value: number) => void
 ): Promise<GithubRelease> {
@@ -18,6 +11,12 @@ export async function fetchGithubUpdatedMods(
         clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
     })
+    export type GithubRelease = GetResponseTypeFromEndpointMethod<
+        typeof octokit.releases
+    >;
+    export type GithubReleaseResponse = GetResponseTypeFromEndpointMethod<
+        typeof octokit.releases
+    >;
     const mods: GithubReleaseResponse = await octokit.request('GET /repos/{owner}/{repo}/releases/v3.1', {
         owner: 'hoverbike1',
         repo: 'TOTK-Mods-collection',
