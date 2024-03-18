@@ -1,5 +1,5 @@
 import { Octokit } from 'octokit'
-import { Endpoints, GetResponseTypeFromEndpointMethod, GetResponseDataTypeFromEndpointMethod } from '@octokit/types'
+import { Endpoints } from '@octokit/types'
 
 export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
 
@@ -21,7 +21,7 @@ export async function fetchGithubUpdatedMods(
         },
     })
 
-    const zipAsset = mods.data.assets.find((asset) => {
+    const zipAsset = mods.data.assets.find((asset: any) => {
         return asset.name.endsWith('_full.zip')
     })
 
