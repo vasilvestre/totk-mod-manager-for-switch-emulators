@@ -1,5 +1,5 @@
 import { Octokit } from 'octokit'
-import { GetResponseTypeFromEndpointMethod, GetResponseDataTypeFromEndpointMethod } from '@octokit/types'
+import { Endpoints, GetResponseTypeFromEndpointMethod, GetResponseDataTypeFromEndpointMethod } from '@octokit/types'
 
 export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
 
