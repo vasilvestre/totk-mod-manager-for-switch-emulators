@@ -13,7 +13,7 @@ export async function fetchGithubUpdatedMods(
         clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
         clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
     })
-    const mods: any = await octokit.request('GET /repos/{owner}/{repo}/releases/v3.1', {
+    const mods = await octokit.request('GET /repos/{owner}/{repo}/releases/v3.1', {
         owner: 'hoverbike1',
         repo: 'TOTK-Mods-collection',
         headers: {
