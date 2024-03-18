@@ -1,7 +1,7 @@
 import { Octokit } from 'octokit'
 import { Endpoints } from '@octokit/types'
 
-export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']
+export type GithubRelease = Endpoints['GET /repos/{owner}/{repo}/releases/v3.1']['response']
 
 export async function fetchGithubUpdatedMods(
     setDownloadProgress: (value: number) => void
