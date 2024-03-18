@@ -8,6 +8,9 @@ It fetch distant mod collection and install/update the mods for you.
 
 They are sourced from https://github.com/HolographicWings/TOTK-Mods-collection
 
+> [!IMPORTANT]  
+> Holographic now uses TOTKOptimizer to handle mods easily. [Give it a try !](https://github.com/HolographicWings/TOTK-Mods-collection)
+
 ## Features
 
 -   **Mod Management**: Easily manage mods for Zelda: Tears of the Kingdom by enabling, updating or removing them from your game installation.
